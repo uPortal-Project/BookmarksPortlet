@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:util="http://www.springframework.org/schema/util"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    
+
+    
+    <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.support.BookmarkValidator"/>
+    
+    <bean id="baseBookmarksController" abstract="true">
+        <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
+        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
+    </bean>
+    
+    <bean id="baseBookmarksFormController" abstract="true" parent="baseBookmarksController">
+        <property name="sessionForm" value="false"/>
+        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Bookmark"/>
+        
+        <property name="formView" value="viewBookmarks"/>
+        <property name="successView" value="viewBookmarks"/>
+    </bean>
+    
+    <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController" parent="baseBookmarksFormController">
+    </bean>
+
+    <bean id="saveBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.SaveBookmarkFormController" parent="baseBookmarksFormController">
+        <property name="validator"><ref bean="bookmarkValidator"/></property> 
+    </bean>
+    
+    <bean id="saveFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.SaveFolderFormController" parent="baseBookmarksFormController">
+        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
+    </bean>
+    
+    <bean id="toggleFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.ToggleFolderFormController" parent="baseBookmarksController">
+    </bean>
+    
+    <bean id="deleteEntryFormController" class="edu.wisc.my.portlets.bookmarks.web.DeleteEntryFormController" parent="baseBookmarksController">
+    </bean>
+    
+    
+    
+    <bean id="parameterMappingInterceptor" class="org.springframework.web.portlet.handler.ParameterMappingInterceptor"/>
+    
+    <bean id="portletModeParameterHandlerMapping" class="org.springframework.web.portlet.handler.PortletModeParameterHandlerMapping">
+        <property name="order" value="10"/>
+        <property name="interceptors">
+            <list>
+                <ref bean="parameterMappingInterceptor"/>
+            </list>
+        </property>
+        <property name="portletModeParameterMap">
+            <map>
+                <entry key="view">
+                    <map>
+                        <entry key="viewBookmarks"><ref local="viewBookmarksFormController"/></entry>
+                        <entry key="saveBookmark"><ref bean="saveBookmarkFormController"/></entry>
+                        <entry key="saveFolder"><ref bean="saveFolderFormController"/></entry>
+                        <entry key="toggleFolder"><ref bean="toggleFolderFormController"/></entry>
+                        <entry key="deleteEntry"><ref bean="deleteEntryFormController"/></entry>
+                    </map>
+                </entry>
+            </map>
+        </property>
+    </bean>
+    
+    <bean id="portletModeHandlerMapping" class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
+        <property name="order" value="20"/>
+        <property name="portletModeMap">
+            <map>
+                <entry key="view"><ref local="viewBookmarksFormController"/></entry>
+            </map>
+        </property>
+    </bean>
+    
+</beans>

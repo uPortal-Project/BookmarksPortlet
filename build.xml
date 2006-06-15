@@ -1,0 +1,101 @@
+<project name="BookmarkPortlet" default="compile" basedir=".">
+
+    <description>BookmarkPortlet buildfile</description>
+
+    <!-- override properties -->
+    <property file="build.properties" />
+
+    <property environment="env"/>
+    <property name="portal.home"        value="${env.PORTAL_HOME}/uPortal"/>       
+
+    <property name="build" value="build"  />  <!-- temporary build location -->
+    <property name="dist"  value="dist"   />  <!-- where the war file will be made -->
+    <property name="src"   value="src" />  <!-- your java source code -->
+
+    <!-- Java compiler options -->
+    <property name="compile.debug"       value="true"  />
+    <property name="compile.deprecation" value="false" />
+    <property name="compile.optimize"    value="true"  />
+
+
+    <fileset id="lib.fileset" dir="${lib.dir}">
+        <include name="**/*.jar"/>
+    </fileset>
+    
+    <fileset id="extlib.fileset" dir="${extlib.dir}">
+        <include name="**/*.jar"/>
+    </fileset>
+    
+    <path id="compile.classpath">
+        <fileset refid="lib.fileset"/>
+        <fileset refid="extlib.fileset"/>
+    </path>
+    
+    <path id="test.classpath">
+        <path refid="compile.classpath"/>
+    </path>
+            
+
+    <target name="clean">
+        <!-- out with the old... -->
+        <delete dir="${dist}" />
+        <delete dir="${build}" />
+    </target>
+
+    <target name="init">
+        <!-- ...and in with the new -->
+        <mkdir dir="${dist}" />
+        <mkdir dir="${build}/WEB-INF/classes" />
+    </target>
+
+    <target name="compile" depends="init">
+        <!-- copying WEB-INF contents (properties, lib, tld...) into ${build}/WEB-INF -->
+        <echo message="Copying WEB-INF contents..." />
+        <copy todir="${build}">
+			<fileset dir="webapp"/>
+		</copy>
+		
+        <!-- compile source into ${build}/WEB-INF/classes -->
+        <echo message="Compiling source tree..." />
+        <javac srcdir="${src}"
+               destdir="${build}/WEB-INF/classes"
+               debug="${compile.debug}"
+               deprecation="${compile.deprecation}"
+               optimize="${compile.optimize}">
+            <classpath refid="compile.classpath" />
+        </javac>
+
+        <copy todir="${build}/WEB-INF/classes">
+            <fileset dir="${src}">
+                <exclude name="**/*.java" />
+                <exclude name="CVS" />
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="dist" depends="compile">
+        <copy todir="${build}/WEB-INF/lib">
+            <fileset dir="${lib.dir}">
+                <include name="*.jar" />
+            </fileset>
+        </copy>
+
+        <!-- war up the completed build -->
+        <jar destfile="${dist}/${app.name}.war">
+            <fileset dir="${build}" />
+        </jar>
+    </target>
+
+    <!--==================== Deploy Target ====================-->
+    <!--
+	     | The "deploy" target uses the deployPortletApp target of the uPortal build.xml
+	     | to deploy the portlet to the portal container. The target depends on dist and
+	     | having the portal.home property set in build.properties.
+	     +-->
+    <target name="deploy" depends="dist">
+        <ant dir="${portal.home}" target="deployPortletApp">
+            <property name="portletApp" value="${basedir}/${dist}/${app.name}.war" />
+        </ant>
+    </target>
+
+</project>

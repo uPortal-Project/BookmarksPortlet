@@ -1,0 +1,44 @@
+ul.bookmarkList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+ul.subBookmarkList {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 18px;
+    clear: both;
+}
+ul.bookmarkList li {
+    clear: both;
+    overflow:auto;
+}
+/* List item icon alignment */
+ul.bookmarkList li img {
+    vertical-align: middle;
+}
+/* List item link underlineing */
+ul.bookmarkList li a {
+    text-decoration: none;
+}
+ul.bookmarkList li a:hover {
+    text-decoration: none;
+}
+ul.bookmarkList li a:active {
+    text-decoration: none;
+}
+
+ul.bookmarkList span.label {
+    text-decoration: underline;
+}
+ul.bookmarkList span.padding {
+    padding-right: 15px;
+}
+ul.bookmarkList img {
+    border: none;
+    width: 16px;
+    height: 16px;
+}
+.hidden {
+    display: none;
+}
