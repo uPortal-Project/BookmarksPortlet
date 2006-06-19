@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+<!--
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:util="http://www.springframework.org/schema/util"
@@ -6,7 +10,7 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-    
+-->    
 
     
     <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.support.BookmarkValidator"/>
@@ -42,6 +46,11 @@
     </bean>
     
     
+    <bean id="portletOpenSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.PortletOpenSessionInViewInterceptor">
+        <property name="sessionFactory">
+            <ref bean="sessionFactory" />
+        </property>
+    </bean>
     
     <bean id="parameterMappingInterceptor" class="org.springframework.web.portlet.handler.ParameterMappingInterceptor"/>
     
@@ -49,6 +58,7 @@
         <property name="order" value="10"/>
         <property name="interceptors">
             <list>
+                <ref bean="portletOpenSessionInViewInterceptor"/>
                 <ref bean="parameterMappingInterceptor"/>
             </list>
         </property>
@@ -69,6 +79,11 @@
     
     <bean id="portletModeHandlerMapping" class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
         <property name="order" value="20"/>
+        <property name="interceptors">
+            <list>
+                <ref bean="portletOpenSessionInViewInterceptor"/>
+            </list>
+        </property>
         <property name="portletModeMap">
             <map>
                 <entry key="view"><ref local="viewBookmarksFormController"/></entry>

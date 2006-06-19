@@ -36,12 +36,13 @@
 
 package edu.wisc.my.portlets.bookmarks.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -52,7 +53,7 @@ import org.apache.commons.logging.LogFactory;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class Entry implements Comparable {
+public class Entry implements Comparable, Serializable {
     protected Log logger = LogFactory.getLog(this.getClass());
     
     private long id = -1;

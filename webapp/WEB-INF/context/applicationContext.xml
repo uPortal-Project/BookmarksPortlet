@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    <!--
+        <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+    -->        
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/datasource.properties</value>
+            </list>
+        </property>
+    </bean>
+    
+    
+    
     
     
     
@@ -21,15 +36,16 @@
     
     
 
-
+<!--
     <bean id="bookmarkStore" class="edu.wisc.my.portlets.bookmarks.dao.file.FileSystemBookmarkStore">
         <property name="baseStorePath">
             <value>.</value>
         </property>
     </bean>
-<!--
-    <bean id="bookmarkStore" class="edu.wisc.my.portlets.bookmarks.dao.StaticBookmarkStore"/>
 -->
+
+    
+    
     
     
     <!-- Default View Resolver -->
@@ -38,5 +54,61 @@
         <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
+    </bean>
+    
+    
+    
+    
+
+    <!-- Hibernate Persistence Code -->
+    <bean id="bookmarkStore" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager"><ref bean="transactionManager"/></property>
+        <property name="target"><ref local="bookmarkStoreTarget"/></property>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="store*">PROPAGATION_REQUIRED</prop>
+                <prop key="remove*">PROPAGATION_REQUIRED</prop>
+                <prop key="get*">PROPAGATION_REQUIRED,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+    
+    
+    <bean id="bookmarkStoreTarget" class="edu.wisc.my.portlets.bookmarks.dao.hibernate.HibernateBookmarkStore">
+        <property name="sessionFactory">
+            <ref local="sessionFactory" />
+        </property>
+    </bean>
+    
+    
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mappingResources">
+            <list>
+                <value>hibernate-mappings/Bookmarks.hbm.xml</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName"><value>${jdbc.driverClassName}</value></property>
+        <property name="url"><value>${jdbc.url}</value></property>
+        <property name="username"><value>${jdbc.username}</value></property>
+        <property name="password"><value>${jdbc.password}</value></property>
+        
+        <property name="initialSize"><value>8</value></property>
+        <property name="maxActive"><value>128</value></property>
+        <property name="maxIdle"><value>16</value></property>
+        <property name="minIdle"><value>8</value></property>
+        <property name="maxWait"><value>15000</value></property>
     </bean>
 </beans>

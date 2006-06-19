@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" default-cascade="all-delete-orphan">
+    
+    <class name="edu.wisc.my.portlets.bookmarks.domain.Entry" table="BOOKMARK_STORE">
+        <id name="id" type="long" unsaved-value="-1" column="ENTRY_ID">
+            <generator class="native"/>
+        </id>
+        
+        <discriminator column="ENTRY_TYPE" type="string" length="64"/>
+        
+        <property name="name" type="string" length="4000" index="NameIdx"/>
+        <property name="note" type="string" length="4000"/>
+        <property name="created" type="java.util.Date"/>
+        <property name="modified" type="java.util.Date"/>
+        
+        
+        <subclass name="edu.wisc.my.portlets.bookmarks.domain.Folder" discriminator-value="FOLDER">
+            <list name="children" fetch="join" optimistic-lock="false">
+                <key column="PARENT_FOLDER_ID" not-null="false" />
+                <list-index column="CHILD_ORDER"/>
+                <one-to-many class="edu.wisc.my.portlets.bookmarks.domain.Entry" not-found="ignore"/>
+            </list>
+            
+            <property name="minimized" type="true_false"/>
+            
+            
+            <subclass name="edu.wisc.my.portlets.bookmarks.domain.BookmarkSet" discriminator-value="BOOKMARK_SET">
+                <property name="owner" type="string" length="500" index="NameIdx"/>
+            </subclass>
+        </subclass>
+        
+        <subclass name="edu.wisc.my.portlets.bookmarks.domain.Bookmark" discriminator-value="BOOKMARK">
+            <property name="url" type="string" length="4000"/>
+            <property name="newWindow" type="true_false"/>
+        </subclass>
+    </class>
+</hibernate-mapping>

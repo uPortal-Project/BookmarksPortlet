@@ -98,6 +98,9 @@ public class SaveBookmarkFormController extends ViewBookmarksController {
             final int[] indexPath = originalBookmarkPathInfo.getIndexPath();
             originalChildren.remove(indexPath[indexPath.length - 1]);
         }
+        
+        //TODO only move if needed, if moving create new object
+        
 
         //Add the bookmark to the target folder, re-sort the folder
         targetParentChildren.add(newBookmark);

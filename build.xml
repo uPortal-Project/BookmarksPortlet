@@ -98,4 +98,26 @@
         </ant>
     </target>
 
+    
+    
+    <path id="hibernate.classpath">
+        <path refid="compile.classpath"/>
+        <pathelement path="${build}/WEB-INF/classes"/>
+    </path>
+
+
+    <target name="createSchemaSqlScript" depends="compile" description="Creates the SQL statements used to create the database.">
+        <taskdef name="schemaexport"
+            classname="org.hibernate.tool.hbm2ddl.SchemaExportTask"
+            classpathref="hibernate.classpath"/>
+      
+        <schemaexport properties="webapp/WEB-INF/datasource.properties"
+            quiet="yes" text="no" drop="no" delimiter=";"
+            output="${dist}/bookmarksPortletDDL.sql">
+            
+            <fileset dir="${src}/hibernate-mappings">
+                <include name="**/*.hbm.xml"/>
+            </fileset>
+        </schemaexport>
+    </target>
 </project>

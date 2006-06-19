@@ -76,7 +76,7 @@ public class Folder extends Entry {
      */
     public void setChildren(List<Entry> children) {
         if (!(children instanceof RandomAccess)) {
-            this.logger.warn("Children list '" + children + "' is not a RandomAccess list, performance will be degraded.");
+            this.logger.warn("Children list '" + children.getClass() + "' is not a RandomAccess list, performance will be degraded.");
         }
         
         this.children = children;
