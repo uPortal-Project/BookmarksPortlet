@@ -1,14 +1,14 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
-<c:set var="localParentFolderIndexes" value="${parentFolderIndexes}"/>
+<c:set var="localParentFolderIds" value="${parentFolderIds}"/>
 <c:set var="localEntries" value="${bookmarkEntries}"/>
 
-<c:forEach items="${localEntries}" var="bookmarkEntry" varStatus="entryStatus">
-    <c:set var="fullEntryIndex" value="${localParentFolderIndexes}.${entryStatus.index}" scope="page"/>
+<c:forEach items="${localEntries}" var="bookmarkEntry">
+    <c:set var="fullEntryId" value="${localParentFolderIds}.${bookmarkEntry.id}" scope="page"/>
     
     <portlet:actionURL var="deleteEntry">
         <portlet:param name="action" value="deleteEntry"/>
-        <portlet:param name="entryIndex" value="${fullEntryIndex}"/>
+        <portlet:param name="entryIndex" value="${fullEntryId}"/>
     </portlet:actionURL>
     
     <c:set var="isFolder" value="${uwfn:instanceOf(bookmarkEntry, 'edu.wisc.my.portlets.bookmarks.domain.Folder')}" scope="page"/>
@@ -16,7 +16,7 @@
         <c:when test="${isFolder}">
             <portlet:actionURL var="entryUrl">
                 <portlet:param name="action" value="toggleFolder"/>
-                <portlet:param name="folderIndex" value="${fullEntryIndex}"/>
+                <portlet:param name="folderIndex" value="${fullEntryId}"/>
             </portlet:actionURL>
             <c:set var="entryTarget" scope="page"></c:set>
             
@@ -55,20 +55,20 @@
     </c:choose>
         
     <li>
-        <a id="<portlet:namespace/>url_${fullEntryIndex}" href="${entryUrl}" ${entryTarget}>
+        <a id="<portlet:namespace/>url_${fullEntryId}" href="${entryUrl}" ${entryTarget}>
             <img src="${entryImg}" border="0" alt="${entryDesc}" ${entryImgError}/>
-            <span id="<portlet:namespace/>name_${fullEntryIndex}" class="label">${bookmarkEntry.name}</span>
+            <span id="<portlet:namespace/>name_${fullEntryId}" class="label">${bookmarkEntry.name}</span>
         </a>
         <span class="padding"></span>
-        <a href="#" onclick="editEntry('${entryType}', '<portlet:namespace/>', '${localParentFolderIndexes}', '${fullEntryIndex}');"><img src="${pageContext.request.contextPath}/img/edit.gif"/></a>
+        <a href="#" onclick="editEntry('${entryType}', '<portlet:namespace/>', '${localParentFolderIds}', '${fullEntryId}');"><img src="${pageContext.request.contextPath}/img/edit.gif"/></a>
         <a href="${deleteEntry}"><img src="${pageContext.request.contextPath}/img/delete.gif"/></a>
         
-        <span id="<portlet:namespace/>note_${fullEntryIndex}" class="hidden">${bookmarkEntry.note}</span>
+        <span id="<portlet:namespace/>note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
         
         <c:if test="${isFolder && !bookmarkEntry.minimized}">
             <ul class="subBookmarkList">
-                <c:set var="parentFolderIndexes" value="${fullEntryIndex}" scope="request"/>
-                <c:set var="bookmarkEntries" value="${bookmarkEntry.children}" scope="request"/>
+                <c:set var="parentFolderIds" value="${fullEntryId}" scope="request"/>
+                <c:set var="bookmarkEntries" value="${bookmarkEntry.sortedChildren}" scope="request"/>
                 <c:import url="renderEntry.jsp"/>
             </ul>
         </c:if>

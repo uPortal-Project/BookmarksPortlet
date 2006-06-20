@@ -36,7 +36,7 @@
 
 package edu.wisc.my.portlets.bookmarks.web;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -49,7 +49,7 @@ import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 import edu.wisc.my.portlets.bookmarks.domain.Entry;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.support.FolderUtils;
-import edu.wisc.my.portlets.bookmarks.domain.support.IndexPathInfo;
+import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
 
 
@@ -100,14 +100,14 @@ public class DeleteEntryFormController extends AbstractController {
         
         //Get the BookmarkSet from the store
         final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request);
-        final IndexPathInfo targetEntryPathInfo = FolderUtils.getEntryInfo(bs, entryIndex);
+        final IdPathInfo targetEntryPathInfo = FolderUtils.getEntryInfo(bs, entryIndex);
         
         final Folder parentFolder = targetEntryPathInfo.getParent();
         if (parentFolder != null) {
-            final List<Entry> children = parentFolder.getChildren();
-            final int[] indexPath = targetEntryPathInfo.getIndexPath();
-            children.remove(indexPath[indexPath.length - 1]);
-            
+            final Map<Long, Entry> children = parentFolder.getChildren();
+            final Entry target = targetEntryPathInfo.getTarget();
+            children.remove(target.getId());
+
             //Persist the changes to the BookmarkSet 
             this.bookmarkStore.storeBookmarkSet(bs);
         }

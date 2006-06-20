@@ -36,6 +36,7 @@
 
 package edu.wisc.my.portlets.bookmarks.dao;
 
+import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
@@ -67,7 +68,6 @@ public interface BookmarkStore {
      */
     public void storeBookmarkSet(BookmarkSet bookmarkSet);
     
-    
     /**
      * Removes a BookmarkSet from the persistent store. If a BookmarkSet matching
      * the owner and name cannot be found this is a noop.
@@ -77,4 +77,7 @@ public interface BookmarkStore {
      * TODO should this return something?
      */
     public void removeBookmarkSet(String owner, String name);
+    
+    
+    public Bookmark createBookmark();
 }

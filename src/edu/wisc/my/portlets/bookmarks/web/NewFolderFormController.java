@@ -36,9 +36,8 @@
 
 package edu.wisc.my.portlets.bookmarks.web;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,12 +45,11 @@ import javax.portlet.ActionResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindException;
 
-import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 import edu.wisc.my.portlets.bookmarks.domain.Entry;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.support.FolderUtils;
-import edu.wisc.my.portlets.bookmarks.domain.support.IndexPathInfo;
+import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
 
 
 
@@ -59,55 +57,33 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IndexPathInfo;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class SaveBookmarkFormController extends ViewBookmarksController {
-
+public class NewFolderFormController extends ViewBookmarksController {
     /**
      * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
      */
     @Override
     protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
-        final String folderPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);
-        final String entryIndex = StringUtils.defaultIfEmpty(request.getParameter("indexPath"), null);
+        final String targetParentPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);
         
         //User edited bookmark
-        final Bookmark newBookmark = (Bookmark)command;
+        final Folder commandFolder = (Folder)command;
         
         //Get the BookmarkSet from the store
         final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request);
         
-        //Parent folder specified in the form
-        final IndexPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, folderPath);
-        final Folder targetParentFolder = (Folder)targetParentPathInfo.getTarget();
-        final List<Entry> targetParentChildren = targetParentFolder.getChildren();
+        //Ensure the created & modified dates are set correctly
+        commandFolder.setCreated(new Date());
+        commandFolder.setModified(commandFolder.getCreated());
         
+        //Get the target parent folder
+        final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);
+        final Folder targetParent = (Folder)targetParentPathInfo.getTarget();
+        final Map<Long, Entry> targetChildren = targetParent.getChildren();
         
-        //Editing an existing bookmark
-        if (entryIndex != null) {
-            final IndexPathInfo originalBookmarkPathInfo = FolderUtils.getEntryInfo(bs, entryIndex);
-            final Folder originalParent = originalBookmarkPathInfo.getParent();
-            final List<Entry> originalChildren = originalParent.getChildren();
-            
-            //TODO deal with an invalid target type (null or Bookmark)
-            final Bookmark originalBookmark = (Bookmark)originalBookmarkPathInfo.getTarget();
-            
-            newBookmark.setId(originalBookmark.getId());
-            newBookmark.setCreated(originalBookmark.getCreated());
-            newBookmark.setModified(new Date());
-            
-            //Always remove the bookmark from the list
-            final int[] indexPath = originalBookmarkPathInfo.getIndexPath();
-            originalChildren.remove(indexPath[indexPath.length - 1]);
-        }
-        
-        //TODO only move if needed, if moving create new object
-        
-
-        //Add the bookmark to the target folder, re-sort the folder
-        targetParentChildren.add(newBookmark);
-        Collections.sort(targetParentChildren);
+        //Add the new bookmark to the target parent
+        targetChildren.put(commandFolder.getId(), commandFolder);
         
         //Persist the changes to the BookmarkSet 
         this.bookmarkStore.storeBookmarkSet(bs);
     }
-    
 }

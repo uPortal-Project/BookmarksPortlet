@@ -36,18 +36,21 @@
 
 package edu.wisc.my.portlets.bookmarks.web;
 
+import java.util.Date;
+import java.util.Map;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.apache.commons.lang.StringUtils;
-import org.springframework.web.portlet.mvc.AbstractController;
+import org.springframework.validation.BindException;
 
-import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
+import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import edu.wisc.my.portlets.bookmarks.domain.Entry;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.support.FolderUtils;
 import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
-import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
 
 
 
@@ -55,57 +58,34 @@ import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class ToggleFolderFormController extends AbstractController {
-    protected BookmarkStore bookmarkStore;
-    protected BookmarkSetRequestResolver bookmarkSetRequestResolver;
-    
-    /**
-     * @return Returns the bookmarkSetRequestResolver.
-     */
-    public BookmarkSetRequestResolver getBookmarkSetRequestResolver() {
-        return this.bookmarkSetRequestResolver;
-    }
+public class NewBookmarkFormController extends ViewBookmarksController {
 
     /**
-     * @param bookmarkSetRequestResolver The bookmarkSetRequestResolver to set.
-     */
-    public void setBookmarkSetRequestResolver(BookmarkSetRequestResolver bookmarkSetRequestResolver) {
-        this.bookmarkSetRequestResolver = bookmarkSetRequestResolver;
-    }
-
-    /**
-     * @return Returns the bookmarkStore.
-     */
-    public BookmarkStore getBookmarkStore() {
-        return this.bookmarkStore;
-    }
-
-    /**
-     * @param bookmarkStore The bookmarkStore to set.
-     */
-    public void setBookmarkStore(BookmarkStore bookmarkStore) {
-        this.bookmarkStore = bookmarkStore;
-    }
-    
-    
-    /**
-     * @see org.springframework.web.portlet.mvc.AbstractController#handleActionRequestInternal(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+     * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
      */
     @Override
-    protected void handleActionRequestInternal(ActionRequest request, ActionResponse response) throws Exception {
-        final String folderIndex = StringUtils.defaultIfEmpty(request.getParameter("folderIndex"), null);
+    protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
+        final String targetParentPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);
+        
+        //User edited bookmark
+        final Bookmark commandBookmark = (Bookmark)command;
         
         //Get the BookmarkSet from the store
         final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request);
-        final IdPathInfo targetFolderPathInfo = FolderUtils.getEntryInfo(bs, folderIndex);
         
-        final Folder targetFolder = (Folder)targetFolderPathInfo.getTarget();
-        targetFolder.setMinimized(!targetFolder.isMinimized());
+        //Ensure the created & modified dates are set correctly
+        commandBookmark.setCreated(new Date());
+        commandBookmark.setModified(commandBookmark.getCreated());
+        
+        //Get the target parent folder
+        final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);
+        final Folder targetParent = (Folder)targetParentPathInfo.getTarget();
+        final Map<Long, Entry> targetChildren = targetParent.getChildren();
+        
+        //Add the new bookmark to the target parent
+        targetChildren.put(commandBookmark.getId(), commandBookmark);
         
         //Persist the changes to the BookmarkSet 
         this.bookmarkStore.storeBookmarkSet(bs);
-        
-        response.setRenderParameter("action", "viewBookmarks");
     }
-    
 }

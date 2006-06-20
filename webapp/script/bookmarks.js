@@ -5,7 +5,7 @@ knownEntryTypes[1] = 'bookmark';
 
 /***** Public Methods *****/
 function newEntry(type, namespace) {
-    showForm(type, namespace);
+    showForm(type, 'new', namespace);
 }
 
 function cancelEntry(namespace) {
@@ -13,7 +13,7 @@ function cancelEntry(namespace) {
 }
 
 function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
-    showForm(type, namespace);
+    showForm(type, 'edit', namespace);
     
     var form = getForm(namespace);
     
@@ -71,7 +71,7 @@ function showTableRow(namespace, elementId) {
     element.style.display = '';
 }
 
-function showForm(type, namespace) {
+function showForm(type, action, namespace) {
     var form = getForm(namespace);
     form.reset();
     
@@ -81,7 +81,12 @@ function showForm(type, namespace) {
     form.elements['action'].value = "";
 
     if (type == 'bookmark') {
-        form.elements['action'].value = 'saveBookmark';
+        if (action == 'new') {
+            form.elements['action'].value = 'newBookmark';
+        }
+        else {
+            form.elements['action'].value = 'editBookmark';
+        }
         
         form.elements['url'].disabled = false;
         form.elements['newWindow'].disabled = false;
@@ -89,7 +94,12 @@ function showForm(type, namespace) {
         showTableRow(namespace, 'newWindowRow');
     }
     else {
-        form.elements['action'].value = 'saveFolder';
+        if (action == 'new') {
+            form.elements['action'].value = 'newFolder';
+        }
+        else {
+            form.elements['action'].value = 'editFolder';
+        }
         
         form.elements['url'].disabled = true;
         form.elements['newWindow'].disabled = true;

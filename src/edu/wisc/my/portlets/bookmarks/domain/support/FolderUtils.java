@@ -37,72 +37,181 @@
 package edu.wisc.my.portlets.bookmarks.domain.support;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
+import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 import edu.wisc.my.portlets.bookmarks.domain.Entry;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 
 /**
- * TODO write unit tests
- * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
 public final class FolderUtils {
     private FolderUtils() { }
     
-    public static IndexPathInfo getEntryInfo(Folder baseFolder, String indexPath) {
+    public static IdPathInfo getEntryInfo(Folder baseFolder, String indexPath) {
         return getEntryInfo(baseFolder, indexPath, "\\.");
     }
-    //TODO test edge cases
-    public static IndexPathInfo getEntryInfo(Folder baseFolder, String indexPath, String regexDelimeter) {
+    
+    public static IdPathInfo getEntryInfo(Folder baseFolder, String idPath, String regexDelimeter) {
         if (baseFolder == null) {
             throw new IllegalArgumentException("The base Folder can not be null.");
         }
-        if (indexPath == null) {
-            throw new IllegalArgumentException("The index path can not be null.");
+        if (idPath == null) {
+            throw new IllegalArgumentException("The ID path can not be null.");
         }
         if (regexDelimeter == null) {
             throw new IllegalArgumentException("The regexDelimeter can not be null.");
         }
         
-        final String[] stringIndexes = indexPath.split(regexDelimeter);
-        final int[] indexes = new int[stringIndexes.length];
+        final String[] stringIds = idPath.split(regexDelimeter);
+        final long[] ids = new long[stringIds.length];
         
-        indexes[0] = Integer.parseInt(stringIndexes[0]);
+        ids[0] = Long.parseLong(stringIds[0]);
 
         Folder parent = null;
         Entry target = baseFolder;
 
-        for (int idIndex = 1; idIndex < stringIndexes.length; idIndex++) {
-            final int listIndex = Integer.parseInt(stringIndexes[idIndex]);
+        for (int idIndex = 1; idIndex < stringIds.length; idIndex++) {
+            final long entryId = Long.parseLong(stringIds[idIndex]);
             
             if (target instanceof Folder) {
                 parent = (Folder)target;
-                final List<Entry> children = parent.getChildren();
-                target = children.get(listIndex);
-                indexes[idIndex] = listIndex;
+                final Map<Long, Entry> children = parent.getChildren();
+                target = children.get(entryId);
+                ids[idIndex] = entryId;
             }
             else {
-                throw new IllegalArgumentException("The Entry denoted by the path of ids='" + Arrays.asList(indexes) + "' is not a Folder");
+                throw new IllegalArgumentException("The Entry denoted by the path of ids='" + Arrays.asList(ids) + "' is not a Folder");
             }
         }
 
-        final IndexPathInfo pathInfo = new IndexPathInfo(indexes, parent, target);
+        final IdPathInfo pathInfo = new IdPathInfo(ids, parent, target);
         return pathInfo;
     }
     
+    
+    
     public static boolean deepContains(Folder parent, Entry query) {
-        final List<Entry> children = parent.getChildren();
-        for (Entry entry : children) {
-            if (entry.equals(query)) {
+        final Map<Long, Entry> children = parent.getChildren();
+       
+        for (Map.Entry<Long, Entry> mapEntry : children.entrySet()) {
+            final Entry child = mapEntry.getValue();
+            
+            if (child.equals(query)) {
                 return true;
             }
-            else if (entry instanceof Folder) {
-                return deepContains((Folder)entry, query);
+            else if (child instanceof Folder) {
+                return deepContains((Folder)child, query);
             }
         }
         
         return false;
+    }
+    
+    
+    public static Entry deepClone(Entry target, boolean copyIds) {
+        if (target instanceof BookmarkSet) {
+            return deepCloneBookmarkSet((BookmarkSet)target, copyIds);
+        }
+        else if (target instanceof Folder) {
+            return deepCloneFolder((Folder)target, copyIds);
+        }
+        else if (target instanceof Bookmark) {
+            return deepCloneBookmark((Bookmark)target, copyIds);
+        }
+        else {
+            return deepCloneEntry(target, copyIds);
+        }
+    }
+    
+    public static Entry deepCloneEntry(Entry target, boolean copyIds) {
+        if (target == null) {
+            return null;
+        }
+        
+        final Entry clone = new Entry();
+        copyEntryFields(target, clone, copyIds);
+        
+        return clone;
+    }
+    
+    public static Bookmark deepCloneBookmark(Bookmark target, boolean copyIds) {
+        if (target == null) {
+            return null;
+        }
+        
+        final Bookmark clone = new Bookmark();
+        copyEntryFields(target, clone, copyIds);
+        copyBookmarkFields(target, clone);
+        return clone;
+    }
+    
+    public static Folder deepCloneFolder(Folder target, boolean copyIds) {
+        if (target == null) {
+            return null;
+        }
+        
+        final Folder clone = new Folder();
+        copyEntryFields(target, clone, copyIds);
+        copyFolderFields(target, clone, copyIds);
+        return clone;
+    }
+    
+    public static BookmarkSet deepCloneBookmarkSet(BookmarkSet target, boolean copyIds) {
+        if (target == null) {
+            return null;
+        }
+        
+        final BookmarkSet clone = new BookmarkSet();
+        copyEntryFields(target, clone, copyIds);
+        copyFolderFields(target, clone, copyIds);
+        copyBookmarkSetFields(target, clone);
+        return clone;
+    }
+
+    private static void copyBookmarkSetFields(BookmarkSet target, final BookmarkSet clone) {
+        target.setName(clone.getName());
+    }
+
+    private static void copyBookmarkFields(Bookmark target, Bookmark clone) {
+        clone.setUrl(target.getUrl());
+        clone.setNewWindow(target.isNewWindow());
+    }
+
+
+    private static void copyFolderFields(Folder target, Folder clone, boolean copyIds) {
+        clone.setMinimized(target.isMinimized());
+        clone.setChildComparator(target.getChildComparator());
+
+        final Map<Long, Entry> clonedChildren = new HashMap<Long, Entry>();
+        final Map<Long, Entry> children = target.getChildren();
+
+        for (Entry targetEntry : children.values()) {
+            final Entry clonedEntry = deepClone(targetEntry, copyIds);
+            
+            if (copyIds) {
+                clonedChildren.put(clonedEntry.getId(), clonedEntry);
+            }
+            else {
+                clonedChildren.put((long)clonedEntry.hashCode(), clonedEntry);
+            }
+        }
+        
+        clone.setChildren(clonedChildren);
+    }
+    
+    private static void copyEntryFields(Entry target, Entry clone, boolean copyIds) {
+        if (copyIds) {
+            clone.setId(target.getId());
+        }
+
+        clone.setName(target.getName());
+        clone.setNote(target.getNote());
+        clone.setCreated(target.getCreated());
+        clone.setModified(target.getModified());
     }
 }

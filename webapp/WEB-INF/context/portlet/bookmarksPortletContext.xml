@@ -31,11 +31,19 @@
     <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController" parent="baseBookmarksFormController">
     </bean>
 
-    <bean id="saveBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.SaveBookmarkFormController" parent="baseBookmarksFormController">
+    <bean id="newBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.NewBookmarkFormController" parent="baseBookmarksFormController">
         <property name="validator"><ref bean="bookmarkValidator"/></property> 
     </bean>
     
-    <bean id="saveFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.SaveFolderFormController" parent="baseBookmarksFormController">
+    <bean id="editBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.EditBookmarkFormController" parent="baseBookmarksFormController">
+        <property name="validator"><ref bean="bookmarkValidator"/></property> 
+    </bean>
+    
+    <bean id="newFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.NewFolderFormController" parent="baseBookmarksFormController">
+        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
+    </bean>
+    
+    <bean id="editFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.EditFolderFormController" parent="baseBookmarksFormController">
         <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
     </bean>
     
@@ -67,8 +75,10 @@
                 <entry key="view">
                     <map>
                         <entry key="viewBookmarks"><ref local="viewBookmarksFormController"/></entry>
-                        <entry key="saveBookmark"><ref bean="saveBookmarkFormController"/></entry>
-                        <entry key="saveFolder"><ref bean="saveFolderFormController"/></entry>
+                        <entry key="newBookmark"><ref bean="newBookmarkFormController"/></entry>
+                        <entry key="editBookmark"><ref bean="editBookmarkFormController"/></entry>
+                        <entry key="newFolder"><ref bean="newFolderFormController"/></entry>
+                        <entry key="editFolder"><ref bean="editFolderFormController"/></entry>
                         <entry key="toggleFolder"><ref bean="toggleFolderFormController"/></entry>
                         <entry key="deleteEntry"><ref bean="deleteEntryFormController"/></entry>
                     </map>

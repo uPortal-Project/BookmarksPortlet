@@ -46,22 +46,22 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class IndexPathInfo {
-    private final int[] indexPath;
+public class IdPathInfo {
+    private final long[] idPath;
     private final Folder parent;
     private final Entry target;
     
-    public IndexPathInfo(int[] indexPath, Folder parent, Entry target) {
-        this.indexPath = indexPath;
+    public IdPathInfo(long[] indexPath, Folder parent, Entry target) {
+        this.idPath = indexPath;
         this.parent = parent;
         this.target = target;
     }
 
     /**
-     * @return Returns the indexPath.
+     * @return Returns the idPath.
      */
-    public int[] getIndexPath() {
-        return this.indexPath;
+    public long[] getIdPath() {
+        return this.idPath;
     }
 
     /**
@@ -85,12 +85,12 @@ public class IndexPathInfo {
         if (object == this) {
             return true;
         }
-        if (!(object instanceof IndexPathInfo)) {
+        if (!(object instanceof IdPathInfo)) {
             return false;
         }
-        IndexPathInfo rhs = (IndexPathInfo)object;
+        IdPathInfo rhs = (IdPathInfo)object;
         return new EqualsBuilder()
-                .append(this.indexPath, rhs.indexPath)
+                .append(this.idPath, rhs.idPath)
                 .append(this.target, rhs.target)
                 .append(this.parent, rhs.parent)
                 .isEquals();
@@ -101,7 +101,7 @@ public class IndexPathInfo {
      */
     public int hashCode() {
         return new HashCodeBuilder(1559811763, 1812223771)
-                .append(this.indexPath)
+                .append(this.idPath)
                 .append(this.target)
                 .append(this.parent)
                 .toHashCode();
@@ -113,7 +113,7 @@ public class IndexPathInfo {
     public String toString() {
         return new ToStringBuilder(this).appendSuper(super.toString())
                 .append("parent", this.parent)
-                .append("indexPath", this.indexPath)
+                .append("idPath", this.idPath)
                 .append("target", this.target)
                 .toString();
     }

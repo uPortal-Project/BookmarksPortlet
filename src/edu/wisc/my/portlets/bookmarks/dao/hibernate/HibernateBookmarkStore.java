@@ -16,6 +16,7 @@ import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
+import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
@@ -69,6 +70,25 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
             final Session session = this.getSession(false);
             final BookmarkSet bs = this.getBookmarkSet(owner, name);
             session.delete(bs);
+            session.flush();
+        }
+        catch (HibernateException ex) {
+            throw convertHibernateAccessException(ex);
+        }
+    }
+    
+    /**
+     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#createBookmark()
+     */
+    public Bookmark createBookmark() {
+        try {
+            final Session session = this.getSession(false);
+            
+            final Bookmark b = new Bookmark();
+            session.save(b);
+            session.flush();
+
+            return b;
         }
         catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);

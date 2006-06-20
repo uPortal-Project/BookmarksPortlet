@@ -48,6 +48,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Revision$
  */
 public class BookmarkSet extends Folder {
+    private static final long serialVersionUID = 1L;
+    
     private String owner;
 
     /**

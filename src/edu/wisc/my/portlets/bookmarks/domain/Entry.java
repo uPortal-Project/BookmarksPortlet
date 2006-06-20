@@ -39,12 +39,9 @@ package edu.wisc.my.portlets.bookmarks.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 
 /**
  * An Entry is the base object that may in a bookmarks hierarchy. It is a stand alone object
@@ -53,8 +50,8 @@ import org.apache.commons.logging.LogFactory;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class Entry implements Comparable, Serializable {
-    protected Log logger = LogFactory.getLog(this.getClass());
+public class Entry implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private long id = -1;
     private String name;
@@ -131,7 +128,7 @@ public class Entry implements Comparable, Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     /**
      * @see java.lang.Object#equals(Object)
      */
@@ -174,26 +171,5 @@ public class Entry implements Comparable, Serializable {
                 .append("created", this.created)
                 .append("modified", this.modified)
                 .toString();
-    }
-
-    /**
-     * @see java.lang.Comparable#compareTo(Object)
-     */
-    public int compareTo(final Object object) {
-        Entry myClass = (Entry)object;
-        return new CompareToBuilder()
-                .append(this.name, myClass.name)
-                .append(this.note, myClass.note)
-                .append(this.created, myClass.created)
-                .append(this.modified, myClass.modified)
-                .toComparison();
-    }
-    
-    
-    /**
-     * Enumeration to specify the type of icon assciated with the Entry. 
-     */
-    public enum IconType {
-        NONE, DEFAULT, URL;
     }
 }

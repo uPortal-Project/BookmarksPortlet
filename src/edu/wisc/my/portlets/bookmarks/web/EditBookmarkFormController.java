@@ -36,9 +36,8 @@
 
 package edu.wisc.my.portlets.bookmarks.web;
 
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -46,11 +45,12 @@ import javax.portlet.ActionResponse;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindException;
 
+import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 import edu.wisc.my.portlets.bookmarks.domain.Entry;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.support.FolderUtils;
-import edu.wisc.my.portlets.bookmarks.domain.support.IndexPathInfo;
+import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
 
 
 
@@ -58,59 +58,54 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IndexPathInfo;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class SaveFolderFormController extends ViewBookmarksController {
-//TODO check for loop here, create bind exception if there is one
+public class EditBookmarkFormController extends ViewBookmarksController {
+
     /**
      * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
      */
     @Override
     protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
-        final String folderPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);
-        final String entryIndex = StringUtils.defaultIfEmpty(request.getParameter("indexPath"), null);
+        final String targetParentPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);
+        final String targetEntryPath = StringUtils.defaultIfEmpty(request.getParameter("indexPath"), null);
         
         //User edited bookmark
-        final Folder newFolder = (Folder)command;
+        final Bookmark commandBookmark = (Bookmark)command;
         
         //Get the BookmarkSet from the store
         final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request);
         
-        //Parent folder specified in the form
-        final IndexPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, folderPath);
-        final Folder targetParentFolder = (Folder)targetParentPathInfo.getTarget();
-        final List<Entry> targetParentChildren = targetParentFolder.getChildren();
+        //Get the target parent folder
+        final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);
+        final Folder targetParent = (Folder)targetParentPathInfo.getTarget();
+        final Map<Long, Entry> targetChildren = targetParent.getChildren();
         
-        
-        //Editing an existing bookmark
-        if (entryIndex != null) {
-            final IndexPathInfo originalFolderPathInfo = FolderUtils.getEntryInfo(bs, entryIndex);
-            final Folder originalParent = originalFolderPathInfo.getParent();
-            final List<Entry> originalChildren = originalParent.getChildren();
+        //Get the original bookmark & it's parent folder
+        final IdPathInfo originalBookmarkPathInfo = FolderUtils.getEntryInfo(bs, targetEntryPath);
+        final Folder originalParent = originalBookmarkPathInfo.getParent();
+        final Bookmark originalBookmark = (Bookmark)originalBookmarkPathInfo.getTarget();
+
+        //If moving the bookmark
+        if (targetParent.getId() != originalParent.getId()) {
+            final Map<Long, Entry> originalChildren = originalParent.getChildren();
+            originalChildren.remove(originalBookmark.getId());
             
-            //TODO deal with an invalid target type (null or Bookmark)
-            final Folder originalFolder = (Folder)originalFolderPathInfo.getTarget();
-            
-            final boolean wouldCreateLoop = FolderUtils.deepContains(originalFolder, targetParentFolder);
-            if (wouldCreateLoop) {
-                //TODO figure out how to get the error data to display on the result form
-                return;
-            }
-            
-            newFolder.setId(originalFolder.getId());
-            newFolder.setChildren(originalFolder.getChildren());
-            newFolder.setMinimized(originalFolder.isMinimized());
-            newFolder.setCreated(originalFolder.getCreated());
-            newFolder.setModified(new Date());
-            
-            //Always remove the bookmark from the list
-            final int[] indexPath = originalFolderPathInfo.getIndexPath();
-            originalChildren.remove(indexPath[indexPath.length - 1]);
+            commandBookmark.setCreated(originalBookmark.getCreated());
+            commandBookmark.setModified(new Date());
+
+            targetChildren.put(commandBookmark.getId(), commandBookmark);
+        }
+        //If just updaing the bookmark
+        //TODO should the formBackingObject be smarter on form submits for editBookmark and return the targeted bookmark?
+        else {
+            originalBookmark.setModified(new Date());
+            originalBookmark.setName(commandBookmark.getName());
+            originalBookmark.setNote(commandBookmark.getNote());
+            originalBookmark.setUrl(commandBookmark.getUrl());
+            originalBookmark.setNewWindow(commandBookmark.isNewWindow());
         }
 
-        //Add the bookmark to the target folder, re-sort the folder
-        targetParentChildren.add(newFolder);
-        Collections.sort(targetParentChildren);
-        
         //Persist the changes to the BookmarkSet 
         this.bookmarkStore.storeBookmarkSet(bs);
     }
+    
 }

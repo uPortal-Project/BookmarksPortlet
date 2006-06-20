@@ -8,8 +8,8 @@
     
     <div>
         <ul class="bookmarkList">
-            <c:set var="parentFolderIndexes" value="-1" scope="request"/>
-            <c:set var="bookmarkEntries" value="${bookmarkSet.children}" scope="request"/>
+            <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
+            <c:set var="bookmarkEntries" value="${bookmarkSet.sortedChildren}" scope="request"/>
             <c:import url="renderEntry.jsp"/>
         </ul>
     </div>
@@ -51,8 +51,8 @@
                             <option selected="true" value="-1">None</option>
                             
                             <c:set var="depth" value="0" scope="request"/>
-                            <c:set var="parentFolderIndexes" value="-1" scope="request"/>
-                            <c:set var="bookmarkEntries" value="${bookmarkSet.children}" scope="request"/>
+                            <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
+                            <c:set var="bookmarkEntries" value="${bookmarkSet.sortedChildren}" scope="request"/>
                             <c:import url="renderFolder.jsp"/>
                         </select>
                     </td>

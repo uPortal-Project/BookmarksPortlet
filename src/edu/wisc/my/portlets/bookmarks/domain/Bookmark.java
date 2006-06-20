@@ -47,6 +47,8 @@ import org.apache.commons.lang.builder.ToStringBuilder;
  * @version $Revision$
  */
 public class Bookmark extends Entry {
+    private static final long serialVersionUID = 1L;
+    
     private String url;
     private boolean newWindow = true;
 
@@ -113,18 +115,5 @@ public class Bookmark extends Entry {
                 .append("newWindow", this.newWindow)
                 .append("url", this.url)
                 .toString();
-    }
-
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.Entry#compareTo(java.lang.Object)
-     */
-    @Override
-    public int compareTo(Object object) {
-        if (object instanceof Folder) {
-            return 1;
-        }
-        else {
-            return super.compareTo(object);
-        }
     }
 }

@@ -37,14 +37,18 @@
 package edu.wisc.my.portlets.bookmarks.domain;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.RandomAccess;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import edu.wisc.my.portlets.bookmarks.domain.compare.DefaultBookmarksComparator;
 import edu.wisc.my.portlets.bookmarks.domain.support.IntegerSetThreadLocal;
 
 /**
@@ -56,29 +60,28 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IntegerSetThreadLocal;
  * @version $Revision$
  */
 public class Folder extends Entry {
+    private static final long serialVersionUID = 1L;
+    
     private static IntegerSetThreadLocal equalsVisitedFolder = new IntegerSetThreadLocal();
     private static IntegerSetThreadLocal hashCodeVisitedFolder = new IntegerSetThreadLocal();
     private static IntegerSetThreadLocal toStringVisitedFolder = new IntegerSetThreadLocal();
 
-    private List<Entry> children = new ArrayList<Entry>();
+    private Map<Long, Entry> children;
+    private Comparator<Entry> childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
     private boolean minimized = false;
 
 
     /**
      * @return Returns the children.
      */
-    public List<Entry> getChildren() {
+    public Map<Long, Entry> getChildren() {
         return this.children;
     }
 
     /**
      * @param children The children to set.
      */
-    public void setChildren(List<Entry> children) {
-        if (!(children instanceof RandomAccess)) {
-            this.logger.warn("Children list '" + children.getClass() + "' is not a RandomAccess list, performance will be degraded.");
-        }
-        
+    public void setChildren(Map<Long, Entry> children) {
         this.children = children;
     }
 
@@ -94,6 +97,54 @@ public class Folder extends Entry {
      */
     public void setMinimized(boolean minimized) {
         this.minimized = minimized;
+    }
+    
+    /**
+     * Returns an immutable sorted view of the values of the children Map. The sorting is done
+     * using the current childComparator. Warning, this is has a time cost of 2n log(n)
+     * on every call.
+     * 
+     * @return An immutable sorted view of the folder's children.
+     */
+    public List<Entry> getSortedChildren() {
+        if (this.children == null) {
+            return null;
+        }
+        else {
+            final Collection<Entry> childCollection = this.children.values();
+            final List<Entry> childList = new ArrayList<Entry>(childCollection);
+            Collections.sort(childList, this.childComparator);
+            return Collections.unmodifiableList(childList);
+        }
+    }
+    
+    /**
+     * @return Returns the childComparator.
+     */
+    public Comparator<Entry> getChildComparator() {
+        return this.childComparator;
+    }
+
+    /**
+     * @param childComparator The childComparator to set, calls setChildComparator on all children of type Folder.
+     */
+    public void setChildComparator(Comparator<Entry> childComparator) {
+        if (childComparator == null) {
+            throw new IllegalArgumentException("childComparator cannot be null");
+        }
+        
+        this.childComparator = childComparator;
+        
+        if (this.children != null) {
+            //TODO loop detection?
+            for (Map.Entry<Long, Entry> entry : this.children.entrySet()) {
+                final Entry child = entry.getValue();
+    
+                if (child instanceof Folder) {
+                    ((Folder)child).setChildComparator(childComparator);
+                }
+            }
+        }
     }
 
     /**
@@ -166,19 +217,6 @@ public class Folder extends Entry {
         }
         finally {
             visited.remove(identityHash);
-        }
-    }
-
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.Entry#compareTo(java.lang.Object)
-     */
-    @Override
-    public int compareTo(Object object) {
-        if (object instanceof Bookmark) {
-            return -1;
-        }
-        else {
-            return super.compareTo(object);
         }
     }
 }
