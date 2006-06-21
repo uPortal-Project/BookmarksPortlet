@@ -53,15 +53,17 @@
             <c:set var="entryType"     value="bookmark" scope="page"/>
         </c:otherwise>
     </c:choose>
+    
+    <c:set var="entryDesc" value="${entryDesc} - ${bookmarkEntry.name}" scope="page"/>
         
     <li>
-        <a id="<portlet:namespace/>url_${fullEntryId}" href="${entryUrl}" ${entryTarget}>
+        <a id="<portlet:namespace/>url_${fullEntryId}" href="${entryUrl}" ${entryTarget} title="${bookmarkEntry.noteLines[0]}">
             <img src="${entryImg}" border="0" alt="${entryDesc}" ${entryImgError}/>
             <span id="<portlet:namespace/>name_${fullEntryId}" class="label">${bookmarkEntry.name}</span>
         </a>
         <span class="padding"></span>
-        <a href="#" onclick="editEntry('${entryType}', '<portlet:namespace/>', '${localParentFolderIds}', '${fullEntryId}');"><img src="${pageContext.request.contextPath}/img/edit.gif"/></a>
-        <a href="${deleteEntry}"><img src="${pageContext.request.contextPath}/img/delete.gif"/></a>
+        <a href="#" onclick="editEntry('${entryType}', '<portlet:namespace/>', '${localParentFolderIds}', '${fullEntryId}');" title="Edit ${entryDesc}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="Edit ${entryDesc}"/></a>
+        <a href="${deleteEntry}" title="Delete ${entryDesc}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="Delete ${entryDesc}"/></a>
         
         <span id="<portlet:namespace/>note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
         

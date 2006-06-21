@@ -49,7 +49,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
-import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
@@ -133,16 +132,6 @@ public class FileSystemBookmarkStore implements BookmarkStore {
         final File storeFile = this.getStoreFile(owner, name);
         storeFile.delete();
     }
-    
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#createBookmark()
-     */
-    public Bookmark createBookmark() {
-        final Bookmark b = new Bookmark();
-        b.setId(nextId++);
-        return b;
-    }
-    private static long nextId = 0;
     
     /**
      * Generates the file name String for an owner and book name.

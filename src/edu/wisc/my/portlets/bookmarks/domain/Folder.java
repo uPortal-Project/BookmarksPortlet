@@ -36,6 +36,10 @@
 
 package edu.wisc.my.portlets.bookmarks.domain;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -67,7 +71,7 @@ public class Folder extends Entry {
     private static IntegerSetThreadLocal toStringVisitedFolder = new IntegerSetThreadLocal();
 
     private Map<Long, Entry> children;
-    private Comparator<Entry> childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
+    private transient Comparator<Entry> childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
     private boolean minimized = false;
 
 
@@ -217,6 +221,42 @@ public class Folder extends Entry {
         }
         finally {
             visited.remove(identityHash);
+        }
+    }
+    
+    
+    
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        
+        if (this.childComparator instanceof Serializable) {
+            out.writeObject(this.childComparator);
+        }
+        else {
+            out.writeObject(this.childComparator.getClass());
+        }
+    }
+    
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        
+        final Object comparatorInfo = in.readObject();
+        if (comparatorInfo instanceof Comparator) {
+            this.childComparator = (Comparator<Entry>)comparatorInfo;
+        }
+        else if (comparatorInfo instanceof Class && Comparator.class.isAssignableFrom((Class)comparatorInfo)) {
+            try {
+                this.childComparator = (Comparator<Entry>)((Class)comparatorInfo).newInstance();
+            }
+            catch (InstantiationException e) {
+                this.childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
+            }
+            catch (IllegalAccessException e) {
+                this.childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
+            }
+        }
+        else {
+            this.childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
         }
     }
 }

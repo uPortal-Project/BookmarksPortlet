@@ -6,25 +6,29 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
     <script src="${pageContext.request.contextPath}/script/bookmarks.js" type="text/javascript"></script>
     
-    <div>
-        <ul class="bookmarkList">
-            <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
-            <c:set var="bookmarkEntries" value="${bookmarkSet.sortedChildren}" scope="request"/>
-            <c:import url="renderEntry.jsp"/>
-        </ul>
-    </div>
-    <br/>
+    <c:set var="sortedChildren" value="${bookmarkSet.sortedChildren}"/>
+    
+    <c:if test="${fn:length(sortedChildren) > 0}">
+        <div>
+            <ul class="bookmarkList">
+                <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
+                <c:set var="bookmarkEntries" value="${sortedChildren}" scope="request"/>
+                <c:import url="renderEntry.jsp"/>
+            </ul>
+        </div>
+        <br/>
+    </c:if>
+
     <a href="#" onclick="newEntry('bookmark', '${portletNamespace}')">Add Bookmark</a>
     <a href="#" onclick="newEntry('folder', '${portletNamespace}')">Add Folder</a>
-    
-    <br/>
-    <br/>
     
     <portlet:actionURL var="formUrl"/>
     <form:form name="${portletNamespace}bookmarksForm" method="POST" action="${formUrl}" commandName="emptyCommand">
         <form:errors path="*"/>
         
         <div id="${portletNamespace}bookmarksDiv" class="hidden">
+            <br/>
+            
             <input name="action" type="hidden"/>
             <input name="indexPath" type="hidden"/>
             <input name="type" type="hidden"/>
@@ -52,7 +56,7 @@
                             
                             <c:set var="depth" value="0" scope="request"/>
                             <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
-                            <c:set var="bookmarkEntries" value="${bookmarkSet.sortedChildren}" scope="request"/>
+                            <c:set var="bookmarkEntries" value="${sortedChildren}" scope="request"/>
                             <c:import url="renderFolder.jsp"/>
                         </select>
                     </td>

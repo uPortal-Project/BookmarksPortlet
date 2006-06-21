@@ -1,0 +1,46 @@
+<ehcache>
+    
+    <!--
+     | Used for storing data for persistent caches
+     +-->
+    <diskStore path="java.io.tmpdir/BookmarksPortlet"/>
+    
+    <!--
+     | Required by EHcache
+     +-->
+    <defaultCache
+        maxElementsInMemory="128"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+    />
+    
+    <!--
+     | Cache for Entries
+     +-->
+    <cache name="edu.wisc.my.portlets.bookmarks.domain.Entry"
+        maxElementsInMemory="1024"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+    />
+    
+    <!--
+        | Cache for Folder.children Collections
+        +-->
+    <cache name="edu.wisc.my.portlets.bookmarks.domain.Folder.children"
+        maxElementsInMemory="1024"
+        eternal="false"
+        overflowToDisk="false"
+        timeToIdleSeconds="300"
+        timeToLiveSeconds="600"
+        diskPersistent="false"
+        memoryStoreEvictionPolicy="LRU"
+    />
+</ehcache>

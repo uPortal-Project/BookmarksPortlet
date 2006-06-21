@@ -12,7 +12,7 @@
         <discriminator type="string">
             <column name="ENTRY_TYPE" length="64"/>
         </discriminator>
-        
+
         <property name="name" type="string">
             <column name="NAME" length="4000" index="NameIdx"/>
         </property>
@@ -38,6 +38,7 @@
                 <one-to-many class="edu.wisc.my.portlets.bookmarks.domain.Entry" not-found="ignore"/>
             </map>
             
+            <!-- TODO figure out how to persist comparator -->
             <property name="minimized" type="true_false">
                 <column name="MINIMIZED"/>
             </property>
@@ -59,4 +60,32 @@
             </property>
         </subclass>
     </class>
+    
+    <query name="DELETE_BOOKMARK_SET__BOTH_NULL">
+        <![CDATA[
+			delete BookmarkSet
+			where name is null and owner is null
+		]]>
+    </query>
+    
+    <query name="DELETE_BOOKMARK_SET__NAME_NULL">
+        <![CDATA[
+			delete BookmarkSet
+			where name is null and owner = :owner
+		]]>
+    </query>
+    
+    <query name="DELETE_BOOKMARK_SET__OWNER_NULL">
+        <![CDATA[
+			delete BookmarkSet
+			where name = :name and owner is null
+		]]>
+    </query>
+    
+    <query name="DELETE_BOOKMARK_SET__NO_NULL">
+        <![CDATA[
+			delete BookmarkSet
+			where name = :name and owner = :owner
+		]]>
+    </query>
 </hibernate-mapping>

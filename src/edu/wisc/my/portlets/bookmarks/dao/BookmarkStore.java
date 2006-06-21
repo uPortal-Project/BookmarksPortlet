@@ -36,7 +36,6 @@
 
 package edu.wisc.my.portlets.bookmarks.dao;
 
-import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
@@ -77,7 +76,4 @@ public interface BookmarkStore {
      * TODO should this return something?
      */
     public void removeBookmarkSet(String owner, String name);
-    
-    
-    public Bookmark createBookmark();
 }

@@ -108,6 +108,8 @@ function showForm(type, action, namespace) {
     }
 
     showDiv(namespace, 'bookmarksDiv');
+    
+    form.elements['name'].focus();
 }
 
 function hideForm(namespace) {

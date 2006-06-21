@@ -130,6 +130,18 @@ public class Entry implements Serializable {
     }
     
     /**
+     * @return A String[] of the lines the note contains
+     */
+    public String[] getNoteLines() {
+        if (this.note == null) {
+            return null;
+        }
+        else {
+            return this.note.split("\n");
+        }
+    }
+    
+    /**
      * @see java.lang.Object#equals(Object)
      */
     public boolean equals(final Object object) {

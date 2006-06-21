@@ -13,7 +13,7 @@
 -->    
 
     
-    <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.support.BookmarkValidator"/>
+    <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.BookmarkValidator"/>
     
     <bean id="baseBookmarksController" abstract="true">
         <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>

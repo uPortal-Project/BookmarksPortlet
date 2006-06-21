@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
-<beans>
+<beans default-lazy-init="false">
     <!--
         <beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -95,6 +95,20 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.generate_statistics">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+            </props>
+        </property>
+        <property name="entityCacheStrategies">
+            <props>
+                <prop key="edu.wisc.my.portlets.bookmarks.domain.Entry">nonstrict-read-write</prop>
+            </props>
+        </property>
+        <property name="collectionCacheStrategies">
+            <props>
+                <prop key="edu.wisc.my.portlets.bookmarks.domain.Folder.children">nonstrict-read-write</prop>
             </props>
         </property>
     </bean>
@@ -110,5 +124,25 @@
         <property name="maxIdle"><value>16</value></property>
         <property name="minIdle"><value>8</value></property>
         <property name="maxWait"><value>15000</value></property>
+    </bean>
+    
+    
+    
+    
+    <!-- JMX Stats Exporting -->
+    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter">
+        <property name="beans">
+            <map>
+                <entry key="BookmarkPortlets:name=HibernateStatistics" value-ref="hibernateStatisticsBean"/>
+            </map>
+        </property>
+    </bean>
+    
+    
+    <bean id="hibernateStatisticsBean" class="org.hibernate.jmx.StatisticsService">
+        <property name="statisticsEnabled">
+            <value>true</value>
+        </property>
+        <property name="sessionFactory"><ref local="sessionFactory"/></property>
     </bean>
 </beans>

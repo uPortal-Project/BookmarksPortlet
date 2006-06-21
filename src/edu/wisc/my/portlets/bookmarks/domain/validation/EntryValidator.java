@@ -34,53 +34,38 @@
  *ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package edu.wisc.my.portlets.bookmarks.domain.support;
-
-import java.net.MalformedURLException;
-import java.net.URL;
+package edu.wisc.my.portlets.bookmarks.domain.validation;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 
-import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
+import edu.wisc.my.portlets.bookmarks.domain.Entry;
 
 /**
+ * Validates an entry, requires a non null/empty name.
+ * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class BookmarkValidator extends EntryValidator {
+public class EntryValidator implements Validator {
 
     /**
      * @see org.springframework.validation.Validator#supports(java.lang.Class)
      */
     public boolean supports(Class clazz) {
-        return Bookmark.class.isAssignableFrom(clazz) && super.supports(clazz);
+        return Entry.class.isAssignableFrom(clazz);
     }
 
     /**
      * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
      */
     public void validate(Object obj, Errors errors) {
-        super.validate(obj, errors);
-        final Bookmark bookmark = (Bookmark)obj;
-        this.validateUrl(bookmark, errors);
+        final Entry entry = (Entry)obj;
+        this.validateName(entry, errors);
     }
 
-    public void validateUrl(Bookmark bookmark, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "url", "URL_REQUIRED", "URL is required.");
-
-        String url = bookmark.getUrl();
-        if (!url.contains("://")) {
-            url = "http://" + url;
-        }
-        
-        bookmark.setUrl(url);
-        
-        try {
-            new URL(url);
-        }
-        catch (MalformedURLException mue) {
-            errors.rejectValue("url", "MALFORMED_URL", "The URL entered is invalid.");
-        }
+    private void validateName(Entry entry, Errors errors) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NAME_REQUIRED", "Name is required.");
     }
 }

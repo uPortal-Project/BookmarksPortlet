@@ -34,36 +34,84 @@
  *ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 
-package edu.wisc.my.portlets.bookmarks.domain.support;
+package edu.wisc.my.portlets.bookmarks.domain.validation;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 
-import edu.wisc.my.portlets.bookmarks.domain.Entry;
+import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 
 /**
+ * Validates a Bookmark, requires a valid URL, determined by calling new URL on the URL String. Also
+ * appends a default protocol of http:// if it isn't already there. The default protocol the validator
+ * uses may be set via the defaultProtocol property.
+ * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class EntryValidator implements Validator {
+public class BookmarkValidator extends EntryValidator {
+    private static final String PROTOCOL_SEPERATOR = "://";
+
+
+    private String defaultProtocol = "http://";
+    
+    /**
+     * @return Returns the defaultProtocol.
+     */
+    public String getDefaultProtocol() {
+        return this.defaultProtocol;
+    }
 
     /**
-     * @see org.springframework.validation.Validator#supports(java.lang.Class)
+     * @param defaultProtocol The defaultProtocol to set.
      */
+    public void setDefaultProtocol(String defaultProtocol) {
+        if (defaultProtocol == null) {
+            throw new IllegalArgumentException("defaultProtocol may not be null.");
+        }
+        if (!defaultProtocol.endsWith(PROTOCOL_SEPERATOR)) {
+            throw new IllegalArgumentException("defaultProtocol must end with a the protocol seperator='" + PROTOCOL_SEPERATOR + "'.");
+        }
+        
+        this.defaultProtocol = defaultProtocol;
+    }
+
+    /**
+     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#supports(java.lang.Class)
+     */
+    @Override
     public boolean supports(Class clazz) {
-        return Entry.class.isAssignableFrom(clazz);
+        return Bookmark.class.isAssignableFrom(clazz) && super.supports(clazz);
     }
 
     /**
-     * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
+     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#validate(java.lang.Object, org.springframework.validation.Errors)
      */
+    @Override
     public void validate(Object obj, Errors errors) {
-        final Entry entry = (Entry)obj;
-        this.validateName(entry, errors);
+        super.validate(obj, errors);
+        final Bookmark bookmark = (Bookmark)obj;
+        this.validateUrl(bookmark, errors);
     }
 
-    public void validateName(Entry entry, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NAME_REQUIRED", "Name is required.");
+    private void validateUrl(Bookmark bookmark, Errors errors) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "url", "URL_REQUIRED", "URL is required.");
+
+        String url = bookmark.getUrl();
+        if (!url.contains(PROTOCOL_SEPERATOR)) {
+            url = this.defaultProtocol + url;
+        }
+        
+        bookmark.setUrl(url);
+
+        try {
+            new URL(url);
+        }
+        catch (MalformedURLException mue) {
+            errors.rejectValue("url", "MALFORMED_URL", "The URL entered is invalid.");
+        }
     }
 }

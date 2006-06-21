@@ -39,7 +39,6 @@ public class DefaultBookmarksComparator implements Comparator<Entry>, Serializab
             .toComparison();
     }
 
-
     /**
      * Folders are always greater than non-Folders, if they are both Folders
      * or both not Folders they are equal. 

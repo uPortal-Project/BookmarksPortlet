@@ -16,10 +16,12 @@ ul.bookmarkList li {
 /* List item icon alignment */
 ul.bookmarkList li img {
     vertical-align: middle;
+    margin: 1px 1px 1px 1px;
 }
-/* List item link underlineing */
+/* List item link underlining */
 ul.bookmarkList li a {
     text-decoration: none;
+    margin: 1px 1px 1px 1px;
 }
 ul.bookmarkList li a:hover {
     text-decoration: none;
