@@ -99,7 +99,11 @@ public class DeleteEntryFormController extends AbstractController {
         final String entryIndex = StringUtils.defaultIfEmpty(request.getParameter("entryIndex"), null);
         
         //Get the BookmarkSet from the store
-        final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request);
+        final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
+        if (bs == null) {
+            throw new IllegalArgumentException("No BookmarkSet exists for request='" + request + "'");
+        }
+        
         final IdPathInfo targetEntryPathInfo = FolderUtils.getEntryInfo(bs, entryIndex);
         
         final Folder parentFolder = targetEntryPathInfo.getParent();

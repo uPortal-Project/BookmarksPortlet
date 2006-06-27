@@ -105,7 +105,7 @@ public class ViewBookmarksController extends SimpleFormController {
      */
     @Override
     protected Map referenceData(PortletRequest request, Object command, Errors errors) throws Exception {
-        final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request);
+        final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
         
         final Map<String, Object> refData = new HashMap<String, Object>();
         refData.put(BOOKMARK_SET, bookmarkSet);

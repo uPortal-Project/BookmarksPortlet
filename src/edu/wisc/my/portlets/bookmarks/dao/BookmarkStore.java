@@ -73,7 +73,15 @@ public interface BookmarkStore {
      * 
      * @param owner The owner of the BookmarkSet to remove.
      * @param name The name of the BookmarkSet to remove.
-     * TODO should this return something?
      */
     public void removeBookmarkSet(String owner, String name);
+    
+    /**
+     * Creates a BookmarkSet and stores it in the persistent store.
+     * 
+     * @param owner The owner of the BookmarkSet to create.
+     * @param name The name of the BookmarkSet to create.
+     * @return The new BookmarkSet.
+     */
+    public BookmarkSet createBookmarkSet(String owner, String name);
 }

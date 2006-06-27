@@ -70,7 +70,10 @@ public class EditFolderFormController extends ViewBookmarksController {
         final Folder commandFolder = (Folder)command;
 
         //Get the BookmarkSet from the store
-        final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request);
+        final BookmarkSet bs = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
+        if (bs == null) {
+            throw new IllegalArgumentException("No BookmarkSet exists for request='" + request + "'");
+        }
 
         //Get the target parent folder
         final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);

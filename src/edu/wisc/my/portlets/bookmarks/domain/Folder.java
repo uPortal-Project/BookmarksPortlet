@@ -44,6 +44,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -76,9 +77,13 @@ public class Folder extends Entry {
 
 
     /**
-     * @return Returns the children.
+     * @return Returns the children, will never return null.
      */
-    public Map<Long, Entry> getChildren() {
+    public synchronized Map<Long, Entry> getChildren() {
+        if (this.children == null) {
+            this.children = new HashMap<Long, Entry>();
+        }
+
         return this.children;
     }
 

@@ -44,6 +44,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -131,6 +132,22 @@ public class FileSystemBookmarkStore implements BookmarkStore {
     public void removeBookmarkSet(String owner, String name) {
         final File storeFile = this.getStoreFile(owner, name);
         storeFile.delete();
+    }
+    
+
+    /**
+     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#createBookmarkSet(java.lang.String, java.lang.String)
+     */
+    public BookmarkSet createBookmarkSet(String owner, String name) {
+        final BookmarkSet bookmarkSet = new BookmarkSet();
+        bookmarkSet.setOwner(owner);
+        bookmarkSet.setName(name);
+        bookmarkSet.setCreated(new Date());
+        bookmarkSet.setModified(bookmarkSet.getCreated());
+
+        this.storeBookmarkSet(bookmarkSet);
+        
+        return bookmarkSet;
     }
     
     /**

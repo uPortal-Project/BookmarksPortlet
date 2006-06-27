@@ -37,8 +37,6 @@
 
 package edu.wisc.my.portlets.bookmarks.web.support;
 
-import java.util.Date;
-
 import javax.portlet.PortletRequest;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
@@ -98,21 +96,42 @@ public class BookmarkSetRequestResolver {
     
     
 
+    /**
+     * Calls getBookmarkSet(request, true);
+     * 
+     * @see #getBookmarkSet(PortletRequest, boolean)
+     */
     public BookmarkSet getBookmarkSet(PortletRequest request) {
+        return this.getBookmarkSet(request, true);
+    }
+    
+    /**
+     * Gets a BookmarkSet for the request using the injected {@link BookmarkSetOwnerResolver}
+     * and {@link BookmarkSetNameResolver}.
+     * <br>
+     * <br>
+     * If <code>create</code> is false and no BookmarkSet exists for the name and owner null is returned. 
+     * <br>
+     * <br>
+     * If <code>create</code> is true and no BookmarkSet exists for the name and owner a new BookmarkSet is created. 
+     * 
+     * @param request The request to resolve the name and owner from.
+     * @param create If a BookmarkSet should be created for the name and owner if one does not exist
+     * @return The BookmarkSet for the name and owner from the request, null if it does not exists and create is false. If create is true this will never return null.
+     */
+    public BookmarkSet getBookmarkSet(PortletRequest request, boolean create) {
         final String owner = this.ownerResolver.getOwner(request);
         final String name = this.nameResolver.getBookmarkSetName(request);
         BookmarkSet bookmarkSet = this.bookmarkStore.getBookmarkSet(owner, name);
         
-        if (bookmarkSet == null) {
-            bookmarkSet = new BookmarkSet();
-            bookmarkSet.setOwner(owner);
-            bookmarkSet.setName(name);
-            bookmarkSet.setCreated(new Date());
-            bookmarkSet.setModified(bookmarkSet.getCreated());
-
-            this.bookmarkStore.storeBookmarkSet(bookmarkSet);
+        if (bookmarkSet == null && create) {
+            bookmarkSet = this.bookmarkStore.createBookmarkSet(owner, name);
+            
+            if (bookmarkSet == null) {
+                throw new IllegalStateException("Required BookmarkSet is null even after createBookmarkSet was called.");
+            }
         }
-        
+
         return bookmarkSet;
     }
 }

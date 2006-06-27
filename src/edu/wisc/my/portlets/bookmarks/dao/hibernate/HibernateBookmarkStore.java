@@ -5,6 +5,8 @@
 
 package edu.wisc.my.portlets.bookmarks.dao.hibernate;
 
+import java.util.Date;
+
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
@@ -102,6 +104,22 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
         catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);
         }
+    }
+    
+
+    /**
+     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#createBookmarkSet(java.lang.String, java.lang.String)
+     */
+    public BookmarkSet createBookmarkSet(String owner, String name) {
+        final BookmarkSet bookmarkSet = new BookmarkSet();
+        bookmarkSet.setOwner(owner);
+        bookmarkSet.setName(name);
+        bookmarkSet.setCreated(new Date());
+        bookmarkSet.setModified(bookmarkSet.getCreated());
+
+        this.storeBookmarkSet(bookmarkSet);
+        
+        return bookmarkSet;
     }
 
     /**
