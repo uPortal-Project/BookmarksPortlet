@@ -7,17 +7,23 @@
     <script src="${pageContext.request.contextPath}/script/bookmarks.js" type="text/javascript"></script>
     
     <c:set var="sortedChildren" value="${bookmarkSet.sortedChildren}"/>
-    
-    <c:if test="${fn:length(sortedChildren) > 0}">
-        <div>
-            <ul class="bookmarkList">
-                <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
-                <c:set var="bookmarkEntries" value="${sortedChildren}" scope="request"/>
-                <c:import url="renderEntry.jsp"/>
-            </ul>
-        </div>
-        <br/>
-    </c:if>
+    <c:choose>
+        <c:when test="${fn:length(sortedChildren) > 0}">
+            <div>
+                <ul class="bookmarkList">
+                    <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
+                    <c:set var="bookmarkEntries" value="${sortedChildren}" scope="request"/>
+                    <c:import url="renderEntry.jsp"/>
+                </ul>
+            </div>
+        </c:when>
+        <c:otherwise>
+            <div>
+                You have no bookmarks. Add folders and bookmarks to this portlet to keep useful links handy.
+            </div>
+        </c:otherwise>
+    </c:choose>
+    <br/>
 
     <a href="#" onclick="newEntry('bookmark', '${portletNamespace}')">Add Bookmark</a>
     <a href="#" onclick="newEntry('folder', '${portletNamespace}')">Add Folder</a>

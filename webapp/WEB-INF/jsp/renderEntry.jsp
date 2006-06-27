@@ -63,7 +63,7 @@
         </a>
         <span class="padding"></span>
         <a href="#" onclick="editEntry('${entryType}', '<portlet:namespace/>', '${localParentFolderIds}', '${fullEntryId}');" title="Edit ${entryDesc}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="Edit ${entryDesc}"/></a>
-        <a href="${deleteEntry}" title="Delete ${entryDesc}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="Delete ${entryDesc}"/></a>
+        <a href="#" onclick="return deleteEntry('${entryType}', '<portlet:namespace/>', '${bookmarkEntry.name}', '${deleteEntry}');" title="Delete ${entryDesc}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="Delete ${entryDesc}"/></a>
         
         <span id="<portlet:namespace/>note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
         

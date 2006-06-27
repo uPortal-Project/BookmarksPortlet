@@ -48,6 +48,23 @@ function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
     }
 }
 
+function deleteEntry(type, namespace, name, url) {
+    var confirmMessage = "Are you sure you want to delete the '" + name + "' ";
+
+    if (type == 'bookmark') {
+        confirmMessage = confirmMessage + "Bookmark?";
+    }
+    else {
+        confirmMessage = confirmMessage + "Folder?\n" + 
+            "All children bookmarks and folders will be deleted as well.";
+    }
+    
+    var shouldDelete = confirm(confirmMessage);
+    
+    if (shouldDelete) {
+        location.href = url;
+    }
+}
 
 
 
