@@ -5,7 +5,17 @@ knownEntryTypes[1] = 'bookmark';
 
 /***** Public Methods *****/
 function newEntry(type, namespace) {
-    showForm(type, 'new', namespace);
+    setupForm(type, 'new', namespace);
+    getNamespacedElement(namespace, 'folderAction').innerHTML = "Create in folder:";
+    
+    //Ensure all the Folder options are enabled
+    var form = getForm(namespace);
+    var folderOpts =  form.elements['folderPath'].options;
+    for (var index = 0; index < folderOpts.length; index++) {
+        folderOpts[index].disabled = false;
+    }
+    
+    showForm(namespace);
 }
 
 function cancelEntry(namespace) {
@@ -13,8 +23,8 @@ function cancelEntry(namespace) {
 }
 
 function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
-    showForm(type, 'edit', namespace);
-    
+    setupForm(type, 'edit', namespace);
+
     var form = getForm(namespace);
     
     form.elements['indexPath'].value = entryIndexPath;
@@ -28,6 +38,8 @@ function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
         form.elements['url'].value = entryUrl.href;
         form.elements['newWindow'].checked = (entryUrl.target != "");
     }
+    
+    getNamespacedElement(namespace, 'folderAction').innerHTML = "Move to folder:";
 
     //Select the folder the entry is in
     var folderOpts =  form.elements['folderPath'].options;
@@ -46,6 +58,8 @@ function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
             folderOpts[index].disabled = false;
         }
     }
+    
+    showForm(namespace);
 }
 
 function deleteEntry(type, namespace, name, url) {
@@ -88,7 +102,7 @@ function showTableRow(namespace, elementId) {
     element.style.display = '';
 }
 
-function showForm(type, action, namespace) {
+function setupForm(type, action, namespace) {
     var form = getForm(namespace);
     form.reset();
     
@@ -123,9 +137,12 @@ function showForm(type, action, namespace) {
         hideElement(namespace, 'urlRow');
         hideElement(namespace, 'newWindowRow');
     }
+}
 
+function showForm(namespace) {
     showDiv(namespace, 'bookmarksDiv');
     
+    var form = getForm(namespace);
     form.elements['name'].focus();
 }
 

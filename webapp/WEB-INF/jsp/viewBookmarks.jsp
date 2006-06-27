@@ -54,8 +54,16 @@
                     <td align="right" valign="top">Note:</td>
                     <td><form:textarea path="note" cssStyle="width: 250px;"></form:textarea></td>
                 </tr>
-                <tr>
-                    <td align="right" valign="top">Folder:</td>
+                
+                <c:set var="folderRowClass" value="hidden" scope="page"/>
+                <c:forEach items="${sortedChildren}" var="bookmarkEntry">
+                    <c:if test="${uwfn:instanceOf(bookmarkEntry, 'edu.wisc.my.portlets.bookmarks.domain.Folder')}">
+                        <c:set var="folderRowClass" value=" " scope="page"/>
+                    </c:if>
+                </c:forEach>
+                        
+                <tr class="${folderRowClass}">
+                    <td id="${portletNamespace}folderAction" align="right" valign="top">Folder:</td>
                     <td>
                         <select name="folderPath" style="width: 250px;">
                             <option selected="true" value="-1">None</option>
