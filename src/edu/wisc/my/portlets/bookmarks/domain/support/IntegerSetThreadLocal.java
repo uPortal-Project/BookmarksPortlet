@@ -43,13 +43,13 @@ import java.util.Set;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class IntegerSetThreadLocal extends ThreadLocal {
+public class IntegerSetThreadLocal extends ThreadLocal<Set <Integer>> {
 
     /**
      * @see java.lang.ThreadLocal#initialValue()
      */
     @Override
-    protected Object initialValue() {
+    protected Set<Integer> initialValue() {
         return new HashSet<Integer>();
     }
 
