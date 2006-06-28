@@ -126,8 +126,8 @@ function showElementBlock(namespace, elementId) {
 function showElementInline(namespace, elementId) {
     showElement(namespace, elementId, 'inline');
 }
-function showElement(namespace, elementId) {
-    showElement(namespace, elementId, '');
+function showElementTableRow(namespace, elementId) {
+    showElement(namespace, elementId, 'table-row');
 }
 function showElement(namespace, elementId, displayType) {
     var element = getNamespacedElement(namespace, elementId);
@@ -153,8 +153,8 @@ function setupForm(type, action, namespace) {
         
         form.elements['url'].disabled = false;
         form.elements['newWindow'].disabled = false;
-        showElement(namespace, 'urlRow');
-        showElement(namespace, 'newWindowRow');
+        showElementTableRow(namespace, 'urlRow');
+        showElementTableRow(namespace, 'newWindowRow');
     }
     else {
         if (action == 'new') {
