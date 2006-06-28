@@ -1,3 +1,5 @@
+<%@ include file="/WEB-INF/jsp/include.jsp" %>
+
 var knownEntryTypes = new Array()
 knownEntryTypes[0] = 'folder';
 knownEntryTypes[1] = 'bookmark';
@@ -6,7 +8,7 @@ knownEntryTypes[1] = 'bookmark';
 /***** Public Methods *****/
 function newEntry(type, namespace) {
     setupForm(type, 'new', namespace);
-    getNamespacedElement(namespace, 'folderAction').innerHTML = "Create in folder:";
+    getNamespacedElement(namespace, 'folderAction').innerHTML = "<spring:message code="portlet.form.folder.create"/>";
     
     //Ensure all the Folder options are enabled
     var form = getForm(namespace);
@@ -39,7 +41,7 @@ function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
         form.elements['newWindow'].checked = (entryUrl.target != "");
     }
     
-    getNamespacedElement(namespace, 'folderAction').innerHTML = "Move to folder:";
+    getNamespacedElement(namespace, 'folderAction').innerHTML = "<spring:message code="portlet.form.folder.move"/>";
 
     //Select the folder the entry is in
     var folderOpts =  form.elements['folderPath'].options;
@@ -63,14 +65,13 @@ function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
 }
 
 function deleteEntry(type, namespace, name, url) {
-    var confirmMessage = "Are you sure you want to delete the '" + name + "' ";
+    var confirmMessage = "<spring:message code="portlet.view.delete.confirm"/> '" + name + "' ";
 
     if (type == 'bookmark') {
-        confirmMessage = confirmMessage + "Bookmark?";
+        confirmMessage = confirmMessage + "<spring:message code="portlet.view.delete.confirm.bookmark"/>";
     }
     else {
-        confirmMessage = confirmMessage + "Folder?\n" + 
-            "All children bookmarks and folders will be deleted as well.";
+        confirmMessage = confirmMessage + "<spring:message code="portlet.view.delete.confirm.folder"/>";
     }
     
     var shouldDelete = confirm(confirmMessage);

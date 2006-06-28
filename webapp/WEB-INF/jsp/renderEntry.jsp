@@ -30,7 +30,7 @@
             </c:choose>
             <c:set var="entryImg"      value="${pageContext.request.contextPath}/img/folder-${folderImgSufix}.gif" scope="page"/>
             <c:set var="entryImgError" value="" scope="page"/>
-            <c:set var="entryDesc"     value="Folder" scope="page"/>
+            <spring:message code="portlet.view.folder" var="entryDesc"/>
             
             <c:set var="entryType"     value="folder" scope="page"/>
         </c:when>
@@ -45,10 +45,9 @@
                 </c:otherwise>
             </c:choose>
             
-            
             <c:set var="entryImg"      value="${bookmarkEntry.url}/favicon.ico" scope="page"/>
             <c:set var="entryImgError" value="onerror=\"this.src='${pageContext.request.contextPath}/img/bookmark.gif';\"" scope="page"/>
-            <c:set var="entryDesc"     value="Bookmark" scope="page"/>
+            <spring:message code="portlet.view.bookmark" var="entryDesc"/>
             
             <c:set var="entryType"     value="bookmark" scope="page"/>
         </c:otherwise>
@@ -57,15 +56,25 @@
     <c:set var="entryDesc" value="${entryDesc} - ${bookmarkEntry.name}" scope="page"/>
         
     <li>
-        <a id="<portlet:namespace/>url_${fullEntryId}" href="${entryUrl}" ${entryTarget} title="${bookmarkEntry.noteLines[0]}">
+        <a id="${portletNamespace}url_${fullEntryId}" href="${entryUrl}" ${entryTarget} title="${bookmarkEntry.noteLines[0]}">
             <img src="${entryImg}" border="0" alt="${entryDesc}" ${entryImgError}/>
-            <span id="<portlet:namespace/>name_${fullEntryId}" class="label">${bookmarkEntry.name}</span>
+            <span id="${portletNamespace}name_${fullEntryId}" class="label">${bookmarkEntry.name}</span>
         </a>
         <span class="padding"></span>
-        <a href="#" onclick="editEntry('${entryType}', '<portlet:namespace/>', '${localParentFolderIds}', '${fullEntryId}');" title="Edit ${entryDesc}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="Edit ${entryDesc}"/></a>
-        <a href="#" onclick="return deleteEntry('${entryType}', '<portlet:namespace/>', '${bookmarkEntry.name}', '${deleteEntry}');" title="Delete ${entryDesc}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="Delete ${entryDesc}"/></a>
         
-        <span id="<portlet:namespace/>note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
+        <spring:message code="portlet.view.editPrefix" var="portletViewEditPrefix"/>
+        <c:set var="altEditText" value="${portletViewEditPrefix} ${entryDesc}"/>
+        <a href="#" onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" title="${altEditText}">
+            <img src="${pageContext.request.contextPath}/img/edit.gif" alt="${altEditText}"/>
+        </a>
+        
+        <spring:message code="portlet.view.deletePrefix" var="portletViewDeletePrefix"/>
+        <c:set var="altDeleteText" value="${portletViewDeletePrefix} ${entryDesc}"/>
+        <a href="#" onclick="return deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" title="${altDeleteText}">
+            <img src="${pageContext.request.contextPath}/img/delete.gif" alt="${altDeleteText}"/>
+        </a>
+        
+        <span id="${portletNamespace}note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
         
         <c:if test="${isFolder && !bookmarkEntry.minimized}">
             <ul class="subBookmarkList">
