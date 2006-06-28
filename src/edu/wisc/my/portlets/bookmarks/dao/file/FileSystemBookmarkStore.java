@@ -48,6 +48,7 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.dao.DataAccessResourceFailureException;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
@@ -81,6 +82,11 @@ public class FileSystemBookmarkStore implements BookmarkStore {
     public BookmarkSet getBookmarkSet(String owner, String name) {
         final File storeFile = this.getStoreFile(owner, name);
         
+        //Ok if the file doesn't exist, the user hasn't stored one yet.
+        if (!storeFile.exists()) {
+            return null;
+        }
+        
         try {
             final FileInputStream fis = new FileInputStream(storeFile);
             final BufferedInputStream bis = new BufferedInputStream(fis);
@@ -95,8 +101,9 @@ public class FileSystemBookmarkStore implements BookmarkStore {
             }
         }
         catch (FileNotFoundException fnfe) {
-            logger.error("Error reading BookmarkSet for owner='" + owner + "', name='" + name + "'", fnfe);
-            return null;
+            final String errorMsg = "Error reading BookmarkSet for owner='" + owner + "', name='" + name + "' from file='" + storeFile + "'";
+            logger.error(errorMsg, fnfe);
+            throw new DataAccessResourceFailureException(errorMsg);
         }
     }
 
@@ -122,7 +129,9 @@ public class FileSystemBookmarkStore implements BookmarkStore {
             }
         }
         catch (FileNotFoundException fnfe) {
-            logger.error("Error Storing BookmarkSet='" + bookmarkSet + "'", fnfe);
+            final String errorMsg = "Error storing BookmarkSet='" + bookmarkSet + "' to file='" + storeFile + "'";
+            logger.error(errorMsg, fnfe);
+            throw new DataAccessResourceFailureException(errorMsg, fnfe); 
         }
     }
 
