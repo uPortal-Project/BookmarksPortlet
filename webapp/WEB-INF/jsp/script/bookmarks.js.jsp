@@ -19,17 +19,17 @@ function toggleEditMode(enableEdit, namespace) {
 	
 	if (enableEdit) {
 		hideElement(namespace, 'editLink');
-		showDiv(namespace, 'cancelLink');
+		showElementInline(namespace, 'cancelLink');
 	}
 	else {
 		hideElement(namespace, 'cancelLink');
-		showDiv(namespace, 'editLink');
+		showElementInline(namespace, 'editLink');
 	}
 }
 
 function newEntry(type, namespace) {
     setupForm(type, 'new', namespace);
-    getNamespacedElement(namespace, 'folderAction').innerHTML = "<spring:message code="portlet.form.folder.create"/>";
+    getNamespacedElement(namespace, 'folderAction').innerHTML = "<spring:message code="portlet.script.folder.create" javaScriptEscape="true"/>";
     
     //Ensure all the Folder options are enabled
     var form = getForm(namespace);
@@ -63,7 +63,7 @@ function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
         form.elements['newWindow'].checked = (entryUrl.target != "");
     }
     
-    getNamespacedElement(namespace, 'folderAction').innerHTML = "<spring:message code="portlet.form.folder.move"/>";
+    getNamespacedElement(namespace, 'folderAction').innerHTML = "<spring:message code="portlet.script.folder.move" javaScriptEscape="true"/>";
 
     //Select the folder the entry is in
     var folderOpts =  form.elements['folderPath'].options;
@@ -87,13 +87,17 @@ function editEntry(type, namespace, parentFolderIndexPath, entryIndexPath) {
 }
 
 function deleteEntry(type, namespace, name, url) {
-    var confirmMessage = "<spring:message code="portlet.view.delete.confirm"/> '" + name + "' ";
+    var confirmMessage = "";
 
     if (type == 'bookmark') {
-        confirmMessage = confirmMessage + "<spring:message code="portlet.view.delete.confirm.bookmark"/>";
+    	confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.bookmark.prefix" javaScriptEscape="true"/>";
+    	confirmMessage = confirmMessage + name;
+        confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.bookmark.suffix" javaScriptEscape="true"/>";
     }
     else {
-        confirmMessage = confirmMessage + "<spring:message code="portlet.view.delete.confirm.folder"/>";
+    	confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.folder.prefix" javaScriptEscape="true"/>";
+    	confirmMessage = confirmMessage + name;
+        confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.folder.suffix" javaScriptEscape="true"/>";
     }
     
     var shouldDelete = confirm(confirmMessage);
@@ -116,13 +120,18 @@ function hideElement(namespace, elementId) {
     var element = getNamespacedElement(namespace, elementId);
     element.style.display = 'none';
 }
-function showDiv(namespace, elementId) {
-    var element = getNamespacedElement(namespace, elementId);
-    element.style.display = 'block';
+function showElementBlock(namespace, elementId) {
+    showElement(namespace, elementId, 'block');
 }
-function showTableRow(namespace, elementId) {
+function showElementInline(namespace, elementId) {
+    showElement(namespace, elementId, 'inline');
+}
+function showElement(namespace, elementId) {
+    showElement(namespace, elementId, '');
+}
+function showElement(namespace, elementId, displayType) {
     var element = getNamespacedElement(namespace, elementId);
-    element.style.display = '';
+    element.style.display = displayType;
 }
 
 function setupForm(type, action, namespace) {
@@ -144,8 +153,8 @@ function setupForm(type, action, namespace) {
         
         form.elements['url'].disabled = false;
         form.elements['newWindow'].disabled = false;
-        showTableRow(namespace, 'urlRow');
-        showTableRow(namespace, 'newWindowRow');
+        showElement(namespace, 'urlRow');
+        showElement(namespace, 'newWindowRow');
     }
     else {
         if (action == 'new') {
@@ -163,7 +172,7 @@ function setupForm(type, action, namespace) {
 }
 
 function showForm(namespace) {
-    showDiv(namespace, 'bookmarksDiv');
+    showElementBlock(namespace, 'bookmarksDiv');
     
     var form = getForm(namespace);
     form.elements['name'].focus();
