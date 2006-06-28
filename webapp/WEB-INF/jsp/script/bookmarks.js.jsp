@@ -6,6 +6,27 @@ knownEntryTypes[1] = 'bookmark';
 
 
 /***** Public Methods *****/
+function toggleEditMode(enableEdit, namespace) {
+	var editSpans = document.getElementsByName(namespace + "_entryEditSpan");
+	for (var index = 0; index < editSpans.length; index++) {
+		if (enableEdit) {
+			editSpans[index].style.display = 'inline';
+		}
+		else {
+			editSpans[index].style.display = 'none';
+		}
+	}
+	
+	if (enableEdit) {
+		hideElement(namespace, 'editLink');
+		showDiv(namespace, 'cancelLink');
+	}
+	else {
+		hideElement(namespace, 'cancelLink');
+		showDiv(namespace, 'editLink');
+	}
+}
+
 function newEntry(type, namespace) {
     setupForm(type, 'new', namespace);
     getNamespacedElement(namespace, 'folderAction').innerHTML = "<spring:message code="portlet.form.folder.create"/>";
@@ -21,6 +42,7 @@ function newEntry(type, namespace) {
 }
 
 function cancelEntry(namespace) {
+	toggleEditMode(false, namespace);
     hideForm(namespace);
 }
 

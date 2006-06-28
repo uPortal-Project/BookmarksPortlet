@@ -11,7 +11,7 @@ ul.subBookmarkList {
 }
 ul.bookmarkList li {
     clear: both;
-    overflow:auto;
+    overflow: hidden;
 }
 /* List item icon alignment */
 ul.bookmarkList li img {

@@ -60,19 +60,22 @@
             <img src="${entryImg}" border="0" alt="${entryDesc}" ${entryImgError}/>
             <span id="${portletNamespace}name_${fullEntryId}" class="label">${bookmarkEntry.name}</span>
         </a>
-        <span class="padding"></span>
         
-        <spring:message code="portlet.view.editPrefix" var="portletViewEditPrefix"/>
-        <c:set var="altEditText" value="${portletViewEditPrefix} ${entryDesc}"/>
-        <a href="#" onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" title="${altEditText}">
-            <img src="${pageContext.request.contextPath}/img/edit.gif" alt="${altEditText}"/>
-        </a>
-        
-        <spring:message code="portlet.view.deletePrefix" var="portletViewDeletePrefix"/>
-        <c:set var="altDeleteText" value="${portletViewDeletePrefix} ${entryDesc}"/>
-        <a href="#" onclick="return deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" title="${altDeleteText}">
-            <img src="${pageContext.request.contextPath}/img/delete.gif" alt="${altDeleteText}"/>
-        </a>
+        <span name="${portletNamespace}_entryEditSpan" class="hidden">
+            <span class="padding"></span>
+            
+            <spring:message code="portlet.view.editPrefix" var="portletViewEditPrefix"/>
+            <c:set var="altEditText" value="${portletViewEditPrefix} ${entryDesc}"/>
+            <a href="#" onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" title="${altEditText}">
+                <img src="${pageContext.request.contextPath}/img/edit.gif" alt="${altEditText}"/>
+            </a>
+            
+            <spring:message code="portlet.view.deletePrefix" var="portletViewDeletePrefix"/>
+            <c:set var="altDeleteText" value="${portletViewDeletePrefix} ${entryDesc}"/>
+            <a href="#" onclick="return deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" title="${altDeleteText}">
+                <img src="${pageContext.request.contextPath}/img/delete.gif" alt="${altDeleteText}"/>
+            </a>
+        </span>
         
         <span id="${portletNamespace}note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
         
