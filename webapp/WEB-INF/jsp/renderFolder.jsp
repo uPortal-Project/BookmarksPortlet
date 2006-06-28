@@ -8,7 +8,7 @@
     <c:set var="fullEntryId" value="${localParentFolderIds}.${bookmarkEntry.id}" scope="page"/>
     
     <c:if test="${uwfn:instanceOf(bookmarkEntry, 'edu.wisc.my.portlets.bookmarks.domain.Folder')}">
-        <option value="${fullEntryId}"><c:forEach begin="0" end="${localDepth}"><c:out escapeXml="false" value="&nbsp;&nbsp;&nbsp;&nbsp;"/></c:forEach>${bookmarkEntry.name}</option>
+        <option cssClass="portlet-form-input-field" value="${fullEntryId}"><c:forEach begin="0" end="${localDepth}"><c:out escapeXml="false" value="&nbsp;&nbsp;&nbsp;&nbsp;"/></c:forEach>${bookmarkEntry.name}</option>
     
         <c:set var="depth" value="${depth + 1}" scope="request"/>
         <c:set var="parentFolderIds" value="${fullEntryId}" scope="request"/>

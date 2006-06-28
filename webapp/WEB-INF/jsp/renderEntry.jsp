@@ -63,7 +63,7 @@
     <li>
         <a id="${portletNamespace}url_${fullEntryId}" href="${entryUrl}" ${entryTarget} title="${bookmarkEntry.noteLines[0]}">
             <img src="${entryImg}" border="0" alt="${entryDesc}" ${entryImgError}/>
-            <span id="${portletNamespace}name_${fullEntryId}" class="label">${bookmarkEntry.name}</span>
+            <span id="${portletNamespace}name_${fullEntryId}" class="label portlet-font">${bookmarkEntry.name}</span>
         </a>
         
         <span name="${portletNamespace}_entryEditSpan" class="hidden">

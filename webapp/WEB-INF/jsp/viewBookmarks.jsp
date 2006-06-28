@@ -2,6 +2,7 @@
 
 <c:set var="portletNamespace" scope="request"><portlet:namespace/></c:set>
 <a name="${portletNamespace}_TOP"/>
+
 <div>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
     <script src="${pageContext.request.contextPath}/script/bookmarks.js" type="text/javascript"></script>
@@ -18,20 +19,20 @@
             </div>
         </c:when>
         <c:otherwise>
-            <div>
+            <div class="portlet-font">
                 <spring:message code="portlet.view.noBookmarks"/>
             </div>
         </c:otherwise>
     </c:choose>
     <br/>
 
-    <a href="#${portletNamespace}_TOP" onclick="newEntry('bookmark', '${portletNamespace}')"><spring:message code="portlet.view.addBookmark"/></a>
+    <a href="#${portletNamespace}_TOP" onclick="newEntry('bookmark', '${portletNamespace}')" class="portlet-form-label"><spring:message code="portlet.view.addBookmark"/></a>
     &nbsp;&nbsp;&nbsp;
-    <a href="#${portletNamespace}_TOP" onclick="newEntry('folder', '${portletNamespace}')"><spring:message code="portlet.view.addFolder"/></a>
+    <a href="#${portletNamespace}_TOP" onclick="newEntry('folder', '${portletNamespace}')" class="portlet-form-label"><spring:message code="portlet.view.addFolder"/></a>
     <c:if test="${fn:length(sortedChildren) > 0}">
         &nbsp;&nbsp;&nbsp;    
-        <a id="${portletNamespace}editLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(true, '${portletNamespace}')"><spring:message code="portlet.view.edit.show"/></a>
-        <a id="${portletNamespace}cancelLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(false, '${portletNamespace}')" class="hidden"><spring:message code="portlet.view.edit.hide"/></a>
+        <a id="${portletNamespace}editLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(true, '${portletNamespace}')" class="portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
+        <a id="${portletNamespace}cancelLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(false, '${portletNamespace}')" class="portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
     </c:if>
     
     <portlet:actionURL var="formUrl"/>
@@ -49,16 +50,16 @@
             
             <table padding="0">
                 <tr>
-                    <td align="right"><spring:message code="portlet.form.name"/></td>
-                    <td><form:input path="name" cssStyle="width: 250px;"/></td>
+                    <td class="portlet-form-field-label" align="right"><spring:message code="portlet.form.name"/></td>
+                    <td><form:input path="name" cssStyle="width: 250px;" cssClass="portlet-form-input-field"/></td>
                 </tr>
                 <tr id="${portletNamespace}urlRow">
-                    <td align="right"><spring:message code="portlet.form.url"/></td>
-                    <td><form:input path="url" cssStyle="width: 250px;"/></td>
+                    <td class="portlet-form-field-label" align="right"><spring:message code="portlet.form.url"/></td>
+                    <td><form:input path="url" cssStyle="width: 250px;" cssClass="portlet-form-input-field"/></td>
                 </tr>
                 <tr>
-                    <td align="right" valign="top"><spring:message code="portlet.form.note"/></td>
-                    <td><form:textarea path="note" cssStyle="width: 250px;"></form:textarea></td>
+                    <td class="portlet-form-field-label" align="right" valign="top"><spring:message code="portlet.form.note"/></td>
+                    <td><form:textarea path="note" cssStyle="width: 250px;" cssClass="portlet-form-input-field"></form:textarea></td>
                 </tr>
                 
                 <c:set var="folderRowClass" value="hidden" scope="page"/>
@@ -69,10 +70,10 @@
                 </c:forEach>
                         
                 <tr class="${folderRowClass}">
-                    <td id="${portletNamespace}folderAction" align="right" valign="top"><spring:message code="portlet.form.folder"/></td>
+                    <td class="portlet-form-field-label" id="${portletNamespace}folderAction" align="right" valign="top"><spring:message code="portlet.form.folder"/></td>
                     <td>
                         <select name="folderPath" style="width: 250px;">
-                            <option selected="true" value="-1"><spring:message code="portlet.form.folder.none"/></option>
+                            <option cssClass="portlet-form-input-field" selected="true" value="-1"><spring:message code="portlet.form.folder.none"/></option>
                             
                             <c:set var="depth" value="0" scope="request"/>
                             <c:set var="parentFolderIds" value="${bookmarkSet.id}" scope="request"/>
@@ -84,16 +85,16 @@
                 <tr id="${portletNamespace}newWindowRow">
                     <td/>
                     <td>
-                        <form:checkbox id="newWindow" path="newWindow"/>
-                        <label for="newWindow"><spring:message code="portlet.form.newWindow"/></label>
+                        <form:checkbox id="newWindow" path="newWindow" cssClass="portlet-form-field"/>
+                        <label class="portlet-form-field-label" for="newWindow"><spring:message code="portlet.form.newWindow"/></label>
                     </td>
                 </tr>
                 <tr>
                     <td align="right" colspan="2"">
                         <spring:message code="portlet.form.save" var="portletFormSave"/>
-                        <input value="${portletFormSave}" type="submit"/>
+                        <input class="portlet-form-button" value="${portletFormSave}" type="submit"/>
                         <spring:message code="portlet.form.cancel" var="portletFormCancel"/>
-                        <input value="${portletFormCancel}" type="reset" onclick="cancelEntry('${portletNamespace}');"/>
+                        <input class="portlet-form-button" value="${portletFormCancel}" type="reset" onclick="cancelEntry('${portletNamespace}');"/>
                     </td>
                 </tr>
             </table>
