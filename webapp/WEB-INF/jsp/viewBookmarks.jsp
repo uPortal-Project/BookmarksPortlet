@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
 <c:set var="portletNamespace" scope="request"><portlet:namespace/></c:set>
-        
+<a name="${portletNamespace}_TOP"/>
 <div>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
     <script src="${pageContext.request.contextPath}/script/bookmarks.js" type="text/javascript"></script>
@@ -25,13 +25,13 @@
     </c:choose>
     <br/>
 
-    <a href="#" onclick="newEntry('bookmark', '${portletNamespace}')"><spring:message code="portlet.view.addBookmark"/></a>
+    <a href="#${portletNamespace}_TOP" onclick="newEntry('bookmark', '${portletNamespace}')"><spring:message code="portlet.view.addBookmark"/></a>
     &nbsp;&nbsp;&nbsp;
-    <a href="#" onclick="newEntry('folder', '${portletNamespace}')"><spring:message code="portlet.view.addFolder"/></a>
+    <a href="#${portletNamespace}_TOP" onclick="newEntry('folder', '${portletNamespace}')"><spring:message code="portlet.view.addFolder"/></a>
     <c:if test="${fn:length(sortedChildren) > 0}">
         &nbsp;&nbsp;&nbsp;    
-        <a id="${portletNamespace}editLink" href="#" onclick="toggleEditMode(true, '${portletNamespace}')"><spring:message code="portlet.view.edit.show"/></a>
-        <a id="${portletNamespace}cancelLink" href="#" onclick="toggleEditMode(false, '${portletNamespace}')" class="hidden"><spring:message code="portlet.view.edit.hide"/></a>
+        <a id="${portletNamespace}editLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(true, '${portletNamespace}')"><spring:message code="portlet.view.edit.show"/></a>
+        <a id="${portletNamespace}cancelLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(false, '${portletNamespace}')" class="hidden"><spring:message code="portlet.view.edit.hide"/></a>
     </c:if>
     
     <portlet:actionURL var="formUrl"/>

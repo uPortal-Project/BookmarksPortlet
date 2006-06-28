@@ -69,11 +69,11 @@
         <span name="${portletNamespace}_entryEditSpan" class="hidden">
             <span class="padding"></span>
             
-            <a href="#" onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" title="${entryEditText}">
+            <a href="#${portletNamespace}_TOP" onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" title="${entryEditText}">
                 <img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/>
             </a>
             
-            <a href="#" onclick="return deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" title="${entryDeleteText}">
+            <a href="#${portletNamespace}_TOP" onclick="return deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" title="${entryDeleteText}">
                 <img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/>
             </a>
         </span>
