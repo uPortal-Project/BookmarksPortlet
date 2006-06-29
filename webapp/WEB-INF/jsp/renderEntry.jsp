@@ -58,23 +58,24 @@
     </c:choose>
         
     <li>
-        <a id="${portletNamespace}url_${fullEntryId}" href="${entryUrl}" ${entryTarget} title="${bookmarkEntry.noteLines[0]}">
-            <img src="${entryImg}" border="0" alt="${entryDesc}"/>
-            <span id="${portletNamespace}name_${fullEntryId}" class="label portlet-font">${bookmarkEntry.name}</span>
-        </a>
+        <a id="${portletNamespace}url_${fullEntryId}" 
+            href="${entryUrl}" ${entryTarget} 
+            title="${bookmarkEntry.noteLines[0]}"><img src="${entryImg}" border="0" alt="${entryDesc}"/>
+            <span id="${portletNamespace}name_${fullEntryId}" class="label portlet-font">${bookmarkEntry.name}</span></a>
         
-        <span name="${portletNamespace}_entryEditSpan" class="hidden">
-            <span class="padding"></span>
+        <span class="padding"></span>
+        
+        <%-- Need both ID (for IE) and NAME (for FF/Opera) --%>
+        <span id="${portletNamespace}_entryEditUI" name="${portletNamespace}_entryEditUI" class="hidden">
+            <a href="#${portletNamespace}_TOP" 
+                onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" 
+                title="${entryEditText}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
             
-            <a href="#${portletNamespace}_TOP" onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" title="${entryEditText}">
-                <img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/>
-            </a>
-            
-            <a href="#${portletNamespace}_TOP" onclick="return deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" title="${entryDeleteText}">
-                <img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/>
-            </a>
+            <a href="#${portletNamespace}_TOP" 
+                onclick="deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" 
+                title="${entryDeleteText}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/></a>
         </span>
-        
+
         <span id="${portletNamespace}note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
         
         <c:if test="${isFolder && !bookmarkEntry.minimized}">
