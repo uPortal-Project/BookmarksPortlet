@@ -29,7 +29,6 @@
                 </c:otherwise>
             </c:choose>
             <c:set var="entryImg"      value="${pageContext.request.contextPath}/img/folder-${folderImgSufix}.gif" scope="page"/>
-            <c:set var="entryImgError" value="" scope="page"/>
 
             <spring:message code="portlet.entry.folder.desc" arguments="${bookmarkEntry.name}" var="entryDescText" scope="page"/>
             <spring:message code="portlet.entry.folder.edit" arguments="${bookmarkEntry.name}" var="entryEditText" scope="page"/>
@@ -47,9 +46,7 @@
                     <c:set var="entryTarget" scope="page"></c:set>
                 </c:otherwise>
             </c:choose>
-            
-            <c:set var="entryImg"      value="${bookmarkEntry.url}/favicon.ico" scope="page"/>
-            <c:set var="entryImgError" value="onerror=\"this.src='${pageContext.request.contextPath}/img/bookmark.gif';\"" scope="page"/>
+            <c:set var="entryImg"      value="${pageContext.request.contextPath}/img/bookmark.gif" scope="page"/>
 
             <spring:message code="portlet.entry.bookmark.desc" arguments="${bookmarkEntry.name}" var="entryDescText" scope="page"/>
             <spring:message code="portlet.entry.bookmark.edit" arguments="${bookmarkEntry.name}" var="entryEditText" scope="page"/>
@@ -62,7 +59,7 @@
         
     <li>
         <a id="${portletNamespace}url_${fullEntryId}" href="${entryUrl}" ${entryTarget} title="${bookmarkEntry.noteLines[0]}">
-            <img src="${entryImg}" border="0" alt="${entryDesc}" ${entryImgError}/>
+            <img src="${entryImg}" border="0" alt="${entryDesc}"/>
             <span id="${portletNamespace}name_${fullEntryId}" class="label portlet-font">${bookmarkEntry.name}</span>
         </a>
         
