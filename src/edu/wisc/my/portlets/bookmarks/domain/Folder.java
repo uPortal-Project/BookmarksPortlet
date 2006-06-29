@@ -247,11 +247,12 @@ public class Folder extends Entry {
         
         final Object comparatorInfo = in.readObject();
         if (comparatorInfo instanceof Comparator) {
-            this.childComparator = (Comparator<Entry>)comparatorInfo;
+            this.childComparator = this.castComparator(comparatorInfo);
         }
         else if (comparatorInfo instanceof Class && Comparator.class.isAssignableFrom((Class)comparatorInfo)) {
             try {
-                this.childComparator = (Comparator<Entry>)((Class)comparatorInfo).newInstance();
+                final Object instance = ((Class)comparatorInfo).newInstance();
+                this.childComparator = this.castComparator(instance);
             }
             catch (InstantiationException e) {
                 this.childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
@@ -263,5 +264,14 @@ public class Folder extends Entry {
         else {
             this.childComparator = DefaultBookmarksComparator.DEFAULT_BOOKMARKS_COMPARATOR;
         }
+    }
+    
+    /**
+     * Casts an Object to a Comparator<Entry>. Allows the warning suppression to be as localized
+     * as possible.
+     */
+    @SuppressWarnings("unchecked")
+    private Comparator<Entry> castComparator(Object obj) {
+        return (Comparator<Entry>)obj;
     }
 }
