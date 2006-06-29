@@ -9,7 +9,7 @@
      | Required by EHcache
      +-->
     <defaultCache
-        maxElementsInMemory="128"
+        maxElementsInMemory="1024"
         eternal="false"
         overflowToDisk="false"
         timeToIdleSeconds="300"
@@ -22,7 +22,7 @@
      | Cache for Entries
      +-->
     <cache name="edu.wisc.my.portlets.bookmarks.domain.Entry"
-        maxElementsInMemory="1024"
+        maxElementsInMemory="10240"
         eternal="false"
         overflowToDisk="false"
         timeToIdleSeconds="300"
@@ -35,7 +35,7 @@
         | Cache for Folder.children Collections
         +-->
     <cache name="edu.wisc.my.portlets.bookmarks.domain.Folder.children"
-        maxElementsInMemory="1024"
+        maxElementsInMemory="2048"
         eternal="false"
         overflowToDisk="false"
         timeToIdleSeconds="300"
