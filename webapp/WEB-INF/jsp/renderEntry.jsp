@@ -57,28 +57,26 @@
         </c:otherwise>
     </c:choose>
         
-    <li>
+    <li class="bookmarkListItem">
         <a id="${portletNamespace}url_${fullEntryId}" 
             href="${entryUrl}" ${entryTarget} 
             title="${bookmarkEntry.noteLines[0]}"><img src="${entryImg}" border="0" alt="${entryDesc}"/>
-            <span id="${portletNamespace}name_${fullEntryId}" class="label portlet-font">${bookmarkEntry.name}</span></a>
+            <span id="${portletNamespace}name_${fullEntryId}" class="portlet-font">${bookmarkEntry.name}</span></a>
         
         <span class="padding"></span>
         
         <%-- Need both ID (for IE) and NAME (for FF/Opera) --%>
         <span id="${portletNamespace}_entryEditUI" name="${portletNamespace}_entryEditUI" class="hidden">
-            <a href="#${portletNamespace}_TOP" 
-                onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');" 
-                title="${entryEditText}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
+            <a href="#" onclick="editEntry('${entryType}', '${portletNamespace}', '${localParentFolderIds}', '${fullEntryId}');return false;" 
+                title="${entryEditText}" class="jsLink"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
             
-            <a href="#${portletNamespace}_TOP" 
-                onclick="deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');" 
-                title="${entryDeleteText}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/></a>
+            <a href="#" onclick="deleteEntry('${entryType}', '${portletNamespace}', '${bookmarkEntry.name}', '${deleteEntry}');return false;" 
+                title="${entryDeleteText}" class="jsLink"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/></a>
         </span>
 
         <span id="${portletNamespace}note_${fullEntryId}" class="hidden">${bookmarkEntry.note}</span>
         
-        <c:if test="${isFolder && !bookmarkEntry.minimized}">
+        <c:if test="${isFolder && !bookmarkEntry.minimized && fn:length(bookmarkEntry.sortedChildren) > 0}">
             <ul class="subBookmarkList">
                 <c:set var="parentFolderIds" value="${fullEntryId}" scope="request"/>
                 <c:set var="bookmarkEntries" value="${bookmarkEntry.sortedChildren}" scope="request"/>

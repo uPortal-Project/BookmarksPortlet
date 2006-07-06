@@ -1,7 +1,6 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
 <c:set var="portletNamespace" scope="request"><portlet:namespace/></c:set>
-<a name="${portletNamespace}_TOP"/>
 
 <div>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
@@ -26,13 +25,13 @@
     </c:choose>
     <br/>
 
-    <a href="#${portletNamespace}_TOP" onclick="newEntry('bookmark', '${portletNamespace}')" class="portlet-form-label"><spring:message code="portlet.view.addBookmark"/></a>
+    <a href="#" onclick="newEntry('bookmark', '${portletNamespace}');return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.addBookmark"/></a>
     &nbsp;&nbsp;&nbsp;
-    <a href="#${portletNamespace}_TOP" onclick="newEntry('folder', '${portletNamespace}')" class="portlet-form-label"><spring:message code="portlet.view.addFolder"/></a>
+    <a href="#" onclick="newEntry('folder', '${portletNamespace}');return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.addFolder"/></a>
     <c:if test="${fn:length(sortedChildren) > 0}">
         &nbsp;&nbsp;&nbsp;    
-        <a id="${portletNamespace}editLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(true, '${portletNamespace}')" class="portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
-        <a id="${portletNamespace}cancelLink" href="#${portletNamespace}_TOP" onclick="toggleEditMode(false, '${portletNamespace}')" class="portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
+        <a href="#" id="${portletNamespace}editLink" onclick="toggleEditMode(true, '${portletNamespace}');return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
+        <a href="#" id="${portletNamespace}cancelLink" onclick="toggleEditMode(false, '${portletNamespace}');return false;" class="jsTextLink portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
     </c:if>
     
     <portlet:actionURL var="formUrl"/>

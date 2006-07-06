@@ -1,38 +1,31 @@
 ul.bookmarkList {
-    list-style: none;
+    list-style-type: none !important;
     margin: 0;
     padding: 0;
 }
 ul.subBookmarkList {
-    list-style: none;
+    list-style-type: none !important;
     margin: 0;
     padding: 0 0 0 18px;
     clear: both;
 }
-ul.bookmarkList li {
+ul.bookmarkList li.bookmarkListItem {
+    list-style-type: none !important;
+    clear: both;
+    overflow: hidden;
+}
+/* UW Specific Fix */
+#content ul.bookmarkList li.bookmarkListItem {
+    list-style-type: none !important;
     clear: both;
     overflow: hidden;
 }
 /* List item icon alignment */
-ul.bookmarkList li img {
+ul.bookmarkList li.bookmarkListItem img {
     vertical-align: middle;
     margin: 1px 1px 1px 1px;
 }
-/* List item link underlining */
-ul.bookmarkList li a {
-    text-decoration: none;
-    margin: 1px 1px 1px 1px;
-}
-ul.bookmarkList li a:hover {
-    text-decoration: none;
-}
-ul.bookmarkList li a:active {
-    text-decoration: none;
-}
 
-ul.bookmarkList span.label {
-    text-decoration: underline;
-}
 ul.bookmarkList span.padding {
     padding-right: 15px;
 }
