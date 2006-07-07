@@ -39,31 +39,31 @@ package edu.wisc.my.portlets.bookmarks.web.support;
 
 import javax.portlet.PortletRequest;
 
-import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
-import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
+import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 
 /**
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class BookmarkSetRequestResolver {
-    protected BookmarkStore bookmarkStore;
+public class PreferencesRequestResolver {
+    protected PreferencesStore preferencesStore;
     protected OwnerResolver ownerResolver;
     protected NameResolver nameResolver;
     
     
     /**
-     * @return Returns the bookmarkStore.
+     * @return Returns the preferencesStore.
      */
-    public BookmarkStore getBookmarkStore() {
-        return this.bookmarkStore;
+    public PreferencesStore getPreferencesStore() {
+        return this.preferencesStore;
     }
 
     /**
-     * @param bookmarkStore The bookmarkStore to set.
+     * @param preferencesStore The preferencesStore to set.
      */
-    public void setBookmarkStore(BookmarkStore bookmarkStore) {
-        this.bookmarkStore = bookmarkStore;
+    public void setPreferencesStore(PreferencesStore preferencesStore) {
+        this.preferencesStore = preferencesStore;
     }
 
     /**
@@ -97,41 +97,41 @@ public class BookmarkSetRequestResolver {
     
 
     /**
-     * Calls getBookmarkSet(request, true);
+     * Calls getPreferences(request, true);
      * 
-     * @see #getBookmarkSet(PortletRequest, boolean)
+     * @see #getPreferences(PortletRequest, boolean)
      */
-    public BookmarkSet getBookmarkSet(PortletRequest request) {
-        return this.getBookmarkSet(request, true);
+    public Preferences getPreferences(PortletRequest request) {
+        return this.getPreferences(request, true);
     }
     
     /**
-     * Gets a BookmarkSet for the request using the injected {@link OwnerResolver}
+     * Gets Preferences for the request using the injected {@link OwnerResolver}
      * and {@link NameResolver}.
      * <br>
      * <br>
-     * If <code>create</code> is false and no BookmarkSet exists for the name and owner null is returned. 
+     * If <code>create</code> is false and no Preferences exists for the name and owner null is returned. 
      * <br>
      * <br>
-     * If <code>create</code> is true and no BookmarkSet exists for the name and owner a new BookmarkSet is created. 
+     * If <code>create</code> is true and no Preferences exists for the name and owner a new Preferences is created. 
      * 
      * @param request The request to resolve the name and owner from.
-     * @param create If a BookmarkSet should be created for the name and owner if one does not exist
-     * @return The BookmarkSet for the name and owner from the request, null if it does not exists and create is false. If create is true this will never return null.
+     * @param create If a Preferences should be created for the name and owner if one does not exist
+     * @return The Preferences for the name and owner from the request, null if it does not exists and create is false. If create is true this will never return null.
      */
-    public BookmarkSet getBookmarkSet(PortletRequest request, boolean create) {
+    public Preferences getPreferences(PortletRequest request, boolean create) {
         final String owner = this.ownerResolver.getOwner(request);
         final String name = this.nameResolver.getBookmarkSetName(request);
-        BookmarkSet bookmarkSet = this.bookmarkStore.getBookmarkSet(owner, name);
+        Preferences preferences = this.preferencesStore.getPreferences(owner, name);
         
-        if (bookmarkSet == null && create) {
-            bookmarkSet = this.bookmarkStore.createBookmarkSet(owner, name);
+        if (preferences == null && create) {
+            preferences = this.preferencesStore.createPreferences(owner, name);
             
-            if (bookmarkSet == null) {
-                throw new IllegalStateException("Required BookmarkSet is null even after createBookmarkSet was called.");
+            if (preferences == null) {
+                throw new IllegalStateException("Required Preferences is null even after createPreferences was called.");
             }
         }
 
-        return bookmarkSet;
+        return preferences;
     }
 }

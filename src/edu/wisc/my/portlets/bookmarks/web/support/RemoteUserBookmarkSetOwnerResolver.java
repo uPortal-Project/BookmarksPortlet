@@ -44,10 +44,10 @@ import javax.portlet.PortletRequest;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class RemoteUserBookmarkSetOwnerResolver implements BookmarkSetOwnerResolver {
+public class RemoteUserBookmarkSetOwnerResolver implements OwnerResolver {
 
     /**
-     * @see edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetOwnerResolver#getOwner(javax.portlet.PortletRequest)
+     * @see edu.wisc.my.portlets.bookmarks.web.support.OwnerResolver#getOwner(javax.portlet.PortletRequest)
      */
     public String getOwner(PortletRequest request) {
         return request.getRemoteUser();

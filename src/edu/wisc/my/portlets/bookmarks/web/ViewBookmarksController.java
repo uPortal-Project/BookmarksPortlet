@@ -53,9 +53,12 @@ import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.portlet.mvc.SimpleFormController;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
+import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
 import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
+import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
 
 /**
  * Controller resolves the BookmarkSet owner and name for the request and displays it
@@ -66,9 +69,14 @@ import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
  */
 public class ViewBookmarksController extends SimpleFormController {
     public static final String BOOKMARK_SET = "bookmarkSet";
+    public static final String PREFERENCES  = "preferences";
     
     protected BookmarkStore bookmarkStore;
+    protected PreferencesStore preferencesStore;
+
     protected BookmarkSetRequestResolver bookmarkSetRequestResolver;
+    protected PreferencesRequestResolver preferencesRequestResolver;
+    
     
     /**
      * @return Returns the bookmarkSetRequestResolver.
@@ -98,7 +106,35 @@ public class ViewBookmarksController extends SimpleFormController {
         this.bookmarkStore = bookmarkStore;
     }
 
-    
+    /**
+     * @return Returns the preferencesRequestResolver.
+     */
+    public PreferencesRequestResolver getPreferencesRequestResolver() {
+        return this.preferencesRequestResolver;
+    }
+
+    /**
+     * @param preferencesRequestResolver The preferencesRequestResolver to set.
+     */
+    public void setPreferencesRequestResolver(PreferencesRequestResolver preferencesRequestResolver) {
+        this.preferencesRequestResolver = preferencesRequestResolver;
+    }
+
+    /**
+     * @return Returns the preferencesStore.
+     */
+    public PreferencesStore getPreferencesStore() {
+        return this.preferencesStore;
+    }
+
+    /**
+     * @param preferencesStore The preferencesStore to set.
+     */
+    public void setPreferencesStore(PreferencesStore preferencesStore) {
+        this.preferencesStore = preferencesStore;
+    }
+
+
     
     /**
      * @see org.springframework.web.portlet.mvc.SimpleFormController#referenceData(javax.portlet.PortletRequest, java.lang.Object, org.springframework.validation.Errors)
@@ -106,9 +142,11 @@ public class ViewBookmarksController extends SimpleFormController {
     @Override
     protected Map referenceData(PortletRequest request, Object command, Errors errors) throws Exception {
         final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
+        final Preferences preferences = this.preferencesRequestResolver.getPreferences(request, false);
         
         final Map<String, Object> refData = new HashMap<String, Object>();
         refData.put(BOOKMARK_SET, bookmarkSet);
+        refData.put(PREFERENCES, preferences);
         refData.put("emptyCommand", new Bookmark());
         
         return refData;

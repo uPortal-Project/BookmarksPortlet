@@ -42,8 +42,6 @@ import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
  * The BookmarkStore provides the APIs to use for storing, retrieving and removing BookmarkSets 
  * from a persitent store.
  * 
- * TODO figure out a good package name
- * 
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */

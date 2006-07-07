@@ -64,7 +64,7 @@ public class EditFolderFormController extends ViewBookmarksController {
     @Override
     protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
         final String targetParentPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);
-        final String targetEntryPath = StringUtils.defaultIfEmpty(request.getParameter("indexPath"), null);
+        final String targetEntryPath = StringUtils.defaultIfEmpty(request.getParameter("idPath"), null);
 
         //User edited bookmark
         final Folder commandFolder = (Folder)command;

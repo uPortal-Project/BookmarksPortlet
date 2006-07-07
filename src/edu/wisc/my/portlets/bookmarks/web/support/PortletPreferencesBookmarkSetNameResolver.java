@@ -46,7 +46,7 @@ import javax.portlet.PortletRequest;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class PortletPreferencesBookmarkSetNameResolver implements BookmarkSetNameResolver {
+public class PortletPreferencesBookmarkSetNameResolver implements NameResolver {
     public static final String DEFAULT_BOOKMARK_SET_NAME = "bookmarkSetName";
     
     private String bookmarkSetName = DEFAULT_BOOKMARK_SET_NAME;
@@ -68,7 +68,7 @@ public class PortletPreferencesBookmarkSetNameResolver implements BookmarkSetNam
 
 
     /**
-     * @see edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetNameResolver#getBookmarkSetName(javax.portlet.PortletRequest)
+     * @see edu.wisc.my.portlets.bookmarks.web.support.NameResolver#getBookmarkSetName(javax.portlet.PortletRequest)
      */
     public String getBookmarkSetName(PortletRequest request) {
         final PortletPreferences prefs = request.getPreferences();

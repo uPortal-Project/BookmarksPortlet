@@ -21,6 +21,9 @@
     </bean>
     
     <bean id="baseBookmarksFormController" abstract="true" parent="baseBookmarksController">
+        <property name="preferencesStore"><ref bean="preferencesStore"/></property>
+        <property name="preferencesRequestResolver"><ref bean="preferencesRequestResolver"/></property>
+
         <property name="sessionForm" value="false"/>
         <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Bookmark"/>
         

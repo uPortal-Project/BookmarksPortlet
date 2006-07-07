@@ -42,7 +42,7 @@
             <br/>
             
             <input name="action" type="hidden"/>
-            <input name="indexPath" type="hidden"/>
+            <input name="idPath" type="hidden"/>
             <input name="type" type="hidden"/>
 
             <!-- todo form:errors tag -->            

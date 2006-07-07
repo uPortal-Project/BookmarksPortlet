@@ -1,5 +1,3 @@
-<%@ include file="/WEB-INF/jsp/include.jsp" %>
-
 var knownEntryTypes = new Array();
 knownEntryTypes[0] = "folder";
 knownEntryTypes[1] = "bookmark";
@@ -7,7 +5,7 @@ knownEntryTypes[1] = "bookmark";
 
 /***** Public Methods *****/
 function toggleFolder(contextPath, namespace, folderIdPath) {
-    var folderImg = getNamespacedElement(namespace, "entryImg_" + folderIdPath);
+    var folderImg = getNamespacedElement(namespace, "folderImg_" + folderIdPath);
     
     if (isElementHidden(namespace, "children_" + folderIdPath)) {
         showElementBlock(namespace, "children_" + folderIdPath);
@@ -42,7 +40,7 @@ function toggleEditMode(enableEdit, namespace) {
 
 function newEntry(type, namespace) {
     setupForm(type, "new", namespace);
-    getNamespacedElement(namespace, "folderAction").innerHTML = "<spring:message code="portlet.script.folder.create" javaScriptEscape="true"/>";
+    getNamespacedElement(namespace, "folderAction").innerHTML = "Move to folder:";
     
     //Ensure all the Folder options are enabled
     var form = getForm(namespace);
@@ -76,7 +74,7 @@ function editEntry(type, namespace, parentFolderIdPath, entryIdPath) {
         form.elements["newWindow"].checked = (entryUrl.target != "");
     }
     
-    getNamespacedElement(namespace, "folderAction").innerHTML = "<spring:message code="portlet.script.folder.move" javaScriptEscape="true"/>";
+    getNamespacedElement(namespace, "folderAction").innerHTML = "Create in folder:";
 
     //Select the folder the entry is in
     var folderOpts =  form.elements["folderPath"].options;
@@ -103,14 +101,14 @@ function deleteEntry(type, namespace, name, url) {
     var confirmMessage = "";
 
     if (type == "bookmark") {
-    	confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.bookmark.prefix" javaScriptEscape="true"/>";
+    	confirmMessage = confirmMessage + "Are you sure you want to delete the \'";
     	confirmMessage = confirmMessage + name;
-        confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.bookmark.suffix" javaScriptEscape="true"/>";
+        confirmMessage = confirmMessage + "\' Bookmark?";
     }
     else {
-    	confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.folder.prefix" javaScriptEscape="true"/>";
+    	confirmMessage = confirmMessage + "Are you sure you want to delete the \'";
     	confirmMessage = confirmMessage + name;
-        confirmMessage = confirmMessage + "<spring:message code="portlet.script.delete.confirm.folder.suffix" javaScriptEscape="true"/>";
+        confirmMessage = confirmMessage + "\' Folder?\nAll children bookmarks and folders will be deleted as well.";
     }
     
     var shouldDelete = confirm(confirmMessage);

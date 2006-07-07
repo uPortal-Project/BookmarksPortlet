@@ -39,18 +39,13 @@
         <property name="nameResolver"><ref local="bookmarkSetNameResolver"/></property>
     </bean>
     
-    
-
-<!--
-    <bean id="bookmarkStore" class="edu.wisc.my.portlets.bookmarks.dao.file.FileSystemBookmarkStore">
-        <property name="baseStorePath">
-            <value>.</value>
-        </property>
+    <bean id="preferencesRequestResolver" class="edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver">
+        <property name="preferencesStore"><ref local="preferencesStore"/></property>
+        <property name="ownerResolver"><ref local="bookmarkSetOwnerResolver"/></property>
+        <property name="nameResolver"><ref local="bookmarkSetNameResolver"/></property>
     </bean>
--->
+    
 
-    
-    
     
     
     <!-- Default View Resolver -->
@@ -64,11 +59,57 @@
     
     
     
+    <bean id="preferencesStore" class="edu.wisc.my.portlets.bookmarks.dao.support.IteratingPreferencesStore">
+        <property name="delegateStores">
+            <list>
+                <ref local="userPreferencesStore"/>
+                <ref local="defaultPreferencesStore"/>
+                <ref local="basePreferencesStore"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="defaultPreferencesStore" class="edu.wisc.my.portlets.bookmarks.dao.support.DefaultOwnerPreferencesStore">
+        <property name="defaultOwner" value="DB_DEFAULTS"/>
+        <property name="preferencesStore"><ref local="userPreferencesStore"/></property>
+    </bean>
+    
+    <bean id="basePreferencesStore" class="edu.wisc.my.portlets.bookmarks.dao.support.DefaultOwnerPreferencesStore">
+        <property name="defaultOwner" value="STATIC_DEFAULTS"/>
+        <property name="preferencesStore"><ref local="simplePreferencesStore"/></property>
+    </bean>
+    
+    <bean id="simplePreferencesStore" class="edu.wisc.my.portlets.bookmarks.dao.support.SimplePreferencesStore">
+        <property name="preferences">
+            <bean class="edu.wisc.my.portlets.bookmarks.domain.Preferences">
+                <property name="id" value="-1"/>
+                <property name="created"><bean class="java.util.Date"/></property>
+                <property name="modified"><bean class="java.util.Date"/></property>
+                <property name="saveFolderState" value="false"/>
+            </bean>
+        </property>
+    </bean>
 
     <!-- Hibernate Persistence Code -->
-    <bean id="bookmarkStore" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-        <property name="transactionManager"><ref bean="transactionManager"/></property>
+    <bean id="bookmarkStore" parent="abstractStoreTransactionProxy">
         <property name="target"><ref local="bookmarkStoreTarget"/></property>
+    </bean>
+    
+    <bean id="bookmarkStoreTarget" class="edu.wisc.my.portlets.bookmarks.dao.hibernate.HibernateBookmarkStore" parent="abstractHibernateTemplate">
+    </bean>
+    
+
+    <bean id="userPreferencesStore" parent="abstractStoreTransactionProxy">
+        <property name="target"><ref local="preferencesStoreTarget"/></property>
+    </bean>
+    
+    <bean id="preferencesStoreTarget" class="edu.wisc.my.portlets.bookmarks.dao.hibernate.HibernatePreferencesStore" parent="abstractHibernateTemplate">
+    </bean>
+    
+
+    
+    <bean id="abstractStoreTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
+        <property name="transactionManager"><ref bean="transactionManager"/></property>
         <property name="transactionAttributes">
             <props>
                 <prop key="store*">PROPAGATION_REQUIRED</prop>
@@ -78,13 +119,11 @@
         </property>
     </bean>
     
-    
-    <bean id="bookmarkStoreTarget" class="edu.wisc.my.portlets.bookmarks.dao.hibernate.HibernateBookmarkStore">
+    <bean id="abstractHibernateTemplate" abstract="true">
         <property name="sessionFactory">
             <ref local="sessionFactory" />
         </property>
     </bean>
-    
     
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
@@ -95,6 +134,7 @@
         <property name="mappingResources">
             <list>
                 <value>hibernate-mappings/Bookmarks.hbm.xml</value>
+                <value>hibernate-mappings/Preferences.hbm.xml</value>
             </list>
         </property>
         <property name="hibernateProperties">
@@ -109,6 +149,7 @@
         <property name="entityCacheStrategies">
             <props>
                 <prop key="edu.wisc.my.portlets.bookmarks.domain.Entry">nonstrict-read-write</prop>
+                <prop key="edu.wisc.my.portlets.bookmarks.domain.Preferences">nonstrict-read-write</prop>
             </props>
         </property>
         <property name="collectionCacheStrategies">

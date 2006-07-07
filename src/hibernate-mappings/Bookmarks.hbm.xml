@@ -60,7 +60,7 @@
             </property>
         </subclass>
     </class>
-    
+
     <query name="DELETE_BOOKMARK_SET__BOTH_NULL">
         <![CDATA[
 			delete BookmarkSet

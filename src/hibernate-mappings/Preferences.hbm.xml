@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" default-cascade="all-delete-orphan">
+    
+    <class name="edu.wisc.my.portlets.bookmarks.domain.Preferences" table="BOOKMARK_PREFS">
+        <id name="id" type="long" unsaved-value="-1">
+            <column name="PREF_ID" not-null="true"/>
+            <generator class="native"/>
+        </id>
+        
+        <property name="name" type="string">
+            <column name="NAME" length="4000" index="NameIdx"/>
+        </property>
+        <property name="owner" type="string">
+            <column name="OWNER" length="500" index="NameIdx"/>
+        </property>
+
+        <property name="saveFolderState" type="true_false">
+            <column name="SAVE_FOLDER_STATE"/>
+        </property>
+    </class>
+
+    <query name="DELETE_BOOKMARK_PREFS__BOTH_NULL">
+        <![CDATA[
+			delete Preferences
+			where name is null and owner is null
+		]]>
+    </query>
+    
+    <query name="DELETE_BOOKMARK_PREFS__NAME_NULL">
+        <![CDATA[
+			delete Preferences
+			where name is null and owner = :owner
+		]]>
+    </query>
+    
+    <query name="DELETE_BOOKMARK_PREFS__OWNER_NULL">
+        <![CDATA[
+			delete Preferences
+			where name = :name and owner is null
+		]]>
+    </query>
+    
+    <query name="DELETE_BOOKMARK_PREFS__NO_NULL">
+        <![CDATA[
+			delete Preferences
+			where name = :name and owner = :owner
+		]]>
+    </query>
+</hibernate-mapping>

@@ -44,7 +44,7 @@ import javax.portlet.PortletRequest;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public interface BookmarkSetOwnerResolver {
+public interface OwnerResolver {
     
     /**
      * Resolves the BookmarkSet owner for the PortletRequest, may return null if no owner is specified for the request.

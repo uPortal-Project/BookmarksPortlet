@@ -44,7 +44,7 @@ import javax.portlet.PortletRequest;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public interface BookmarkSetNameResolver {
+public interface NameResolver {
     
     /**
      * Resolves the BookmarkSet name for the PortletRequest, may return null if no name is specified for the request.
