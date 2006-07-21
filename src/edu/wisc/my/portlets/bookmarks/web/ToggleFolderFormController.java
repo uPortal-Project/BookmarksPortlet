@@ -109,7 +109,7 @@ public class ToggleFolderFormController extends AbstractController {
         //Persist the changes to the BookmarkSet 
         this.bookmarkStore.storeBookmarkSet(bs);
         
+        //Go back to view bookmarks
         response.setRenderParameter("action", "viewBookmarks");
     }
-    
 }

@@ -14,47 +14,59 @@
 
     
     <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.BookmarkValidator"/>
+    <bean id="folderValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.FolderValidator"/>
     
-    <bean id="baseBookmarksController" abstract="true">
+    
+    
+    <bean id="baseBookmarkSetFormController" abstract="true">
         <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
         <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
-    </bean>
-    
-    <bean id="baseBookmarksFormController" abstract="true" parent="baseBookmarksController">
-        <property name="preferencesStore"><ref bean="preferencesStore"/></property>
         <property name="preferencesRequestResolver"><ref bean="preferencesRequestResolver"/></property>
-
-        <property name="sessionForm" value="false"/>
-        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Bookmark"/>
         
         <property name="formView" value="viewBookmarks"/>
         <property name="successView" value="viewBookmarks"/>
     </bean>
     
-    <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController" parent="baseBookmarksFormController">
+    <bean id="baseFolderFormController" parent="baseBookmarkSetFormController" abstract="true">
+        <property name="commandName" value="folderCommand"/>
+        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
+        <property name="validator"><ref bean="folderValidator"/></property>
+    </bean>
+    
+    <bean id="baseBookmarkFormController" parent="baseBookmarkSetFormController" abstract="true">
+        <property name="commandName" value="bookmarkCommand"/>
+        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Bookmark"/>
+        <property name="validator"><ref bean="bookmarkValidator"/></property>
+    </bean>
+    
+
+    <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController">
+        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
+        <property name="preferencesRequestResolver"><ref bean="preferencesRequestResolver"/></property>
+    </bean>
+    
+    <bean id="newBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.NewBookmarkFormController" parent="baseBookmarkFormController">
+    </bean>
+    
+    <bean id="editBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.EditBookmarkFormController" parent="baseBookmarkFormController">
+    </bean>
+    
+    <bean id="newFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.NewFolderFormController" parent="baseFolderFormController">
+    </bean>
+    
+    <bean id="editFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.EditFolderFormController" parent="baseFolderFormController">
+    </bean>
+    
+    <bean id="toggleFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.ToggleFolderFormController">
+        <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
+        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
+    </bean>
+    
+    <bean id="deleteEntryFormController" class="edu.wisc.my.portlets.bookmarks.web.DeleteEntryFormController">
+        <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
+        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
     </bean>
 
-    <bean id="newBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.NewBookmarkFormController" parent="baseBookmarksFormController">
-        <property name="validator"><ref bean="bookmarkValidator"/></property> 
-    </bean>
-    
-    <bean id="editBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.EditBookmarkFormController" parent="baseBookmarksFormController">
-        <property name="validator"><ref bean="bookmarkValidator"/></property> 
-    </bean>
-    
-    <bean id="newFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.NewFolderFormController" parent="baseBookmarksFormController">
-        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
-    </bean>
-    
-    <bean id="editFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.EditFolderFormController" parent="baseBookmarksFormController">
-        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
-    </bean>
-    
-    <bean id="toggleFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.ToggleFolderFormController" parent="baseBookmarksController">
-    </bean>
-    
-    <bean id="deleteEntryFormController" class="edu.wisc.my.portlets.bookmarks.web.DeleteEntryFormController" parent="baseBookmarksController">
-    </bean>
     
     
     <bean id="portletOpenSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.PortletOpenSessionInViewInterceptor">
@@ -77,13 +89,13 @@
             <map>
                 <entry key="view">
                     <map>
-                        <entry key="viewBookmarks"><ref local="viewBookmarksFormController"/></entry>
-                        <entry key="newBookmark"><ref bean="newBookmarkFormController"/></entry>
-                        <entry key="editBookmark"><ref bean="editBookmarkFormController"/></entry>
-                        <entry key="newFolder"><ref bean="newFolderFormController"/></entry>
-                        <entry key="editFolder"><ref bean="editFolderFormController"/></entry>
-                        <entry key="toggleFolder"><ref bean="toggleFolderFormController"/></entry>
-                        <entry key="deleteEntry"><ref bean="deleteEntryFormController"/></entry>
+                        <entry key="viewBookmarks"> <ref local="viewBookmarksFormController"/></entry>
+                        <entry key="newBookmark">   <ref local="newBookmarkFormController"/></entry>
+                        <entry key="editBookmark">  <ref local="editBookmarkFormController"/></entry>
+                        <entry key="newFolder">     <ref local="newFolderFormController"/></entry>
+                        <entry key="editFolder">    <ref local="editFolderFormController"/></entry>
+                        <entry key="toggleFolder">  <ref local="toggleFolderFormController"/></entry>
+                        <entry key="deleteEntry">   <ref local="deleteEntryFormController"/></entry>
                     </map>
                 </entry>
             </map>

@@ -43,20 +43,17 @@ package edu.wisc.my.portlets.bookmarks.web;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
 import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.portlet.mvc.SimpleFormController;
+import org.springframework.web.portlet.mvc.AbstractController;
 
-import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
-import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
 import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
+import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
 import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
 
@@ -67,15 +64,9 @@ import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class ViewBookmarksController extends SimpleFormController {
-    public static final String BOOKMARK_SET = "bookmarkSet";
-    public static final String PREFERENCES  = "preferences";
-    
-    protected BookmarkStore bookmarkStore;
-    protected PreferencesStore preferencesStore;
-
-    protected BookmarkSetRequestResolver bookmarkSetRequestResolver;
-    protected PreferencesRequestResolver preferencesRequestResolver;
+public class ViewBookmarksController extends AbstractController {
+    private BookmarkSetRequestResolver bookmarkSetRequestResolver;
+    private PreferencesRequestResolver preferencesRequestResolver;
     
     
     /**
@@ -93,20 +84,6 @@ public class ViewBookmarksController extends SimpleFormController {
     }
 
     /**
-     * @return Returns the bookmarkStore.
-     */
-    public BookmarkStore getBookmarkStore() {
-        return this.bookmarkStore;
-    }
-
-    /**
-     * @param bookmarkStore The bookmarkStore to set.
-     */
-    public void setBookmarkStore(BookmarkStore bookmarkStore) {
-        this.bookmarkStore = bookmarkStore;
-    }
-
-    /**
      * @return Returns the preferencesRequestResolver.
      */
     public PreferencesRequestResolver getPreferencesRequestResolver() {
@@ -120,44 +97,28 @@ public class ViewBookmarksController extends SimpleFormController {
         this.preferencesRequestResolver = preferencesRequestResolver;
     }
 
-    /**
-     * @return Returns the preferencesStore.
-     */
-    public PreferencesStore getPreferencesStore() {
-        return this.preferencesStore;
-    }
 
     /**
-     * @param preferencesStore The preferencesStore to set.
-     */
-    public void setPreferencesStore(PreferencesStore preferencesStore) {
-        this.preferencesStore = preferencesStore;
-    }
-
-
-    
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#referenceData(javax.portlet.PortletRequest, java.lang.Object, org.springframework.validation.Errors)
+     * @see org.springframework.web.portlet.mvc.AbstractController#handleRenderRequestInternal(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
      */
     @Override
-    protected Map referenceData(PortletRequest request, Object command, Errors errors) throws Exception {
+    protected ModelAndView handleRenderRequestInternal(RenderRequest request, RenderResponse response) throws Exception {
         final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
         final Preferences preferences = this.preferencesRequestResolver.getPreferences(request, false);
-        
-        final Map<String, Object> refData = new HashMap<String, Object>();
-        refData.put(BOOKMARK_SET, bookmarkSet);
-        refData.put(PREFERENCES, preferences);
-        refData.put("emptyCommand", new Bookmark());
-        
-        return refData;
-    }
 
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#renderFormSubmission(javax.portlet.RenderRequest, javax.portlet.RenderResponse, java.lang.Object, org.springframework.validation.BindException)
-     */
-    @Override
-    protected ModelAndView renderFormSubmission(RenderRequest request, RenderResponse response, Object command, BindException errors) throws Exception {
-        //This should ensure the form renders correctly every time
-        return showForm(request, response, errors);
+        final Map<String, Object> refData = new HashMap<String, Object>();
+        refData.put(ViewConstants.BOOKMARK_SET, bookmarkSet);
+        refData.put(ViewConstants.PREFERENCES, preferences);
+
+        refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());
+        refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());
+        refData.put(ViewConstants.COMMAND_EMPTY_OPTIONS, new Preferences());
+
+        //TODO remove these!
+        refData.put(ViewConstants.COMMAND_BOOKMARK, new Bookmark());
+        refData.put(ViewConstants.COMMAND_FOLDER, new Folder());
+        refData.put(ViewConstants.COMMAND_OPTIONS, new Preferences());
+
+        return new ModelAndView("viewBookmarks", refData);
     }
 }

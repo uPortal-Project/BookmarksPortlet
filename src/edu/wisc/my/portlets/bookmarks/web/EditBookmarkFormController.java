@@ -41,6 +41,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.validation.BindException;
@@ -58,7 +59,16 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class EditBookmarkFormController extends ViewBookmarksController {
+public class EditBookmarkFormController extends BaseBookmarksFormController {
+    /**
+     * @see org.springframework.web.portlet.mvc.AbstractFormController#formBackingObject(javax.portlet.PortletRequest)
+     */
+    @Override
+    protected Object formBackingObject(PortletRequest request) throws Exception {
+        //TODO if move return default object
+        //TODO if no move get real object from store for updating
+        return super.formBackingObject(request);
+    }
 
     /**
      * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
@@ -109,6 +119,9 @@ public class EditBookmarkFormController extends ViewBookmarksController {
 
         //Persist the changes to the BookmarkSet 
         this.bookmarkStore.storeBookmarkSet(bs);
+        
+        if (errors.getErrorCount() <= 0) {
+            response.setRenderParameter("action", "viewBookmarks");
+        }
     }
-    
 }

@@ -116,9 +116,11 @@ public class DeleteEntryFormController extends AbstractController {
             this.bookmarkStore.storeBookmarkSet(bs);
         }
         else {
-            //TODO deal with trying to delete the root folder
+            //Deleting the root bookmark
+            this.bookmarkStore.removeBookmarkSet(bs.getOwner(), bs.getName());
         }
         
+        //Go back to view bookmarks
         response.setRenderParameter("action", "viewBookmarks");
     }
 }

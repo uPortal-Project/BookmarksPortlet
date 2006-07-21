@@ -25,26 +25,8 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     
-    <!--
-     | This servlet is used for rendering Spring servlet handlers
-     +-->
-    <servlet>
-        <servlet-name>ResourceRenderer</servlet-name>
-        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>/WEB-INF/context/servlet/resourceRendererContext.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-    
     <servlet-mapping>
         <servlet-name>ViewRendererServlet</servlet-name>
         <url-pattern>/WEB-INF/servlet/view</url-pattern>
-    </servlet-mapping>
-    
-    <servlet-mapping>
-        <servlet-name>ResourceRenderer</servlet-name>
-        <url-pattern>/script/*</url-pattern>
     </servlet-mapping>
 </web-app>
