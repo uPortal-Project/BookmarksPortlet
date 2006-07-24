@@ -59,7 +59,7 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class EditBookmarkFormController extends BaseBookmarksFormController {
+public class EditBookmarkFormController extends BaseEntryFormController {
     /**
      * @see org.springframework.web.portlet.mvc.AbstractFormController#formBackingObject(javax.portlet.PortletRequest)
      */
@@ -119,9 +119,5 @@ public class EditBookmarkFormController extends BaseBookmarksFormController {
 
         //Persist the changes to the BookmarkSet 
         this.bookmarkStore.storeBookmarkSet(bs);
-        
-        if (errors.getErrorCount() <= 0) {
-            response.setRenderParameter("action", "viewBookmarks");
-        }
     }
 }

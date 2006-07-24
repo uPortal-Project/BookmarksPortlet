@@ -13,14 +13,12 @@ package edu.wisc.my.portlets.bookmarks.web.support;
  */
 public final class ViewConstants {
     public static final String BOOKMARK_SET = "bookmarkSet";
-    public static final String PREFERENCES  = "preferences";
+    public static final String OPTIONS      = "options";
     public static final String ERRORS       = "errors";
     
-    public static final String COMMAND_EMPTY_OPTIONS    = "emptyOptionsCommand";
     public static final String COMMAND_EMPTY_FOLDER     = "emptyFolderCommand";
     public static final String COMMAND_EMPTY_BOOKMARK   = "emptyBookmarkCommand";
 
-    public static final String COMMAND_OPTIONS  = "optionsCommand";
     public static final String COMMAND_FOLDER   = "folderCommand";
     public static final String COMMAND_BOOKMARK = "bookmarkCommand";
 }

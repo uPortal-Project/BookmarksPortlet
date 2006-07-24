@@ -13,11 +13,17 @@
 -->    
 
     
+    <!--
+     | Validators for use by the controllers
+     +-->
     <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.BookmarkValidator"/>
     <bean id="folderValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.FolderValidator"/>
+    <bean id="preferencesValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.PreferencesValidator"/>
     
     
-    
+    <!--
+     | Abstract controllers for re-use below
+     +-->
     <bean id="baseBookmarkSetFormController" abstract="true">
         <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
         <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
@@ -40,6 +46,9 @@
     </bean>
     
 
+    <!--
+     | Actuall, in-use controllers
+     +-->
     <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController">
         <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
         <property name="preferencesRequestResolver"><ref bean="preferencesRequestResolver"/></property>
@@ -66,9 +75,20 @@
         <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
         <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
     </bean>
+    
+    <bean id="saveOptionsFormController" class="edu.wisc.my.portlets.bookmarks.web.PreferencesFormController" parent="baseBookmarkSetFormController">
+        <property name="commandName" value="options"/>
+        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Preferences"/>
+        <property name="validator"><ref bean="preferencesValidator"/></property>
+        
+        <property name="preferencesStore"><ref bean="preferencesStore"/></property>
+    </bean>
 
     
     
+    <!--
+     | Handler mappings to determine the correct controller.
+     +-->
     <bean id="portletOpenSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.PortletOpenSessionInViewInterceptor">
         <property name="sessionFactory">
             <ref bean="sessionFactory" />
@@ -96,6 +116,7 @@
                         <entry key="editFolder">    <ref local="editFolderFormController"/></entry>
                         <entry key="toggleFolder">  <ref local="toggleFolderFormController"/></entry>
                         <entry key="deleteEntry">   <ref local="deleteEntryFormController"/></entry>
+                        <entry key="saveOptions">   <ref local="saveOptionsFormController"/></entry>
                     </map>
                 </entry>
             </map>

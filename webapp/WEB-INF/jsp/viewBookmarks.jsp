@@ -35,8 +35,7 @@
                                     "errorFolderForm",          //folder_forms_error
                                     "/img/folder-closed.gif",   //folder_image_closed
                                     "/img/folder-opened.gif",   //folder_image_open
-                                    "emptyOptionsForm",         //options_forms_empty
-                                    "errorOptionsForm",         //options_forms_error
+                                    "optionsForm",         //options_form
                                     "optionsLink",              //options_showLink
                                     "<spring:message code="portlet.script.folder.create" javaScriptEscape="true"/>",                    //messages_folder_create
                                     "<spring:message code="portlet.script.folder.move" javaScriptEscape="true"/>",                      //messages_folder_move
@@ -47,20 +46,20 @@
     </script>
 
 
+    <c:set var="optionsFormHidden" value="true"/>
+    <c:if test="${hasErrors && empty folderCommand && empty bookmarkCommand}">
+        <c:set var="optionsFormHidden" value="false"/>
+        <c:set var="optionsLinkClass" value="hidden" scope="page"/>
+        <c:set var="bookmarksTreeAndFormClass" value="hidden" scope="page"/>
+    </c:if>
+    
     <div style="float: right;">
-        <c:if test="${hasErrors && !empty optionsCommand}">
-            <c:set var="optionsLinkClass" value="hidden" scope="page"/>
-        </c:if>
         <a id="${portletNamespace}optionsLink" href="#" class="${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></a>
     </div>
-    
-    <c:if test="${hasErrors && !empty optionsCommand}">
-        <bm:optionsForm formName="errorOptionsForm" commandName="optionsCommand" hidden="false" namespace="${portletNamespace}"/>
-    </c:if>
-    <bm:optionsForm formName="emptyOptionsForm" commandName="emptyOptionsCommand" hidden="true" namespace="${portletNamespace}"/>
+    <bm:optionsForm formName="optionsForm" commandName="options" hidden="${optionsFormHidden}" namespace="${portletNamespace}"/>
     
 
-    <div id="${portletNamespace}bookmarksTreeAndForm">
+    <div id="${portletNamespace}bookmarksTreeAndForm" class="${bookmarksTreeAndFormClass}">
         <c:set var="bookmarkEntries" value="${bookmarkSet.sortedChildren}" scope="page"/>
         <c:choose>
             <c:when test="${fn:length(bookmarkEntries) > 0}">

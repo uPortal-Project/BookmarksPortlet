@@ -30,10 +30,27 @@ import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
  * @version $Revision$
  */
 public class BaseBookmarksFormController extends SimpleFormController {
+    private String handlerMappingParameter = "action";
+
     protected BookmarkSetRequestResolver bookmarkSetRequestResolver;
     protected PreferencesRequestResolver preferencesRequestResolver;
     protected BookmarkStore bookmarkStore;
     
+
+    
+    /**
+     * @return Returns the handlerMappingParameter.
+     */
+    public String getHandlerMappingParameter() {
+        return this.handlerMappingParameter;
+    }
+
+    /**
+     * @param handlerMappingParameter The handlerMappingParameter to set.
+     */
+    public void setHandlerMappingParameter(String handlerMappingParameter) {
+        this.handlerMappingParameter = handlerMappingParameter;
+    }
 
     /**
      * @return Returns the bookmarkSetRequestResolver.
@@ -88,12 +105,11 @@ public class BaseBookmarksFormController extends SimpleFormController {
 
         final Map<String, Object> refData = new HashMap<String, Object>();
         refData.put(ViewConstants.BOOKMARK_SET, bookmarkSet);
-        refData.put(ViewConstants.PREFERENCES, preferences);
+        refData.put(ViewConstants.OPTIONS, preferences);
         refData.put(ViewConstants.ERRORS, errors);
 
         refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());
         refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());
-        refData.put(ViewConstants.COMMAND_EMPTY_OPTIONS, new Preferences());
 
         return refData;
     }
@@ -103,16 +119,11 @@ public class BaseBookmarksFormController extends SimpleFormController {
      */
     @Override
     protected void processFormSubmission(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
-        if (errors.hasErrors()) {
-            final String action = request.getParameter("action");
-            final String idPath = request.getParameter("idPath");
-            final String folderPath = request.getParameter("folderPath");
-
-            response.setRenderParameter("action", action);
-            response.setRenderParameter("idPath", idPath);
-            response.setRenderParameter("folderPath", folderPath);
-        }
-        
         super.processFormSubmission(request, response, command, errors);
+
+        if (errors.getErrorCount() <= 0) {
+            response.setRenderParameter(this.handlerMappingParameter, this.getSuccessView());
+        }
     }
+    
 }

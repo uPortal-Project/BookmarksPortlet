@@ -58,7 +58,7 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
  */
-public class NewBookmarkFormController extends BaseBookmarksFormController {
+public class NewBookmarkFormController extends BaseEntryFormController {
     /**
      * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
      */
@@ -86,9 +86,5 @@ public class NewBookmarkFormController extends BaseBookmarksFormController {
         
         //Persist the changes to the BookmarkSet 
         this.bookmarkStore.storeBookmarkSet(bs);
-        
-        if (errors.getErrorCount() <= 0) {
-            response.setRenderParameter("action", "viewBookmarks");
-        }
     }
 }

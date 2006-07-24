@@ -39,8 +39,7 @@ function BookmarksPortletData(  namespace,
                                 folder_forms_error,
                                 folder_image_closed,
                                 folder_image_open,
-                                options_forms_empty,
-                                options_forms_error,
+                                options_form,
                                 options_showLink,
                                 messages_folder_create,
                                 messages_folder_move,
@@ -79,8 +78,7 @@ function BookmarksPortletData(  namespace,
     this.folder_forms_error = folder_forms_error;
     this.folder_image_closed = folder_image_closed;
     this.folder_image_open = folder_image_open;
-    this.options_forms_empty = options_forms_empty;
-    this.options_forms_error = options_forms_error;
+    this.options_form = options_form;
     this.options_showLink = options_showLink;
     this.messages_folder_create = messages_folder_create;
     this.messages_folder_move = messages_folder_move;
@@ -121,11 +119,11 @@ function BookmarksPortletData(  namespace,
 
 /***** Public Methods *****/
 function showOptionsForm(namespace) {
-    resetForm(namespace, bookmarkPortletsData[namespace].options_forms_empty);
+    resetForm(namespace, bookmarkPortletsData[namespace].options_form);
 
     hideElement(namespace, bookmarkPortletsData[namespace].bookmarksTreeAndForm);
     hideElement(namespace, bookmarkPortletsData[namespace].options_showLink);
-    showForm(namespace, bookmarkPortletsData[namespace].options_forms_empty);
+    showForm(namespace, bookmarkPortletsData[namespace].options_form);
 }
 
 function cancelOptionsForm(namespace, formName) {
