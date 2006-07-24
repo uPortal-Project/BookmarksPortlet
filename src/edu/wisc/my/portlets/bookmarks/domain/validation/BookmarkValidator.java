@@ -98,7 +98,7 @@ public class BookmarkValidator extends EntryValidator {
     }
 
     private void validateUrl(Bookmark bookmark, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "url", "URL_REQUIRED", "URL is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "url", "portlet.bookmark.error.url.required");
 
         String url = bookmark.getUrl();
         if (!url.contains(PROTOCOL_SEPERATOR)) {
@@ -111,7 +111,7 @@ public class BookmarkValidator extends EntryValidator {
             new URL(url);
         }
         catch (MalformedURLException mue) {
-            errors.rejectValue("url", "MALFORMED_URL", "The URL entered is invalid.");
+            errors.rejectValue("url", "portlet.bookmark.error.url.malformed");
         }
     }
 }

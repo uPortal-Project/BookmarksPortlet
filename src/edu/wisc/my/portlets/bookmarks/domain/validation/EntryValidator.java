@@ -66,6 +66,6 @@ public class EntryValidator implements Validator {
     }
 
     private void validateName(Entry entry, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "NAME_REQUIRED", "Name is required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "portlet.entry.error.name.required");
     }
 }

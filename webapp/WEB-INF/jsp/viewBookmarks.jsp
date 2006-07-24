@@ -97,7 +97,7 @@
             <bm:bookmarkForm 
                 formName="errorBookmarkForm" commandName="bookmarkCommand" entries="${bookmarkEntries}" 
                 hidden="false" namespace="${portletNamespace}" actionInput="${param['action']}" 
-                idPathInput="${param['idPath']}" folderActionLabel="${folderActionLabel}"/>
+                idPathInput="${param['idPath']}" folderActionLabel="${folderActionLabel}" isErrorForm="true"/>
 
             <script type="text/javascript">
                 setupErrorForm("${portletNamespace}", "errorBookmarkForm", "${param['folderPath']}");
@@ -109,10 +109,10 @@
             <bm:folderForm 
                 formName="errorFolderForm" commandName="folderCommand" entries="${bookmarkEntries}" 
                 hidden="false" namespace="${portletNamespace}" actionInput="${param['action']}" 
-                idPathInput="${param['idPath']}" folderActionLabel="${folderActionLabel}"/>
+                idPathInput="${param['idPath']}" folderActionLabel="${folderActionLabel}" isErrorForm="true"/>
             
             <script type="text/javascript">
-                setupErrorForm("${portletNamespace}", "errorBookmarkForm", "${param['folderPath']}");
+                setupErrorForm("${portletNamespace}", "errorFolderForm", "${param['folderPath']}");
             </script>
         </c:if>
         <bm:folderForm formName="emptyFolderForm" commandName="emptyFolderCommand" entries="${bookmarkEntries}" hidden="true" namespace="${portletNamespace}"/>

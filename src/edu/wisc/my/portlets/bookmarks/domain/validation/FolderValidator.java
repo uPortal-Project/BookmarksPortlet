@@ -30,6 +30,7 @@ public class FolderValidator extends EntryValidator {
      */
     @Override
     public void validate(Object obj, Errors errors) {
+        //Currently folders have no Folder specific fields to validate
         super.validate(obj, errors);
     }
 }
