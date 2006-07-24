@@ -1,6 +1,6 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 <c:set var="portletNamespace" scope="request"><portlet:namespace/></c:set>
-<c:set var="hasErrors" scope="request" value="${errors.errorCount == 0}"/>
+<c:set var="hasErrors" scope="request" value="${errors.errorCount > 0}"/>
 
 <div id="bookmarksPortlet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
@@ -16,18 +16,20 @@
                                     "bookmarksChildFolder_",    //entry_childFolderPrefix
                                     "entryEditButtons",         //entry_edit_buttons
                                     "cancelLink",               //entry_edit_cancelLink
-                                    "editLink",                 //entry_edit_editLin
+                                    "editLink",                 //entry_edit_editLine
+                                    "action",                   //entry_form_action
                                     "editBookmark",             //entry_form_action_editBookmar
                                     "editFolder",               //entry_form_action_editFolder
                                     "newBookmark",              //entry_form_action_newBookmark
                                     "newFolder",                //entry_form_action_newFolder
                                     "folderPath",               //entry_form_folderPath
                                     "folderActionLabel",        //entry_form_folderPathLabel
-                                    "name",                     //entry_form_nam
+                                    "idPath",                   //entry_form_idPath
+                                    "name",                     //entry_form_name
                                     "note",                     //entry_form_note
                                     "entryImg_",                //entry_imagePrefix
                                     "referenceFolderPath",      //entry_reference_folderPath
-                                    "name_",                    //entry_reference_nam
+                                    "name_",                    //entry_reference_name
                                     "note_",                    //entry_reference_note
                                     "emptyFolderForm",          //folder_forms_empty
                                     "errorFolderForm",          //folder_forms_error
@@ -46,7 +48,7 @@
 
 
     <div style="float: right;">
-        <c:if test="${hasErrors}">
+        <c:if test="${hasErrors && !empty optionsCommand}">
             <c:set var="optionsLinkClass" value="hidden" scope="page"/>
         </c:if>
         <a id="${portletNamespace}optionsLink" href="#" class="${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></a>
@@ -79,15 +81,40 @@
             &nbsp;&nbsp;&nbsp;    
             <a href="#" id="${portletNamespace}editLink" onclick="toggleEditMode('${portletNamespace}', true);return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
             <a href="#" id="${portletNamespace}cancelLink" onclick="toggleEditMode('${portletNamespace}', false);return false;" class="jsTextLink portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
-        </c:if> 
+        </c:if>
+        
+        <c:if test="${hasErrors}">
+            <c:choose>
+                <c:when test="${fn:startsWith(param['action'], 'new')}">
+                    <spring:message code="portlet.script.folder.create" javaScriptEscape="false" var="folderActionLabel"/>
+                </c:when>
+                <c:when test="${fn:startsWith(param['action'], 'edit')}">
+                    <spring:message code="portlet.script.folder.move" javaScriptEscape="false" var="folderActionLabel"/>
+                </c:when>
+            </c:choose>
+        </c:if>
         
         <c:if test="${hasErrors && !empty bookmarkCommand}">
-            <bm:bookmarkForm formName="errorBookmarkForm" commandName="bookmarkCommand" entries="${bookmarkEntries}" hidden="false" namespace="${portletNamespace}"/>
+            <bm:bookmarkForm 
+                formName="errorBookmarkForm" commandName="bookmarkCommand" entries="${bookmarkEntries}" 
+                hidden="false" namespace="${portletNamespace}" actionInput="${param['action']}" 
+                idPathInput="${param['idPath']}" folderActionLabel="${folderActionLabel}"/>
+
+            <script type="text/javascript">
+                setupErrorForm("${portletNamespace}", "errorBookmarkForm", "${param['folderPath']}");
+            </script>
         </c:if>
         <bm:bookmarkForm formName="emptyBookmarkForm" commandName="emptyBookmarkCommand" entries="${bookmarkEntries}" hidden="true" namespace="${portletNamespace}"/> 
         
         <c:if test="${hasErrors && !empty folderCommand}">
-            <bm:folderForm formName="errorFolderForm" commandName="folderCommand" entries="${bookmarkEntries}" hidden="false" namespace="${portletNamespace}"/>
+            <bm:folderForm 
+                formName="errorFolderForm" commandName="folderCommand" entries="${bookmarkEntries}" 
+                hidden="false" namespace="${portletNamespace}" actionInput="${param['action']}" 
+                idPathInput="${param['idPath']}" folderActionLabel="${folderActionLabel}"/>
+            
+            <script type="text/javascript">
+                setupErrorForm("${portletNamespace}", "errorBookmarkForm", "${param['folderPath']}");
+            </script>
         </c:if>
         <bm:folderForm formName="emptyFolderForm" commandName="emptyFolderCommand" entries="${bookmarkEntries}" hidden="true" namespace="${portletNamespace}"/>
     </div>

@@ -114,11 +114,6 @@ public class ViewBookmarksController extends AbstractController {
         refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());
         refData.put(ViewConstants.COMMAND_EMPTY_OPTIONS, new Preferences());
 
-        //TODO remove these!
-        refData.put(ViewConstants.COMMAND_BOOKMARK, new Bookmark());
-        refData.put(ViewConstants.COMMAND_FOLDER, new Folder());
-        refData.put(ViewConstants.COMMAND_OPTIONS, new Preferences());
-
         return new ModelAndView("viewBookmarks", refData);
     }
 }

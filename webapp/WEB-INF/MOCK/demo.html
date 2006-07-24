@@ -1,70 +1,69 @@
 <div id="bookmarksPortlet">
     <link rel="stylesheet" href="../../css/bookmarks.css" type="text/css"/>
-    <script src="./../script/bookmarks.js" type="text/javascript"></script>
-    
+    <script src="../../script/bookmarks.js" type="text/javascript"></script>
     <script type="text/javascript">
-        new BookmarksPortletData(   "Pluto_n60_", 
-                                    "newWindow",                       //bookmark_form_newWindow
-                                    "url",                             //bookmark_form_url
-                                    "emptyBookmarkForm",               //bookmark_forms_empty
-                                    "errorBookmarkForm",               //bookmark_forms_error
-                                    "url_",                            //bookmark_reference_url
-                                    "bookmarksTreeAndForm",            //bookmarksTreeAndForm
-                                    "bookmarksChildFolder_",           //entry_childFolderPrefix
-                                    "entryEditButtons",                //entry_edit_buttons
-                                    "cancelLink",                      //entry_edit_cancelLink
-                                    "editLink",                        //entry_edit_editLin
-                                    "editBookmark",                    //entry_form_action_editBookmar
-                                    "editFolder",                      //entry_form_action_editFolder
-                                    "newBookmark",                     //entry_form_action_newBookmark
-                                    "newFolder",                       //entry_form_action_newFolder
-                                    "folderPath",                      //entry_form_folderPath
-                                    "folderActionLabel",               //entry_form_folderPathLabel
-                                    "name",                            //entry_form_nam
-                                    "note",                            //entry_form_note
-                                    "entryImg_",                       //entry_imagePrefix
-                                    "referenceFolderPath",             //entry_reference_folderPath
-                                    "name_",                           //entry_reference_nam
-                                    "note_",                           //entry_reference_note
-                                    "emptyFolderForm",                 //folder_forms_empty
-                                    "errorFolderForm",                 //folder_forms_error
-                                    "/img/folder-closed.gif",          //folder_image_closed
-                                    "/img/folder-opened.gif",          //folder_image_open
-                                    "emptyOptionsForm",                //options_forms_empty
-                                    "errorOptionsForm",                //options_forms_error
-                                    "optionsLink",                     //options_showLink
-                                    "Create in folder:",               //messages_folder_create
-                                    "Move to folder:",                 //messages_folder_move
-                                    "Are you sure you want to delete the \'",  //messages_delete_bookmark_prefix
-                                    "\' Bookmark?",                            //messages_delete_bookmark_suffix
-                                    "Are you sure you want to delete the \'",  //messages_delete_folder_prefix
-                                    "\' Folder?\nAll children bookmarks and folders will be deleted as well."); //messages_delete_folder_suffix
+        new BookmarksPortletData(   "Pluto_n60_",      //namespace
+                                    "newWindow",                //bookmark_form_newWindow
+                                    "url",                      //bookmark_form_url
+                                    "emptyBookmarkForm",        //bookmark_forms_empty
+                                    "errorBookmarkForm",        //bookmark_forms_error
+                                    "url_",                     //bookmark_reference_url
+                                    "bookmarksTreeAndForm",     //bookmarksTreeAndForm
+                                    "bookmarksChildFolder_",    //entry_childFolderPrefix
+                                    "entryEditButtons",         //entry_edit_buttons
+                                    "cancelLink",               //entry_edit_cancelLink
+                                    "editLink",                 //entry_edit_editLin
+                                    "action",                   //entry_form_action
+                                    "editBookmark",             //entry_form_action_editBookmar
+                                    "editFolder",               //entry_form_action_editFolder
+                                    "newBookmark",              //entry_form_action_newBookmark
+                                    "newFolder",                //entry_form_action_newFolder
+                                    "folderPath",               //entry_form_folderPath
+                                    "folderActionLabel",        //entry_form_folderPathLabel
+                                    "idPath",                   //entry_form_idPath
+                                    "name",                     //entry_form_name
+                                    "note",                     //entry_form_note
+                                    "entryImg_",                //entry_imagePrefix
+                                    "referenceFolderPath",      //entry_reference_folderPath
+                                    "name_",                    //entry_reference_nam
+                                    "note_",                    //entry_reference_note
+                                    "emptyFolderForm",          //folder_forms_empty
+                                    "errorFolderForm",          //folder_forms_error
+                                    "/img/folder-closed.gif",   //folder_image_closed
+                                    "/img/folder-opened.gif",   //folder_image_open
+                                    "emptyOptionsForm",         //options_forms_empty
+                                    "errorOptionsForm",         //options_forms_error
+                                    "optionsLink",              //options_showLink
+                                    "Create in folder:",                    //messages_folder_create
+                                    "Move to folder:",                      //messages_folder_move
+                                    "Are you sure you want to delete the \'",   //messages_delete_bookmark_prefix
+                                    "\' Bookmark?",   //messages_delete_bookmark_suffix
+                                    "Are you sure you want to delete the \'",     //messages_delete_folder_prefix
+                                    "\' Folder?\nAll children bookmarks and folders will be deleted as well.");    //messages_delete_folder_suffix
     </script>
     
     <div style="float: right;">
         <a id="Pluto_n60_optionsLink" href="#" class="" onclick="showOptionsForm('Pluto_n60_');return false;">Options</a>
     </div>
-        
-    <form id="Pluto_n60_emptyOptionsForm" name="Pluto_n60_emptyOptionsForm" class="hidden" method="POST" action="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
+    
+    <form id="Pluto_n60_emptyOptionsForm" name="Pluto_n60_emptyOptionsForm" class="hidden" method="POST" action="/portal/tag.c1b3f1138c060a55.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
         <input name="action" type="hidden" value="saveOptions"/>
     
         <table padding="0">
             <tr>
+    
                 <td/>
                 <td>
                     <input id="saveFolderState" name="saveFolderState" class="portlet-form-field" type="checkbox" value="true"/><input type="hidden" value="1" name="_saveFolderState"/>
-    
                     <label class="portlet-form-field-label" for="saveFolderState">Save Folder State</label>
                 </td>
                 <td></td>
             </tr>
             <tr>
-                <td align="right" colspan="2">
-                    
-                    <input class="portlet-form-button" value="Save" type="submit"/>
-                    
-                    <input class="portlet-form-button" value="Cancel" type="reset" onclick="cancelOptionsForm('Pluto_n60_', 'emptyOptionsForm');"/>
     
+                <td align="right" colspan="2">
+                    <input class="portlet-form-button" value="Save" type="submit"/>
+                    <input class="portlet-form-button" value="Cancel" type="reset" onclick="cancelOptionsForm('Pluto_n60_', 'emptyOptionsForm');"/>
                 </td>
                 <td/>
             </tr>
@@ -75,7 +74,7 @@
         <ul id="Pluto_n60_bookmarksRootEntry_82" class="bookmarkList">
             <li id="Pluto_n60_bookmarksTreeItem" class="bookmarkListItem">
                 <a id="Pluto_n60_url_82.105" 
-                    href="#" onclick="toggleFolder('Pluto_n60_', '82.105', '../../');return false;"  
+                    href="#" onclick="toggleFolder('Pluto_n60_', '82.105', '../..');return false;"  
                     title=""><img id="Pluto_n60_entryImg_82.105" src="../../img/folder-opened.gif" border="0" alt=""/>
                     <span id="Pluto_n60_name_82.105" class="portlet-font">UW</span></a>
                 
@@ -85,80 +84,62 @@
                     <a href="#" onclick="editEntry('Pluto_n60_', 'folder', '82', '82.105');return false;"
                         title="Edit Folder - UW"><img src="../../img/edit.gif" alt="Edit Folder - UW"/></a>
                     
-                    <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.105#n60"
-                        onclick="return deleteEntry('Pluto_n60_', 'folder', '82.105');" 
+                    <a href="#"
+                        onclick="deleteEntry('Pluto_n60_', 'folder', '82.105', '/portal/tag.c1b3f1138c060a55.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.105#n60');return false;" 
                         title="Delete Folder - UW"><img src="../../img/delete.gif" alt="Delete Folder - UW"/></a>
                 </span>
         
                 <span id="Pluto_n60_note_82.105" class="hidden"></span>
-
+                
                 <ul id="Pluto_n60_bookmarksChildFolder_82.105" class="subBookmarkList ">
                     <li id="Pluto_n60_bookmarksTreeItem" class="bookmarkListItem">
-                        <a id="Pluto_n60_url_82.105.106" 
-                            href="http://www.wisc.edu"  target="_blank" 
-                            title=""><img id="Pluto_n60_entryImg_82.105.106" src="../../img/bookmark.gif" border="0" alt=""/>
-                            <span id="Pluto_n60_name_82.105.106" class="portlet-font">UW</span></a>
+                        <a id="Pluto_n60_url_82.105.125" 
+                            href="http://my.wisc.edu"  target="_blank" 
+                            title=""><img id="Pluto_n60_entryImg_82.105.125" src="../../img/bookmark.gif" border="0" alt=""/>
+                            <span id="Pluto_n60_name_82.105.125" class="portlet-font">My UW</span></a>
                         
                         <span class="padding"></span>
                         
                         <span id="Pluto_n60_entryEditButtons" name="Pluto_n60_entryEditButtons" class="hidden">
-                            <a href="#" onclick="editEntry('Pluto_n60_', 'bookmark', '82.105', '82.105.106');return false;"
-                                title="Edit Bookmark - UW"><img src="../../img/edit.gif" alt="Edit Bookmark - UW"/></a>
+                
+                            <a href="#" onclick="editEntry('Pluto_n60_', 'bookmark', '82.105', '82.105.125');return false;"
+                                title="Edit Bookmark - My UW"><img src="../../img/edit.gif" alt="Edit Bookmark - My UW"/></a>
                             
-                            <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.105.106#n60"
-                                onclick="return deleteEntry('Pluto_n60_', 'bookmark', '82.105.106');" 
-                                title="Delete Bookmark - UW"><img src="../../img/delete.gif" alt="Delete Bookmark - UW"/></a>
+                            <a href="#"
+                                onclick="deleteEntry('Pluto_n60_', 'bookmark', '82.105.125', '/portal/tag.c1b3f1138c060a55.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.105.125#n60');return false;" 
+                                title="Delete Bookmark - My UW"><img src="../../img/delete.gif" alt="Delete Bookmark - My UW"/></a>
                         </span>
                 
-                        <span id="Pluto_n60_note_82.105.106" class="hidden"></span>
+                        <span id="Pluto_n60_note_82.105.125" class="hidden"></span>
                     </li>
                 </ul>
             </li>
         
             <li id="Pluto_n60_bookmarksTreeItem" class="bookmarkListItem">
-                <a id="Pluto_n60_url_82.87" 
-                    href="http://www.google.com" onclick="toggleFolder('Pluto_n60_', '82.105', '../../');return false;" target="_blank" 
-                    title=""><img id="Pluto_n60_entryImg_82.87" src="../../img/bookmark.gif" border="0" alt=""/>
-                    <span id="Pluto_n60_name_82.87" class="portlet-font">Google</span></a>
-        
+                <a id="Pluto_n60_url_82.126" 
+                    href="http://www.google.com" onclick="toggleFolder('Pluto_n60_', '82.105', '../..');return false;" target="_blank" 
+                    title=""><img id="Pluto_n60_entryImg_82.126" src="../../img/bookmark.gif" border="0" alt=""/>
+                    <span id="Pluto_n60_name_82.126" class="portlet-font">Google</span></a>
+                
                 <span class="padding"></span>
                 
+                
                 <span id="Pluto_n60_entryEditButtons" name="Pluto_n60_entryEditButtons" class="hidden">
-                    <a href="#" onclick="editEntry('Pluto_n60_', 'bookmark', '82', '82.87');return false;"
+                    <a href="#" onclick="editEntry('Pluto_n60_', 'bookmark', '82', '82.126');return false;"
                         title="Edit Bookmark - Google"><img src="../../img/edit.gif" alt="Edit Bookmark - Google"/></a>
                     
-                    <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.87#n60"
-                        onclick="return deleteEntry('Pluto_n60_', 'bookmark', '82.87');" 
+                    <a href="#"
+                        onclick="deleteEntry('Pluto_n60_', 'bookmark', '82.126', '/portal/tag.c1b3f1138c060a55.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.126#n60');return false;" 
                         title="Delete Bookmark - Google"><img src="../../img/delete.gif" alt="Delete Bookmark - Google"/></a>
                 </span>
         
-                <span id="Pluto_n60_note_82.87" class="hidden"></span>
-            </li>
-        
-            <li id="Pluto_n60_bookmarksTreeItem" class="bookmarkListItem">
-        
-                <a id="Pluto_n60_url_82.107" 
-                    href="http://www.yahoo.com" onclick="toggleFolder('Pluto_n60_', '82.105', '../../');return false;" target="_blank" 
-                    title=""><img id="Pluto_n60_entryImg_82.107" src="../../img/bookmark.gif" border="0" alt=""/>
-                    <span id="Pluto_n60_name_82.107" class="portlet-font">Yahoo</span></a>
+                <span id="Pluto_n60_note_82.126" class="hidden"></span>
                 
-                <span class="padding"></span>
-                
-                <span id="Pluto_n60_entryEditButtons" name="Pluto_n60_entryEditButtons" class="hidden">
-                    <a href="#" onclick="editEntry('Pluto_n60_', 'bookmark', '82', '82.107');return false;"
-                        title="Edit Bookmark - Yahoo"><img src="../../img/edit.gif" alt="Edit Bookmark - Yahoo"/></a>
-                    
-                    <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.107#n60"
-                        onclick="return deleteEntry('Pluto_n60_', 'bookmark', '82.107');" 
-                        title="Delete Bookmark - Yahoo"><img src="../../img/delete.gif" alt="Delete Bookmark - Yahoo"/></a>
-                </span>
-        
-                <span id="Pluto_n60_note_82.107" class="hidden"></span>
             </li>
         </ul>
-        
+
         <br/>
-        
+            
         <a href="#" onclick="newBookmark('Pluto_n60_');return false;" class="jsTextLink portlet-form-label">Add Bookmark</a>
         &nbsp;&nbsp;&nbsp;
         <a href="#" onclick="newFolder('Pluto_n60_');return false;" class="jsTextLink portlet-form-label">Add Folder</a>
@@ -166,15 +147,13 @@
         <a href="#" id="Pluto_n60_editLink" onclick="toggleEditMode('Pluto_n60_', true);return false;" class="jsTextLink portlet-form-label">Show Edit</a>
         <a href="#" id="Pluto_n60_cancelLink" onclick="toggleEditMode('Pluto_n60_', false);return false;" class="jsTextLink portlet-form-label hidden">Hide Edit</a>
          
-        <form id="Pluto_n60_emptyBookmarkForm" name="Pluto_n60_emptyBookmarkForm" class="hidden" method="POST" action="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
+        <form id="Pluto_n60_emptyBookmarkForm" name="Pluto_n60_emptyBookmarkForm" class="hidden" method="POST" action="/portal/tag.c1b3f1138c060a55.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
             <input name="action" type="hidden"/>
             <input name="idPath" type="hidden"/>
-            <input name="type" type="hidden"/>
         
             <table padding="0">
                 <tr>
                     <td class="portlet-form-field-label" align="right">Name:</td>
-        
                     <td><input id="name" name="name" class="portlet-form-input-field" style="width: 250px;" type="text" value=""/></td>
                     <td></td>
                 </tr>
@@ -183,17 +162,17 @@
                     <td><input id="url" name="url" class="portlet-form-input-field" style="width: 250px;" type="text" value=""/></td>
                     <td></td>
                 </tr>
-        
                 <tr>
                     <td class="portlet-form-field-label" align="right" valign="top">Note:</td>
                     <td><textarea id="note" name="note" class="portlet-form-input-field" style="width: 250px;"></textarea></td>
                     <td></td>
                 </tr>
                 <tr class="">
-                    <td class="portlet-form-field-label" id="Pluto_n60_folderActionLabel" align="right" valign="top">Folder:</td>
+                    <td class="portlet-form-field-label" id="Pluto_n60_emptyBookmarkFormfolderActionLabel" align="right" valign="top">Folder:</td>
                     <td>
                         <select name="folderPath" style="width: 250px;">
                         </select>
+                        
                         <select name="referenceFolderPath" class="hidden" disabled="true">
                             <option cssClass="portlet-form-input-field" value="82">None</option>
                             <option cssClass="portlet-form-input-field" value="82.105">UW</option>
@@ -216,29 +195,29 @@
                 </tr>
             </table>
         </form>
-        
-        <form id="Pluto_n60_emptyFolderForm" name="Pluto_n60_emptyFolderForm" class="hidden" method="POST" action="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
+ 
+        <form id="Pluto_n60_emptyFolderForm" name="Pluto_n60_emptyFolderForm" class="hidden" method="POST" action="/portal/tag.c1b3f1138c060a55.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
             <input name="action" type="hidden"/>
             <input name="idPath" type="hidden"/>
-            <input name="type" type="hidden"/>
         
             <table padding="0">
                 <tr>
                     <td class="portlet-form-field-label" align="right">Name:</td>
-        
                     <td><input id="name" name="name" class="portlet-form-input-field" style="width: 250px;" type="text" value=""/></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="portlet-form-field-label" align="right" valign="top">Note:</td>
                     <td><textarea id="note" name="note" class="portlet-form-input-field" style="width: 250px;"></textarea></td>
+        
                     <td></td>
                 </tr>
-                <tr class="hidden">
-                    <td class="portlet-form-field-label" id="Pluto_n60_folderActionLabel" align="right" valign="top">Folder:</td>
+                <tr class="">
+                    <td class="portlet-form-field-label" id="Pluto_n60_emptyFolderFormfolderActionLabel" align="right" valign="top">Folder:</td>
                     <td>
                         <select name="folderPath" style="width: 250px;">
                         </select>
+                        
                         <select name="referenceFolderPath" class="hidden" disabled="true">
                             <option cssClass="portlet-form-input-field" value="82">None</option>
                             <option cssClass="portlet-form-input-field" value="82.105">UW</option>
@@ -249,265 +228,6 @@
                     <td align="right" colspan="2">
                         <input class="portlet-form-button" value="Save" type="submit"/>
                         <input class="portlet-form-button" value="Cancel" type="reset" onclick="cancelFolder('Pluto_n60_', 'emptyFolderForm');"/>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-</div>
-
-
-<div id="bookmarksPortlet">
-    <link rel="stylesheet" href="../../css/bookmarks.css" type="text/css"/>
-    <script src="bookmarks.js" type="text/javascript"></script>
-    
-    <script type="text/javascript">
-        new BookmarksPortletData(   "Pluto_n61_", 
-                                    "newWindow",                       //bookmark_form_newWindow
-                                    "url",                             //bookmark_form_url
-                                    "emptyBookmarkForm",               //bookmark_forms_empty
-                                    "errorBookmarkForm",               //bookmark_forms_error
-                                    "url_",                            //bookmark_reference_url
-                                    "bookmarksTreeAndForm",            //bookmarksTreeAndForm
-                                    "bookmarksChildFolder_",           //entry_childFolderPrefix
-                                    "entryEditButtons",                //entry_edit_buttons
-                                    "cancelLink",                      //entry_edit_cancelLink
-                                    "editLink",                        //entry_edit_editLin
-                                    "editBookmark",                    //entry_form_action_editBookmar
-                                    "editFolder",                      //entry_form_action_editFolder
-                                    "newBookmark",                     //entry_form_action_newBookmark
-                                    "newFolder",                       //entry_form_action_newFolder
-                                    "folderPath",                      //entry_form_folderPath
-                                    "folderActionLabel",               //entry_form_folderPathLabel
-                                    "name",                            //entry_form_nam
-                                    "note",                            //entry_form_note
-                                    "entryImg_",                       //entry_imagePrefix
-                                    "referenceFolderPath",             //entry_reference_folderPath
-                                    "name_",                           //entry_reference_nam
-                                    "note_",                           //entry_reference_note
-                                    "emptyFolderForm",                 //folder_forms_empty
-                                    "errorFolderForm",                 //folder_forms_error
-                                    "/img/folder-closed.gif",          //folder_image_closed
-                                    "/img/folder-opened.gif",          //folder_image_open
-                                    "emptyOptionsForm",                //options_forms_empty
-                                    "errorOptionsForm",                //options_forms_error
-                                    "optionsLink",                     //options_showLink
-                                    "Create in folder:",               //messages_folder_create
-                                    "Move to folder:",                 //messages_folder_move
-                                    "Are you sure you want to delete the \'",  //messages_delete_bookmark_prefix
-                                    "\' Bookmark?",                            //messages_delete_bookmark_suffix
-                                    "Are you sure you want to delete the \'",  //messages_delete_folder_prefix
-                                    "\' Folder?\nAll children bookmarks and folders will be deleted as well."); //messages_delete_folder_suffix
-    </script>
-    
-    <div style="float: right;">
-        <a id="Pluto_n61_optionsLink" href="#" class="" onclick="showOptionsForm('Pluto_n61_');return false;">Options</a>
-    </div>
-    
-    <form id="Pluto_n61_emptyOptionsForm" name="Pluto_n61_emptyOptionsForm" class="hidden" method="POST" action="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
-        <input name="action" type="hidden" value="saveOptions"/>
-        
-        <table padding="0">
-            <tr>
-                <td/>
-                <td>
-                    <input id="saveFolderState" name="saveFolderState" class="portlet-form-field" type="checkbox" value="true"/><input type="hidden" value="1" name="_saveFolderState"/>
-                    
-                    <label class="portlet-form-field-label" for="saveFolderState">Save Folder State</label>
-                </td>
-                <td></td>
-            </tr>
-            <tr>
-                <td align="right" colspan="2">
-                    
-                    <input class="portlet-form-button" value="Save" type="submit"/>
-                    
-                    <input class="portlet-form-button" value="Cancel" type="reset" onclick="cancelOptionsForm('Pluto_n61_', 'emptyOptionsForm');"/>
-                    
-                </td>
-                <td/>
-            </tr>
-        </table>
-    </form>
-    
-    <div id="Pluto_n61_bookmarksTreeAndForm">
-        <ul id="Pluto_n61_bookmarksRootEntry_82" class="bookmarkList">
-            <li id="Pluto_n61_bookmarksTreeItem" class="bookmarkListItem">
-                <a id="Pluto_n61_url_82.105" 
-                    href="#" onclick="toggleFolder('Pluto_n61_', '82.105', '../../');return false;"  
-                    title=""><img id="Pluto_n61_entryImg_82.105" src="../../img/folder-opened.gif" border="0" alt=""/>
-                    <span id="Pluto_n61_name_82.105" class="portlet-font">UW</span></a>
-                
-                <span class="padding"></span>
-                
-                <span id="Pluto_n61_entryEditButtons" name="Pluto_n61_entryEditButtons" class="hidden">
-                    <a href="#" onclick="editEntry('Pluto_n61_', 'folder', '82', '82.105');return false;"
-                        title="Edit Folder - UW"><img src="../../img/edit.gif" alt="Edit Folder - UW"/></a>
-                    
-                    <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.105#n60"
-                        onclick="return deleteEntry('Pluto_n61_', 'folder', '82.105');" 
-                        title="Delete Folder - UW"><img src="../../img/delete.gif" alt="Delete Folder - UW"/></a>
-                </span>
-                
-                <span id="Pluto_n61_note_82.105" class="hidden"></span>
-                
-                <ul id="Pluto_n61_bookmarksChildFolder_82.105" class="subBookmarkList ">
-                    <li id="Pluto_n61_bookmarksTreeItem" class="bookmarkListItem">
-                        <a id="Pluto_n61_url_82.105.106" 
-                            href="http://www.wisc.edu"  target="_blank" 
-                            title=""><img id="Pluto_n61_entryImg_82.105.106" src="../../img/bookmark.gif" border="0" alt=""/>
-                            <span id="Pluto_n61_name_82.105.106" class="portlet-font">UW</span></a>
-                        
-                        <span class="padding"></span>
-                        
-                        <span id="Pluto_n61_entryEditButtons" name="Pluto_n61_entryEditButtons" class="hidden">
-                            <a href="#" onclick="editEntry('Pluto_n61_', 'bookmark', '82.105', '82.105.106');return false;"
-                                title="Edit Bookmark - UW"><img src="../../img/edit.gif" alt="Edit Bookmark - UW"/></a>
-                            
-                            <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.105.106#n60"
-                                onclick="return deleteEntry('Pluto_n61_', 'bookmark', '82.105.106');" 
-                                title="Delete Bookmark - UW"><img src="../../img/delete.gif" alt="Delete Bookmark - UW"/></a>
-                        </span>
-                        
-                        <span id="Pluto_n61_note_82.105.106" class="hidden"></span>
-                    </li>
-                </ul>
-            </li>
-            
-            <li id="Pluto_n61_bookmarksTreeItem" class="bookmarkListItem">
-                <a id="Pluto_n61_url_82.87" 
-                    href="http://www.google.com" onclick="toggleFolder('Pluto_n61_', '82.105', '../../');return false;" target="_blank" 
-                    title=""><img id="Pluto_n61_entryImg_82.87" src="../../img/bookmark.gif" border="0" alt=""/>
-                    <span id="Pluto_n61_name_82.87" class="portlet-font">Google</span></a>
-                
-                <span class="padding"></span>
-                
-                <span id="Pluto_n61_entryEditButtons" name="Pluto_n61_entryEditButtons" class="hidden">
-                    <a href="#" onclick="editEntry('Pluto_n61_', 'bookmark', '82', '82.87');return false;"
-                        title="Edit Bookmark - Google"><img src="../../img/edit.gif" alt="Edit Bookmark - Google"/></a>
-                    
-                    <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.87#n60"
-                        onclick="return deleteEntry('Pluto_n61_', 'bookmark', '82.87');" 
-                        title="Delete Bookmark - Google"><img src="../../img/delete.gif" alt="Delete Bookmark - Google"/></a>
-                </span>
-                
-                <span id="Pluto_n61_note_82.87" class="hidden"></span>
-            </li>
-            
-            <li id="Pluto_n61_bookmarksTreeItem" class="bookmarkListItem">
-                
-                <a id="Pluto_n61_url_82.107" 
-                    href="http://www.yahoo.com" onclick="toggleFolder('Pluto_n61_', '82.105', '../../');return false;" target="_blank" 
-                    title=""><img id="Pluto_n61_entryImg_82.107" src="../../img/bookmark.gif" border="0" alt=""/>
-                    <span id="Pluto_n61_name_82.107" class="portlet-font">Yahoo</span></a>
-                
-                <span class="padding"></span>
-                
-                <span id="Pluto_n61_entryEditButtons" name="Pluto_n61_entryEditButtons" class="hidden">
-                    <a href="#" onclick="editEntry('Pluto_n61_', 'bookmark', '82', '82.107');return false;"
-                        title="Edit Bookmark - Yahoo"><img src="../../img/edit.gif" alt="Edit Bookmark - Yahoo"/></a>
-                    
-                    <a href="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true&action=deleteEntry&entryIndex=82.107#n60"
-                        onclick="return deleteEntry('Pluto_n61_', 'bookmark', '82.107');" 
-                        title="Delete Bookmark - Yahoo"><img src="../../img/delete.gif" alt="Delete Bookmark - Yahoo"/></a>
-                </span>
-                
-                <span id="Pluto_n61_note_82.107" class="hidden"></span>
-            </li>
-        </ul>
-        
-        <br/>
-        
-        <a href="#" onclick="newBookmark('Pluto_n61_');return false;" class="jsTextLink portlet-form-label">Add Bookmark</a>
-        &nbsp;&nbsp;&nbsp;
-        <a href="#" onclick="newFolder('Pluto_n61_');return false;" class="jsTextLink portlet-form-label">Add Folder</a>
-        &nbsp;&nbsp;&nbsp;    
-        <a href="#" id="Pluto_n61_editLink" onclick="toggleEditMode('Pluto_n61_', true);return false;" class="jsTextLink portlet-form-label">Show Edit</a>
-        <a href="#" id="Pluto_n61_cancelLink" onclick="toggleEditMode('Pluto_n61_', false);return false;" class="jsTextLink portlet-form-label hidden">Hide Edit</a>
-        
-        <form id="Pluto_n61_emptyBookmarkForm" name="Pluto_n61_emptyBookmarkForm" class="hidden" method="POST" action="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
-            <input name="action" type="hidden"/>
-            <input name="idPath" type="hidden"/>
-            <input name="type" type="hidden"/>
-            
-            <table padding="0">
-                <tr>
-                    <td class="portlet-form-field-label" align="right">Name:</td>
-                    
-                    <td><input id="name" name="name" class="portlet-form-input-field" style="width: 250px;" type="text" value=""/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="portlet-form-field-label" align="right">Url:</td>
-                    <td><input id="url" name="url" class="portlet-form-input-field" style="width: 250px;" type="text" value=""/></td>
-                    <td></td>
-                </tr>
-                
-                <tr>
-                    <td class="portlet-form-field-label" align="right" valign="top">Note:</td>
-                    <td><textarea id="note" name="note" class="portlet-form-input-field" style="width: 250px;"></textarea></td>
-                    <td></td>
-                </tr>
-                <tr class="">
-                    <td class="portlet-form-field-label" id="Pluto_n61_folderActionLabel" align="right" valign="top">Folder:</td>
-                    <td>
-                        <select name="folderPath" style="width: 250px;">
-                        </select>
-                        <select name="referenceFolderPath" class="hidden" disabled="true">
-                            <option cssClass="portlet-form-input-field" value="82">None</option>
-                            <option cssClass="portlet-form-input-field" value="82.105">UW</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td/>
-                    <td>
-                        <input id="newWindow" name="newWindow" class="portlet-form-field" type="checkbox" value="true" checked="checked"/><input type="hidden" value="1" name="_newWindow"/>
-                        <label class="portlet-form-field-label" for="newWindow">Open in new window</label>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="2">
-                        <input class="portlet-form-button" value="Save" type="submit"/>
-                        <input class="portlet-form-button" value="Cancel" type="reset" onclick="cancelBookmark('Pluto_n61_', 'emptyBookmarkForm');"/>
-                    </td>
-                </tr>
-            </table>
-        </form>
-        
-        <form id="Pluto_n61_emptyFolderForm" name="Pluto_n61_emptyFolderForm" class="hidden" method="POST" action="/portal/tag.b96905e12f3186fd.render.userLayoutRootNode.target.n60.uP?uP_portlet_action=true#n60">
-            <input name="action" type="hidden"/>
-            <input name="idPath" type="hidden"/>
-            <input name="type" type="hidden"/>
-            
-            <table padding="0">
-                <tr>
-                    <td class="portlet-form-field-label" align="right">Name:</td>
-                    
-                    <td><input id="name" name="name" class="portlet-form-input-field" style="width: 250px;" type="text" value=""/></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="portlet-form-field-label" align="right" valign="top">Note:</td>
-                    <td><textarea id="note" name="note" class="portlet-form-input-field" style="width: 250px;"></textarea></td>
-                    <td></td>
-                </tr>
-                <tr class="hidden">
-                    <td class="portlet-form-field-label" id="Pluto_n61_folderActionLabel" align="right" valign="top">Folder:</td>
-                    <td>
-                        <select name="folderPath" style="width: 250px;">
-                        </select>
-                        <select name="referenceFolderPath" class="hidden" disabled="true">
-                            <option cssClass="portlet-form-input-field" value="82">None</option>
-                            <option cssClass="portlet-form-input-field" value="82.105">UW</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right" colspan="2">
-                        <input class="portlet-form-button" value="Save" type="submit"/>
-                        <input class="portlet-form-button" value="Cancel" type="reset" onclick="cancelFolder('Pluto_n61_', 'emptyFolderForm');"/>
                     </td>
                 </tr>
             </table>

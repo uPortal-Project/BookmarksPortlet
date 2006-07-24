@@ -21,12 +21,14 @@ function BookmarksPortletData(  namespace,
                                 entry_edit_buttons,
                                 entry_edit_cancelLink,
                                 entry_edit_editLink,
+                                entry_form_action,
                                 entry_form_action_editBookmark,
                                 entry_form_action_editFolder,
                                 entry_form_action_newBookmark,
                                 entry_form_action_newFolder,
                                 entry_form_folderPath,
                                 entry_form_folderPathLabel,
+                                entry_form_idPath,
                                 entry_form_name,
                                 entry_form_note,
                                 entry_imagePrefix,
@@ -59,12 +61,14 @@ function BookmarksPortletData(  namespace,
     this.entry_edit_buttons = entry_edit_buttons;
     this.entry_edit_cancelLink = entry_edit_cancelLink;
     this.entry_edit_editLink = entry_edit_editLink;
+    this.entry_form_action = entry_form_action;
     this.entry_form_action_editBookmark = entry_form_action_editBookmark;
     this.entry_form_action_editFolder = entry_form_action_editFolder;
     this.entry_form_action_newBookmark = entry_form_action_newBookmark;
     this.entry_form_action_newFolder = entry_form_action_newFolder;
     this.entry_form_folderPath = entry_form_folderPath;
     this.entry_form_folderPathLabel = entry_form_folderPathLabel;
+    this.entry_form_idPath = entry_form_idPath;
     this.entry_form_name = entry_form_name;
     this.entry_form_note = entry_form_note;
     this.entry_imagePrefix = entry_imagePrefix;
@@ -167,15 +171,14 @@ function toggleEditMode(namespace, enableEdit) {
 }
 
 function newBookmark(namespace) {
-    cancelFolder(namespace, bookmarkPortletsData[namespace].folder_forms_empty);
+    hideEntryForms(namespace);
 
     var form = resetForm(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty);
 
-    form.elements["idPath"].value = "";
-    form.elements["type"].value = "";
-    form.elements["action"].value = bookmarkPortletsData[namespace].entry_form_action_newBookmark;
+    form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value = "";
+    form.elements[bookmarkPortletsData[namespace].entry_form_action].value = bookmarkPortletsData[namespace].entry_form_action_newBookmark;
 
-    getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_create;
+    getNamespacedElement(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty + bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_create;
 
     setupFolderOptions(form.elements[bookmarkPortletsData[namespace].entry_reference_folderPath], form.elements[bookmarkPortletsData[namespace].entry_form_folderPath]);
 
@@ -188,15 +191,14 @@ function cancelBookmark(namespace, formName) {
 }
 
 function newFolder(namespace) {
-    cancelBookmark(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty);
+    hideEntryForms(namespace);
 
     var form = resetForm(namespace, bookmarkPortletsData[namespace].folder_forms_empty);
 
-    form.elements["idPath"].value = "";
-    form.elements["type"].value = "";
-    form.elements["action"].value = bookmarkPortletsData[namespace].entry_form_action_newFolder;
+    form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value = "";
+    form.elements[bookmarkPortletsData[namespace].entry_form_action].value = bookmarkPortletsData[namespace].entry_form_action_newFolder;
 
-    getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_create;
+    getNamespacedElement(namespace, bookmarkPortletsData[namespace].folder_forms_empty + bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_create;
 
     setupFolderOptions(form.elements[bookmarkPortletsData[namespace].entry_reference_folderPath], form.elements[bookmarkPortletsData[namespace].entry_form_folderPath]);
 
@@ -209,31 +211,55 @@ function cancelFolder(namespace, formName) {
 }
 
 function editEntry(namespace, type, parentIdPath, entryIdPath) {
-    var form = resetForm(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty);
-
-    form.elements["idPath"].value = entryIdPath;
-    form.elements["type"].value = type;
     if (type == "bookmark") {
-        form.elements["action"].value =  bookmarkPortletsData[namespace].entry_form_action_editBookmark;
+        editBookmark(namespace, parentIdPath, entryIdPath);
+    }
+    else if (type == "folder") {
+        editFolder(namespace, parentIdPath, entryIdPath);
     }
     else {
-        form.elements["action"].value =  bookmarkPortletsData[namespace].entry_form_action_editFolder;
+        alert("Bookmarks Portlet Script Error: type='" + type + "' does not match known types.");
     }
+}
+
+function editBookmark(namespace, parentIdPath, entryIdPath) {
+    hideEntryForms(namespace);
+    
+    var form = resetForm(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty);
+
+    form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value = entryIdPath;
+    form.elements[bookmarkPortletsData[namespace].entry_form_action].value =  bookmarkPortletsData[namespace].entry_form_action_editBookmark;
 
     //Set common fields
     form.elements[bookmarkPortletsData[namespace].entry_form_name].value = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_name + entryIdPath).innerHTML;
     form.elements[bookmarkPortletsData[namespace].entry_form_note].value = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_note + entryIdPath).innerHTML;
-    getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_move;
+    getNamespacedElement(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty + bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_move;
 
-    //Set Entity sub-class specific fields
-    if (type == "bookmark") {
-        var entryUrl = getNamespacedElement(namespace, bookmarkPortletsData[namespace].bookmark_reference_url + entryIdPath);
-        form.elements[bookmarkPortletsData[namespace].bookmark_form_url].value = entryUrl.href;
-        form.elements[bookmarkPortletsData[namespace].bookmark_form_newWindow].checked = (entryUrl.target != "");
-    }
+    var entryUrl = getNamespacedElement(namespace, bookmarkPortletsData[namespace].bookmark_reference_url + entryIdPath);
+    form.elements[bookmarkPortletsData[namespace].bookmark_form_url].value = entryUrl.href;
+    form.elements[bookmarkPortletsData[namespace].bookmark_form_newWindow].checked = (entryUrl.target != "");
 
     setupFolderOptions(form.elements[bookmarkPortletsData[namespace].entry_reference_folderPath], form.elements[bookmarkPortletsData[namespace].entry_form_folderPath], parentIdPath, entryIdPath);
+    
     showForm(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty);
+}
+
+function editFolder(namespace, parentIdPath, entryIdPath) {
+    hideEntryForms(namespace);
+
+    var form = resetForm(namespace, bookmarkPortletsData[namespace].folder_forms_empty);
+
+    form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value = entryIdPath;
+    form.elements[bookmarkPortletsData[namespace].entry_form_action].value =  bookmarkPortletsData[namespace].entry_form_action_editFolder;
+
+    //Set common fields
+    form.elements[bookmarkPortletsData[namespace].entry_form_name].value = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_name + entryIdPath).innerHTML;
+    form.elements[bookmarkPortletsData[namespace].entry_form_note].value = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_note + entryIdPath).innerHTML;
+    getNamespacedElement(namespace, bookmarkPortletsData[namespace].folder_forms_empty + bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_move;
+
+    setupFolderOptions(form.elements[bookmarkPortletsData[namespace].entry_reference_folderPath], form.elements[bookmarkPortletsData[namespace].entry_form_folderPath], parentIdPath, entryIdPath);
+    
+    showForm(namespace, bookmarkPortletsData[namespace].folder_forms_empty);
 }
 
 function deleteEntry(namespace, type, entryIdPath, deleteUrl) {
@@ -255,6 +281,16 @@ function deleteEntry(namespace, type, entryIdPath, deleteUrl) {
     if (shouldDelete) {
         window.location = deleteUrl;
     }
+}
+
+function setupErrorForm(namespace, formName, parentIdPath) {
+    var form = getForm(namespace, formName);
+    
+    setupFolderOptions(
+        form.elements[bookmarkPortletsData[namespace].entry_reference_folderPath], 
+        form.elements[bookmarkPortletsData[namespace].entry_form_folderPath], 
+        parentIdPath, 
+        form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value);
 }
 
 /***** Internal Methods *****/
@@ -320,7 +356,7 @@ function setupFolderOptions(sourceSelect, targetSelect, selectedOptionValue, exc
     for (var index = 0; index < sourceSelect.options.length; index++) {
         var sourceOption = sourceSelect.options[index];
 
-        if (typeof excludedOptionValue == "undefined" || sourceOption.value.indexOf(excludedOptionValue) != 0) {
+        if (typeof excludedOptionValue == "undefined" || excludedOptionValue == "" || sourceOption.value.indexOf(excludedOptionValue) != 0) {
             targetSelect.options[index] = new Option(sourceOption.text, sourceOption.value);
             targetSelect.options[index].className = sourceOption.className;
 
@@ -331,3 +367,17 @@ function setupFolderOptions(sourceSelect, targetSelect, selectedOptionValue, exc
     }
 }
 
+function hideEntryForms(namespace) {
+    cancelBookmark(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty);
+    cancelFolder(namespace, bookmarkPortletsData[namespace].folder_forms_empty);
+    
+    var bookmarkErrorForm = getForm(namespace, bookmarkPortletsData[namespace].bookmark_forms_error);
+    if (typeof bookmarkErrorForm != "undefined") {
+        cancelBookmark(namespace, bookmarkPortletsData[namespace].bookmark_forms_error);
+    }
+    
+    var folderErrorForm = getForm(namespace, bookmarkPortletsData[namespace].folder_forms_error);
+    if (typeof folderErrorForm != "undefined") {
+        cancelFolder(namespace, bookmarkPortletsData[namespace].folder_forms_error);
+    }
+}

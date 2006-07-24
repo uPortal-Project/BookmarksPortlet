@@ -8,8 +8,11 @@ package edu.wisc.my.portlets.bookmarks.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
 
+import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.portlet.mvc.SimpleFormController;
 
@@ -18,9 +21,9 @@ import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
-import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
 import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
+import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
 
 /**
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
@@ -93,5 +96,23 @@ public class BaseBookmarksFormController extends SimpleFormController {
         refData.put(ViewConstants.COMMAND_EMPTY_OPTIONS, new Preferences());
 
         return refData;
+    }
+
+    /**
+     * @see org.springframework.web.portlet.mvc.SimpleFormController#processFormSubmission(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
+     */
+    @Override
+    protected void processFormSubmission(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
+        if (errors.hasErrors()) {
+            final String action = request.getParameter("action");
+            final String idPath = request.getParameter("idPath");
+            final String folderPath = request.getParameter("folderPath");
+
+            response.setRenderParameter("action", action);
+            response.setRenderParameter("idPath", idPath);
+            response.setRenderParameter("folderPath", folderPath);
+        }
+        
+        super.processFormSubmission(request, response, command, errors);
     }
 }
