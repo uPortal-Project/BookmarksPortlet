@@ -105,8 +105,14 @@ public class BaseBookmarksFormController extends SimpleFormController {
 
         final Map<String, Object> refData = new HashMap<String, Object>();
         refData.put(ViewConstants.BOOKMARK_SET, bookmarkSet);
-        refData.put(ViewConstants.OPTIONS, preferences);
         refData.put(ViewConstants.ERRORS, errors);
+        
+        if (preferences != null) {
+            refData.put(ViewConstants.OPTIONS, preferences);
+        }
+        else {
+            refData.put(ViewConstants.OPTIONS, new Preferences());
+        }
 
         refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());
         refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());

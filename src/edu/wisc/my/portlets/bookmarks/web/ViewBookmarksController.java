@@ -108,7 +108,13 @@ public class ViewBookmarksController extends AbstractController {
 
         final Map<String, Object> refData = new HashMap<String, Object>();
         refData.put(ViewConstants.BOOKMARK_SET, bookmarkSet);
-        refData.put(ViewConstants.OPTIONS, preferences);
+        
+        if (preferences != null) {
+            refData.put(ViewConstants.OPTIONS, preferences);
+        }
+        else {
+            refData.put(ViewConstants.OPTIONS, new Preferences());
+        }
 
         refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());
         refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());
