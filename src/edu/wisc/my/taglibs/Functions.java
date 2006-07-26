@@ -36,6 +36,8 @@
 
 package edu.wisc.my.taglibs;
 
+import javax.portlet.WindowState;
+
 /**
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision$
@@ -46,5 +48,9 @@ public class Functions {
         final Class clazz = Class.forName(className, true, cl);
         final boolean isInstanceOf = obj.getClass().isAssignableFrom(clazz);
         return isInstanceOf;
+    }
+    
+    public static boolean isState(WindowState state, String name) {
+        return (state == null && name == null) || (state != null && state.toString().equalsIgnoreCase(name));
     }
 }
