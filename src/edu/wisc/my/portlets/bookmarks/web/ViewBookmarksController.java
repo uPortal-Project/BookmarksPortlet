@@ -43,6 +43,8 @@ package edu.wisc.my.portlets.bookmarks.web;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -120,5 +122,13 @@ public class ViewBookmarksController extends AbstractController {
         refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());
 
         return new ModelAndView("viewBookmarks", refData);
+    }
+
+    /**
+     * @see org.springframework.web.portlet.mvc.AbstractController#handleActionRequestInternal(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
+     */
+    @Override
+    protected void handleActionRequestInternal(ActionRequest request, ActionResponse response) throws Exception {
+        //Allow noop action requests in case people want to use direct links to the portlet
     }
 }
