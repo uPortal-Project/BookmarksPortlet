@@ -117,10 +117,4 @@
         </c:if>
         <bm:folderForm formName="emptyFolderForm" commandName="emptyFolderCommand" entries="${bookmarkEntries}" hidden="true" namespace="${portletNamespace}"/>
     </div>
-    
-    <portlet:renderURL windowState="EXCLUSIVE" var="exclusiveUrl"/>
-    <a href="${exclusiveUrl}">Exclusive</a>
-    
-    <portlet:renderURL windowState="NORMAL" var="normalUrl"/>
-    <a href="${normalUrl}">Normal</a>
 </div>
