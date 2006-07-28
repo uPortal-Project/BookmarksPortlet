@@ -20,32 +20,4 @@
             <column name="SAVE_FOLDER_STATE"/>
         </property>
     </class>
-
-    <query name="DELETE_BOOKMARK_PREFS__BOTH_NULL">
-        <![CDATA[
-			delete Preferences
-			where name is null and owner is null
-		]]>
-    </query>
-    
-    <query name="DELETE_BOOKMARK_PREFS__NAME_NULL">
-        <![CDATA[
-			delete Preferences
-			where name is null and owner = :owner
-		]]>
-    </query>
-    
-    <query name="DELETE_BOOKMARK_PREFS__OWNER_NULL">
-        <![CDATA[
-			delete Preferences
-			where name = :name and owner is null
-		]]>
-    </query>
-    
-    <query name="DELETE_BOOKMARK_PREFS__NO_NULL">
-        <![CDATA[
-			delete Preferences
-			where name = :name and owner = :owner
-		]]>
-    </query>
 </hibernate-mapping>

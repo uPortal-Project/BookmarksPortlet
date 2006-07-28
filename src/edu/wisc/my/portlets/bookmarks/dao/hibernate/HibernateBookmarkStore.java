@@ -9,7 +9,6 @@ import java.util.Date;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -27,10 +26,6 @@ import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 public class HibernateBookmarkStore extends HibernateDaoSupport implements BookmarkStore {
     private static final String PARAM_OWNER = "owner";
     private static final String PARAM_NAME = "name";
-    private static final String DELETE_BOOKMARK_SET__BOTH_NULL  = "DELETE_BOOKMARK_SET__BOTH_NULL";
-    private static final String DELETE_BOOKMARK_SET__NAME_NULL  = "DELETE_BOOKMARK_SET__NAME_NULL";
-    private static final String DELETE_BOOKMARK_SET__OWNER_NULL = "DELETE_BOOKMARK_SET__OWNER_NULL";
-    private static final String DELETE_BOOKMARK_SET__NO_NULL    = "DELETE_BOOKMARK_SET__NO_NULL";
 
     /**
      * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#getBookmarkSet(java.lang.String, java.lang.String)
@@ -62,6 +57,8 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
             
             //If the BookmarkSet is new it must be saved first
             if (bookmarkSet.getId() == -1) {
+                //Ensure there won't be duplicate entries with this owner & name
+                this.removeBookmarkSet(bookmarkSet.getOwner(), bookmarkSet.getName());
                 session.save(bookmarkSet);
             }
             
@@ -79,26 +76,12 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
     public void removeBookmarkSet(String owner, String name) {
         try {
             final Session session = this.getSession(false);
-            final Query q;
-
-            if (owner != null && name != null) {
-                q = session.getNamedQuery(DELETE_BOOKMARK_SET__NO_NULL);
-                q.setParameter(PARAM_NAME, name);
-                q.setParameter(PARAM_OWNER, owner);
+            
+            final BookmarkSet set = this.getBookmarkSet(owner, name);
+            if (set != null) {
+                session.delete(set);
             }
-            else if (name != null) {
-                q = session.getNamedQuery(DELETE_BOOKMARK_SET__OWNER_NULL);
-                q.setParameter(PARAM_NAME, name);
-            }
-            else if (owner != null) {
-                q = session.getNamedQuery(DELETE_BOOKMARK_SET__NAME_NULL);
-                q.setParameter(PARAM_OWNER, name);
-            }
-            else {
-                q = session.getNamedQuery(DELETE_BOOKMARK_SET__BOTH_NULL);
-            }
-
-            q.executeUpdate();
+            
             session.flush();
         }
         catch (HibernateException ex) {

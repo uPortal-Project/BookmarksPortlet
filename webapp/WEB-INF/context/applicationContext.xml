@@ -12,9 +12,11 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
     -->        
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
+        <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
                 <value>/WEB-INF/datasource.properties</value>
+                <value>webapp/WEB-INF/datasource.properties</value>
             </list>
         </property>
     </bean>

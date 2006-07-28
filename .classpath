@@ -5,6 +5,7 @@
 	<classpathentry kind="lib" path="extlib/portlet-api-1.0.jar"/>
 	<classpathentry kind="lib" path="extlib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/aopalliance.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/asm-2.2.2.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/cglib-nodep-2.1_3.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/commons-collections-3.2.jar"/>
@@ -22,13 +23,13 @@
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/ojdbc14-10.2.0.1.0.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-aop.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-beans.jar"/>
-	<classpathentry sourcepath="C:/JavaClasses/libraries/spring-framework-2.0-rc2/src" kind="lib" path="webapp/WEB-INF/lib/spring-context.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-context.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-core.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-dao.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-hibernate3.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-jdbc.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-jmx.jar"/>
-	<classpathentry sourcepath="C:/JavaClasses/libraries/spring-framework-2.0-rc2/src" kind="lib" path="webapp/WEB-INF/lib/spring-portlet.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-portlet.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-web.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-webmvc.jar"/>
 	<classpathentry kind="lib" path="webapp/WEB-INF/lib/standard-1.1.2.jar"/>

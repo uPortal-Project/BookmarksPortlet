@@ -9,7 +9,6 @@ import java.util.Date;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -27,10 +26,6 @@ import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 public class HibernatePreferencesStore extends HibernateDaoSupport implements PreferencesStore {
     private static final String PARAM_OWNER = "owner";
     private static final String PARAM_NAME = "name";
-    private static final String DELETE_PREFERENCES__BOTH_NULL  = "DELETE_PREFERENCES__BOTH_NULL";
-    private static final String DELETE_PREFERENCES__NAME_NULL  = "DELETE_PREFERENCES__NAME_NULL";
-    private static final String DELETE_PREFERENCES__OWNER_NULL = "DELETE_PREFERENCES__OWNER_NULL";
-    private static final String DELETE_PREFERENCES__NO_NULL    = "DELETE_PREFERENCES__NO_NULL";
 
     /**
      * @see edu.wisc.my.portlets.bookmarks.dao.PreferencesStore#getPreferences(java.lang.String, java.lang.String)
@@ -78,28 +73,19 @@ public class HibernatePreferencesStore extends HibernateDaoSupport implements Pr
      */
     public void removePreferences(String owner, String name) {
         try {
-            final Session session = this.getSession(false);
-            final Query q;
-
-            if (owner != null && name != null) {
-                q = session.getNamedQuery(DELETE_PREFERENCES__NO_NULL);
-                q.setParameter(PARAM_NAME, name);
-                q.setParameter(PARAM_OWNER, owner);
+            try {
+                final Session session = this.getSession(false);
+                
+                final Preferences prefs = this.getPreferences(owner, name);
+                if (prefs != null) {
+                    session.delete(prefs);
+                }
+                
+                session.flush();
             }
-            else if (name != null) {
-                q = session.getNamedQuery(DELETE_PREFERENCES__OWNER_NULL);
-                q.setParameter(PARAM_NAME, name);
+            catch (HibernateException ex) {
+                throw convertHibernateAccessException(ex);
             }
-            else if (owner != null) {
-                q = session.getNamedQuery(DELETE_PREFERENCES__NAME_NULL);
-                q.setParameter(PARAM_OWNER, name);
-            }
-            else {
-                q = session.getNamedQuery(DELETE_PREFERENCES__BOTH_NULL);
-            }
-
-            q.executeUpdate();
-            session.flush();
         }
         catch (HibernateException ex) {
             throw convertHibernateAccessException(ex);

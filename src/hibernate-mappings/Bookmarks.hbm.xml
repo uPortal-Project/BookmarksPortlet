@@ -60,32 +60,4 @@
             </property>
         </subclass>
     </class>
-
-    <query name="DELETE_BOOKMARK_SET__BOTH_NULL">
-        <![CDATA[
-			delete BookmarkSet
-			where name is null and owner is null
-		]]>
-    </query>
-    
-    <query name="DELETE_BOOKMARK_SET__NAME_NULL">
-        <![CDATA[
-			delete BookmarkSet
-			where name is null and owner = :owner
-		]]>
-    </query>
-    
-    <query name="DELETE_BOOKMARK_SET__OWNER_NULL">
-        <![CDATA[
-			delete BookmarkSet
-			where name = :name and owner is null
-		]]>
-    </query>
-    
-    <query name="DELETE_BOOKMARK_SET__NO_NULL">
-        <![CDATA[
-			delete BookmarkSet
-			where name = :name and owner = :owner
-		]]>
-    </query>
 </hibernate-mapping>
