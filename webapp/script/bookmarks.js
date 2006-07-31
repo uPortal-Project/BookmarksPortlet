@@ -340,9 +340,6 @@ function showForm(namespace, formName, focusedInput) {
     if (!(typeof focusedInput == "undefined")) {
         form.elements[focusedInput].focus();
     }
-    else if (form.elements.length > 0) {
-        form.elements[0].focus();
-    }
 }
 
 function setupFolderOptions(sourceSelect, targetSelect) {
