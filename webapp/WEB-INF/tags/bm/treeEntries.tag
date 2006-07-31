@@ -79,10 +79,10 @@
         
         <%-- Need both ID (for IE) and NAME (for FF/Opera) --%>
         <span id="${namespace}entryEditButtons" name="${namespace}entryEditButtons" class="hidden">
-            <a href="#" onclick="editEntry('${namespace}', '${entryType}', '${parentIdPath}', '${entryIdPath}');return false;"
+            <a href="javascript:void(0);" onclick="editEntry('${namespace}', '${entryType}', '${parentIdPath}', '${entryIdPath}');return false;"
                 title="${entryEditText}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
             
-            <a href="#"
+            <a href="javascript:void(0);"
                 onclick="deleteEntry('${namespace}', '${entryType}', '${entryIdPath}', '${deleteEntryUrl}');return false;" 
                 title="${entryDeleteText}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/></a>
         </span>

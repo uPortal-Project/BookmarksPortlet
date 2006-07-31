@@ -54,7 +54,7 @@
     </c:if>
     
     <div style="float: right;">
-        <a id="${portletNamespace}optionsLink" href="#" class="${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></a>
+        <a id="${portletNamespace}optionsLink" href="javascript:void(0);" class="${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></a>
     </div>
     <bm:optionsForm formName="optionsForm" commandName="options" hidden="${optionsFormHidden}" namespace="${portletNamespace}"/>
     
@@ -73,13 +73,13 @@
             </c:otherwise>
         </c:choose>
         
-        <a href="#" onclick="newBookmark('${portletNamespace}');return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.addBookmark"/></a>
+        <a href="javascript:void(0);" onclick="newBookmark('${portletNamespace}');return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.addBookmark"/></a>
         &nbsp;&nbsp;&nbsp;
-        <a href="#" onclick="newFolder('${portletNamespace}');return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.addFolder"/></a>
+        <a href="javascript:void(0);" onclick="newFolder('${portletNamespace}');return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.addFolder"/></a>
         <c:if test="${fn:length(bookmarkEntries) > 0}">
             &nbsp;&nbsp;&nbsp;    
-            <a href="#" id="${portletNamespace}editLink" onclick="toggleEditMode('${portletNamespace}', true);return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
-            <a href="#" id="${portletNamespace}cancelLink" onclick="toggleEditMode('${portletNamespace}', false);return false;" class="jsTextLink portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
+            <a href="javascript:void(0);" id="${portletNamespace}editLink" onclick="toggleEditMode('${portletNamespace}', true);return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
+            <a href="javascript:void(0);" id="${portletNamespace}cancelLink" onclick="toggleEditMode('${portletNamespace}', false);return false;" class="jsTextLink portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
         </c:if>
         
         <c:if test="${hasErrors}">
