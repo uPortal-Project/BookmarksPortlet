@@ -36,7 +36,6 @@
 
 package edu.wisc.my.portlets.bookmarks.domain.support;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +55,12 @@ public final class FolderUtils {
         return getEntryInfo(baseFolder, indexPath, "\\.");
     }
     
+    /**
+     * @param baseFolder
+     * @param idPath
+     * @param regexDelimeter
+     * @return The IdPathInfo that represents the found Entry, null if no entry is found for the idPath.
+     */
     public static IdPathInfo getEntryInfo(Folder baseFolder, String idPath, String regexDelimeter) {
         if (baseFolder == null) {
             throw new IllegalArgumentException("The base Folder can not be null.");
@@ -85,7 +90,7 @@ public final class FolderUtils {
                 ids[idIndex] = entryId;
             }
             else {
-                throw new IllegalArgumentException("The Entry denoted by the path of ids='" + Arrays.asList(ids) + "' is not a Folder");
+                return null;
             }
         }
 

@@ -89,11 +89,19 @@ public class EditBookmarkFormController extends BaseEntryFormController {
         
         //Get the target parent folder
         final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);
+        if (targetParentPathInfo == null || targetParentPathInfo.getTarget() == null) {
+            throw new IllegalArgumentException("The specified parent Folder does not exist. BaseFolder='" + bs + "' and idPath='" + targetParentPath + "'");
+        }
+        
         final Folder targetParent = (Folder)targetParentPathInfo.getTarget();
         final Map<Long, Entry> targetChildren = targetParent.getChildren();
         
         //Get the original bookmark & it's parent folder
         final IdPathInfo originalBookmarkPathInfo = FolderUtils.getEntryInfo(bs, targetEntryPath);
+        if (targetParentPathInfo == null || originalBookmarkPathInfo.getTarget() == null) {
+            throw new IllegalArgumentException("The specified Bookmark does not exist. BaseFolder='" + bs + "' and idPath='" + targetEntryPath + "'");
+        }
+        
         final Folder originalParent = originalBookmarkPathInfo.getParent();
         final Bookmark originalBookmark = (Bookmark)originalBookmarkPathInfo.getTarget();
 

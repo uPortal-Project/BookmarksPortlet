@@ -102,12 +102,16 @@ public class ToggleFolderFormController extends AbstractController {
         }
         
         final IdPathInfo targetFolderPathInfo = FolderUtils.getEntryInfo(bs, folderIndex);
-        
-        final Folder targetFolder = (Folder)targetFolderPathInfo.getTarget();
-        targetFolder.setMinimized(!targetFolder.isMinimized());
-        
-        //Persist the changes to the BookmarkSet 
-        this.bookmarkStore.storeBookmarkSet(bs);
+        if (targetFolderPathInfo != null && targetFolderPathInfo.getTarget() != null) {
+            final Folder targetFolder = (Folder)targetFolderPathInfo.getTarget();
+            targetFolder.setMinimized(!targetFolder.isMinimized());
+            
+            //Persist the changes to the BookmarkSet 
+            this.bookmarkStore.storeBookmarkSet(bs);
+        }
+        else {
+            this.logger.warn("No IdPathInfo found for BaseFolder='" + bs + "' and idPath='" + folderIndex + "'");
+        }
         
         //Go back to view bookmarks
         response.setRenderParameter("action", "viewBookmarks");

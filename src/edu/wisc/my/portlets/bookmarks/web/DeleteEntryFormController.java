@@ -105,19 +105,23 @@ public class DeleteEntryFormController extends AbstractController {
         }
         
         final IdPathInfo targetEntryPathInfo = FolderUtils.getEntryInfo(bs, entryIndex);
-        
-        final Folder parentFolder = targetEntryPathInfo.getParent();
-        if (parentFolder != null) {
-            final Map<Long, Entry> children = parentFolder.getChildren();
-            final Entry target = targetEntryPathInfo.getTarget();
-            children.remove(target.getId());
-
-            //Persist the changes to the BookmarkSet 
-            this.bookmarkStore.storeBookmarkSet(bs);
+        if (targetEntryPathInfo != null && targetEntryPathInfo.getTarget() != null) {
+            final Folder parentFolder = targetEntryPathInfo.getParent();
+            if (parentFolder != null) {
+                final Map<Long, Entry> children = parentFolder.getChildren();
+                final Entry target = targetEntryPathInfo.getTarget();
+                children.remove(target.getId());
+    
+                //Persist the changes to the BookmarkSet 
+                this.bookmarkStore.storeBookmarkSet(bs);
+            }
+            else {
+                //Deleting the root bookmark
+                this.bookmarkStore.removeBookmarkSet(bs.getOwner(), bs.getName());
+            }
         }
         else {
-            //Deleting the root bookmark
-            this.bookmarkStore.removeBookmarkSet(bs.getOwner(), bs.getName());
+            this.logger.warn("No IdPathInfo found for BaseFolder='" + bs + "' and idPath='" + entryIndex + "'");
         }
         
         //Go back to view bookmarks

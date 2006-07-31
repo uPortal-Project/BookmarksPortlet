@@ -78,6 +78,10 @@ public class NewBookmarkFormController extends BaseEntryFormController {
         
         //Get the target parent folder
         final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);
+        if (targetParentPathInfo == null || targetParentPathInfo.getTarget() == null) {
+            throw new IllegalArgumentException("The specified parent Folder does not exist. BaseFolder='" + bs + "' and idPath='" + targetParentPath + "'");
+        }
+        
         final Folder targetParent = (Folder)targetParentPathInfo.getTarget();
         final Map<Long, Entry> targetChildren = targetParent.getChildren();
         
