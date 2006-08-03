@@ -21,29 +21,33 @@
     <%-- Need to zero out page scoped parameters since they seem to be scoped to more than just the .tag file --%>
     <c:set var="entryUrlOnClick"/>
     <c:set var="folderImgSufix"/>
+    <c:set var="isFolderClosed"/>
+    <c:set var="childrenHiddenClass"/>
     
     <c:set var="isFolder" value="${uwfn:instanceOf(bookmarkEntry, 'edu.wisc.my.portlets.bookmarks.domain.Folder')}"/>
     <c:choose>
         <c:when test="${isFolder}">
             <c:choose>
-                <c:when test="${options.saveFolderState}">
+                <c:when test="${options.defaultFolderOperation == 'SAVED'}">
                     <portlet:actionURL var="entryUrl">
                         <portlet:param name="action" value="toggleFolder"/>
                         <portlet:param name="folderIndex" value="${entryIdPath}"/>
                     </portlet:actionURL>
                 </c:when>
                 <c:otherwise>
-                    <c:set var="entryUrl"    value="#"/>
-                    <c:set var="entryUrlOnClick" >onclick="toggleFolder('${namespace}', '${entryIdPath}', '${pageContext.request.contextPath}');return false;"</c:set>
+                    <c:set var="entryUrl"    value="javascript:void(0);"/>
+                    <c:set var="entryUrlOnClick">onclick="toggleFolder('${namespace}', '${entryIdPath}', '${pageContext.request.contextPath}');return false;"</c:set>
                 </c:otherwise>
             </c:choose>
 
             <c:choose>
-                <c:when test="${options.saveFolderState && bookmarkEntry.minimized}">
-                    <c:set var="folderImgSufix" >closed</c:set>
+                <c:when test="${options.defaultFolderOperation == 'CLOSED' || (options.defaultFolderOperation == 'SAVED' && bookmarkEntry.minimized)}">
+                    <c:set var="isFolderClosed">true</c:set>
+                    <c:set var="folderImgSufix">closed</c:set>
                 </c:when>
                 <c:otherwise>
-                    <c:set var="folderImgSufix" >opened</c:set>
+                    <c:set var="isFolderClosed">false</c:set>
+                    <c:set var="folderImgSufix">opened</c:set>
                 </c:otherwise>
             </c:choose>
             <c:set var="entryImg"      value="${pageContext.request.contextPath}/img/folder-${folderImgSufix}.gif"/>
@@ -89,11 +93,11 @@
 
         <span id="${namespace}note_${entryIdPath}" class="hidden">${bookmarkEntry.note}</span>
         
-        <c:if test="${isFolder && (!options.saveFolderState || (options.saveFolderState && !bookmarkEntry.minimized))}">
-            <c:if test="${options.saveFolderState && bookmarkEntry.minimized}">
+        <c:if test="${isFolder && !(options.defaultFolderOperation == 'SAVED' && bookmarkEntry.minimized)}">
+            <c:if test="${isFolderClosed}">
                 <c:set var="childrenHiddenClass" value="hidden"/>
             </c:if>
-
+            
             <bm:treeFolder treeName="${treeName}" folderIdSuffix="ChildFolder" entries="${bookmarkEntry.sortedChildren}" parentIdPath="${entryIdPath}" namespace="${portletNamespace}" cssClass="subBookmarkList ${childrenHiddenClass}"/>
         </c:if>
     </li>

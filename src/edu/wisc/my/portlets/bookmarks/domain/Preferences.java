@@ -21,13 +21,19 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class Preferences implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    public enum DefaultFolderOperation {
+        OPENED, 
+        CLOSED, 
+        SAVED;
+    }
+    
     private long id = -1;
     private String name;
     private String owner;
     private Date created;
     private Date modified;
     
-    private boolean saveFolderState = false;
+    private DefaultFolderOperation defaultFolderOperation = DefaultFolderOperation.CLOSED;
 
 
     /**
@@ -101,19 +107,31 @@ public class Preferences implements Serializable {
     }
 
     /**
-     * @return Returns the saveFolderState.
+     * @return Returns the defaultFolderOperation.
      */
-    public boolean isSaveFolderState() {
-        return this.saveFolderState;
+    public DefaultFolderOperation getDefaultFolderOperation() {
+        return this.defaultFolderOperation;
     }
 
     /**
-     * @param saveFolderState The saveFolderState to set.
+     * @param defaultFolderOperation The defaultFolderOperation to set.
      */
-    public void setSaveFolderState(boolean saveFolderState) {
-        this.saveFolderState = saveFolderState;
+    public void setDefaultFolderOperation(DefaultFolderOperation defaultFolderOperation) {
+        if (defaultFolderOperation == null) {
+            this.defaultFolderOperation = DefaultFolderOperation.CLOSED;
+        }
+        else {
+            this.defaultFolderOperation = defaultFolderOperation;
+        }
     }
     
+    /**
+     * @return The array of possible DefaultFolderOperations
+     */
+    public DefaultFolderOperation[] getDefaultFolderOperations() {
+        return DefaultFolderOperation.values();
+    }
+
     /**
      * @see java.lang.Object#equals(Object)
      */
@@ -131,7 +149,7 @@ public class Preferences implements Serializable {
             .append(this.owner, rhs.owner)
             .append(this.created, rhs.created)
             .append(this.modified, rhs.modified)
-            .append(this.saveFolderState, rhs.saveFolderState)
+            .append(this.defaultFolderOperation, rhs.defaultFolderOperation)
             .isEquals();
     }
 
@@ -145,7 +163,7 @@ public class Preferences implements Serializable {
             .append(this.owner)
             .append(this.created)
             .append(this.modified)
-            .append(this.saveFolderState)
+            .append(this.defaultFolderOperation)
             .toHashCode();
     }
 
@@ -160,7 +178,7 @@ public class Preferences implements Serializable {
             .append("owner", this.owner)
             .append("created", this.created)
             .append("modified", this.modified)
-            .append("saveFolderState", this.saveFolderState)
+            .append("defaultFolderOperation", this.defaultFolderOperation)
             .toString();
     }
 }

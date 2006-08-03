@@ -25,6 +25,8 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
     
+    <JSPC-GENERATED-XML/>
+
     <servlet-mapping>
         <servlet-name>ViewRendererServlet</servlet-name>
         <url-pattern>/WEB-INF/servlet/view</url-pattern>

@@ -20,21 +20,40 @@
 
     <table padding="0">
         <tr>
-            <td/>
-            <td>
-                <form:checkbox id="saveFolderState" path="saveFolderState" cssClass="portlet-form-field"/>
-                <label class="portlet-form-field-label" for="saveFolderState"><spring:message code="portlet.options.form.saveState"/></label>
-            </td>
-            <td><form:errors cssClass="portlet-msg-error" path="saveFolderState"/></td>
+            <td width="1%">&nbsp;</td>
+            <td width="1%">&nbsp;</td>
+            <td width="1%">&nbsp;</td>
+            <td width="97%">&nbsp;</td>
         </tr>
         <tr>
-            <td align="right" colspan="2">
+            <td class="portlet-form-field-label" colspan="4">
+                <strong><spring:message code="portlet.options.form.defaultFolderOperations.title"/></strong>
+            </td>
+        </tr>
+        <c:forEach items="${options.defaultFolderOperations}" var="operation">
+            <tr>
+                <td/>
+                <td valign="top"><form:radiobutton id="defaultFolderOperation_${operation}" path="defaultFolderOperation" value="${operation}"/></td>
+                <td colspan="2">
+                    <label class="portlet-form-field-label" for="defaultFolderOperation_${operation}">
+                        <strong><spring:message code="portlet.options.form.defaultFolderOperations.${operation}.title"/></strong>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3"/>
+                <td class="portlet-form-field-label">
+                    <spring:message code="portlet.options.form.defaultFolderOperations.${operation}.description"/>
+                </td>
+            </tr>
+        </c:forEach>
+        <tr>
+            <td align="right" colspan="4">
                 <spring:message code="portlet.options.form.save" var="portletFormSave"/>
                 <input class="portlet-form-button" value="${portletFormSave}" type="submit"/>
                 <spring:message code="portlet.options.form.cancel" var="portletFormCancel"/>
                 <input class="portlet-form-button" value="${portletFormCancel}" type="reset" onclick="cancelOptionsForm('${namespace}', '${formName}');"/>
             </td>
-            <td/>
         </tr>
     </table>
 </form:form>

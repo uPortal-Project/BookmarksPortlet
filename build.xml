@@ -6,7 +6,8 @@
     <property file="build.properties" />
 
     <property environment="env"/>
-    <property name="portal.home"        value="${env.PORTAL_HOME}/uPortal"/>       
+    <property name="portal.home"        value="${env.PORTAL_HOME}/uPortal"/>
+    <property name="tomcat.home"        value="${env.CATALINA_HOME}"/>
 
     <property name="build" value="build"  />  <!-- temporary build location -->
     <property name="dist"  value="dist"   />  <!-- where the war file will be made -->
@@ -31,6 +32,26 @@
         <fileset refid="extlib.fileset"/>
     </path>
     
+    <path id="jspc.classpath">
+        <path refid="compile.classpath"/>
+        
+        <pathelement location="${portal.home}/lib/pluto-1.0.1.jar"/>
+
+        <fileset dir="${tomcat.home}/common/lib"> 
+            <include name="*.jar"/> 
+        </fileset> 
+        <fileset dir="${tomcat.home}/server/lib"> 
+            <include name="*.jar"/> 
+        </fileset>
+        <fileset dir="${tomcat.home}/bin"> 
+            <include name="*.jar"/> 
+        </fileset>
+        
+        <pathelement location="${env.JAVA_HOME}/lib/tools.jar"/>
+        
+        <pathelement location="${ant.library.dir}/ant.jar"/>
+    </path>
+
     <path id="test.classpath">
         <path refid="compile.classpath"/>
     </path>
@@ -46,15 +67,15 @@
         <!-- ...and in with the new -->
         <mkdir dir="${dist}" />
         <mkdir dir="${build}/WEB-INF/classes" />
-    </target>
 
-    <target name="compile" depends="init">
         <!-- copying WEB-INF contents (properties, lib, tld...) into ${build}/WEB-INF -->
         <echo message="Copying WEB-INF contents..." />
         <copy todir="${build}">
-			<fileset dir="webapp"/>
-		</copy>
-		
+            <fileset dir="webapp"/>
+        </copy>
+    </target>
+
+    <target name="compile" depends="init">
         <!-- compile source into ${build}/WEB-INF/classes -->
         <echo message="Compiling source tree..." />
         <javac srcdir="${src}"
@@ -72,14 +93,33 @@
             </fileset>
         </copy>
     </target>
+    
+    <target name="jspc" depends="init, compile"> 
+        <mkdir dir="${build}/WEB-INF/classes"/>
+        <java classname="org.apache.jasper.JspC" fork="true" dir="${basedir}">
+            <arg value="-v"/>
+            <arg value="-l"/>
+            <arg value="-s"/>
+            <arg value="-uriroot"/><arg value="${build}/"/>
+            <arg value="-d"/><arg value="${build}/WEB-INF/classes"/>
+            <arg value="-compile"/>
+            <arg value="-webinc"/><arg value="${build}/WEB-INF/generated_partial_web.xml"/>
+            <arg value="-source"/><arg value="${java.specification.version}"/>
+            <arg value="-target"/><arg value="${java.specification.version}"/>
+            
+            <classpath refid="jspc.classpath"/>
+        </java>
+        
+        <taskdef name="xmltask" classname="com.oopsconsultancy.xmltask.ant.XmlTask">
+            <classpath refid="compile.classpath"/>
+        </taskdef>
+        
+        <xmltask source="${build}/WEB-INF/web.xml" dest="${build}/WEB-INF/web.xml">
+            <replace path="//:web-app/:JSPC-GENERATED-XML" withFile="${build}/WEB-INF/generated_partial_web.xml"/>
+        </xmltask>
+    </target> 
 
-    <target name="dist" depends="compile">
-        <copy todir="${build}/WEB-INF/lib">
-            <fileset dir="${lib.dir}">
-                <include name="*.jar" />
-            </fileset>
-        </copy>
-
+    <target name="dist" depends="compile, jspc">
         <!-- war up the completed build -->
         <jar destfile="${dist}/${app.name}.war">
             <fileset dir="${build}" />

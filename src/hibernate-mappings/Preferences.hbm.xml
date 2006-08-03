@@ -16,8 +16,8 @@
             <column name="OWNER" length="500" index="NameIdx"/>
         </property>
 
-        <property name="saveFolderState" type="true_false">
-            <column name="SAVE_FOLDER_STATE"/>
+        <property name="defaultFolderOperation" type="edu.wisc.my.portlets.bookmarks.dao.hibernate.types.DefaultFolderOperationUserType">
+            <column name="DEFAULT_FOLDER_OPERATION" length="64"/>
         </property>
     </class>
 </hibernate-mapping>

@@ -327,7 +327,7 @@ function showElementTableRow(namespace, elementId) {
 }
 function isElementHidden(namespace, elementId) {
     var targetElement = getNamespacedElement(namespace, elementId);
-    return targetElement.style.display == "none";
+    return targetElement.style.display == "none" || (targetElement.style.display == "" && targetElement.className.indexOf("hidden") >= 0);
 }
 
 function showForm(namespace, formName) {
