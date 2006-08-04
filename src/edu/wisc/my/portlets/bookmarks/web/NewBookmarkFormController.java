@@ -76,13 +76,20 @@ public class NewBookmarkFormController extends BaseEntryFormController {
         commandBookmark.setCreated(new Date());
         commandBookmark.setModified(commandBookmark.getCreated());
         
-        //Get the target parent folder
-        final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);
-        if (targetParentPathInfo == null || targetParentPathInfo.getTarget() == null) {
-            throw new IllegalArgumentException("The specified parent Folder does not exist. BaseFolder='" + bs + "' and idPath='" + targetParentPath + "'");
+        final Folder targetParent;
+        if (targetParentPath != null) {
+            //Get the target parent folder
+            final IdPathInfo targetParentPathInfo = FolderUtils.getEntryInfo(bs, targetParentPath);
+            if (targetParentPathInfo == null || targetParentPathInfo.getTarget() == null) {
+                throw new IllegalArgumentException("The specified parent Folder does not exist. BaseFolder='" + bs + "' and idPath='" + targetParentPath + "'");
+            }
+            
+            targetParent = (Folder)targetParentPathInfo.getTarget();
+        }
+        else {
+            targetParent = bs;
         }
         
-        final Folder targetParent = (Folder)targetParentPathInfo.getTarget();
         final Map<Long, Entry> targetChildren = targetParent.getChildren();
         
         //Add the new bookmark to the target parent
