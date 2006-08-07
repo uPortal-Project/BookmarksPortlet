@@ -22,6 +22,7 @@
     <c:set var="entryUrlOnClick"/>
     <c:set var="folderImgSufix"/>
     <c:set var="isFolderClosed"/>
+    <c:set var="entryTarget"/>
     <c:set var="childrenHiddenClass"/>
     
     <c:set var="isFolder" value="${uwfn:instanceOf(bookmarkEntry, 'edu.wisc.my.portlets.bookmarks.domain.Folder')}"/>
