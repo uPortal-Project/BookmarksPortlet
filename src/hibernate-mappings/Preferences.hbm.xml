@@ -10,10 +10,10 @@
         </id>
         
         <property name="name" type="string">
-            <column name="NAME" length="4000" index="NameIdx"/>
+            <column name="NAME" length="4000" index="BM_PrefNameIdx"/>
         </property>
         <property name="owner" type="string">
-            <column name="OWNER" length="500" index="NameIdx"/>
+            <column name="OWNER" length="500" index="BM_PrefNameIdx"/>
         </property>
 
         <property name="defaultFolderOperation" type="edu.wisc.my.portlets.bookmarks.dao.hibernate.types.DefaultFolderOperationUserType">

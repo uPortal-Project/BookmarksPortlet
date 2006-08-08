@@ -10,11 +10,11 @@
         </id>
         
         <discriminator type="string">
-            <column name="ENTRY_TYPE" length="64"/>
+            <column name="ENTRY_TYPE" length="64" index="BM_EntryTypeIdx"/>
         </discriminator>
 
         <property name="name" type="string">
-            <column name="NAME" length="4000" index="NameIdx"/>
+            <column name="NAME" length="4000" index="BM_EntryNameIdx"/>
         </property>
         <property name="note" type="string">
             <column name="NOTE" length="4000"/>
@@ -45,7 +45,7 @@
             
             <subclass name="edu.wisc.my.portlets.bookmarks.domain.BookmarkSet" discriminator-value="BOOKMARK_SET">
                 <property name="owner" type="string">
-                    <column name="OWNER" length="500" index="NameIdx"/>
+                    <column name="OWNER" length="500" index="BM_EntryNameIdx"/>
                 </property>
             </subclass>
         </subclass>
