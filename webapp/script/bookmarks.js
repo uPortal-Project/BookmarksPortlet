@@ -348,16 +348,18 @@ function setupFolderOptions(sourceSelect, targetSelect) {
 function setupFolderOptions(sourceSelect, targetSelect, selectedOptionValue, excludedOptionValue) {
     targetSelect.length = 0;
 
-    for (var index = 0; index < sourceSelect.options.length; index++) {
-        var sourceOption = sourceSelect.options[index];
+    for (var sourceIndex = 0, targetIndex = 0; sourceIndex < sourceSelect.options.length; sourceIndex++) {
+        var sourceOption = sourceSelect.options[sourceIndex];
 
         if (typeof excludedOptionValue == "undefined" || excludedOptionValue == "" || sourceOption.value.indexOf(excludedOptionValue) != 0) {
-            targetSelect.options[index] = new Option(sourceOption.text, sourceOption.value);
-            targetSelect.options[index].className = sourceOption.className;
+            targetSelect.options[targetIndex] = new Option(sourceOption.text, sourceOption.value);
+            targetSelect.options[targetIndex].className = sourceOption.className;
 
-            if (!(typeof selectedOptionValue == "undefined") && targetSelect.options[index].value == selectedOptionValue) {
-                targetSelect.options[index].selected = true;
+            if (!(typeof selectedOptionValue == "undefined") && targetSelect.options[targetIndex].value == selectedOptionValue) {
+                targetSelect.options[targetIndex].selected = true;
             }
+            
+            targetIndex++;
         }
     }
 }
