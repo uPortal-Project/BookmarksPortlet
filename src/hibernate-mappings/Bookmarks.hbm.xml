@@ -30,7 +30,7 @@
         <subclass name="edu.wisc.my.portlets.bookmarks.domain.Folder" discriminator-value="FOLDER">
             <map name="children" fetch="join" optimistic-lock="false">
                 <key>
-                    <column name="PARENT_FOLDER_ID" not-null="false"/>
+                    <column name="PARENT_FOLDER_ID" not-null="false" index="BM_EntryParentIdIdx"/>
                 </key>
                 <map-key type="long">
                     <formula>ENTRY_ID</formula>
