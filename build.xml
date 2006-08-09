@@ -152,7 +152,7 @@
             classpathref="hibernate.classpath"/>
       
         <schemaexport properties="webapp/WEB-INF/datasource.properties"
-            quiet="yes" text="no" drop="no" delimiter=";"
+            quiet="yes" text="yes" drop="no" delimiter=";"
             output="${dist}/bookmarksPortletDDL.sql">
             
             <fileset dir="${src}/hibernate-mappings">
