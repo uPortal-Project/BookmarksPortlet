@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
-<beans>
-<!--
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
--->    
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
 
-    
     <!--
      | Validators for use by the controllers
      +-->
@@ -25,9 +18,9 @@
      | Abstract controllers for re-use below
      +-->
     <bean id="baseBookmarkSetFormController" abstract="true">
-        <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
-        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
-        <property name="preferencesRequestResolver"><ref bean="preferencesRequestResolver"/></property>
+        <property name="bookmarkStore" ref="bookmarkStore"/>
+        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
+        <property name="preferencesRequestResolver" ref="preferencesRequestResolver"/>
         
         <property name="formView" value="viewBookmarks"/>
         <property name="successView" value="viewBookmarks"/>
@@ -36,13 +29,13 @@
     <bean id="baseFolderFormController" parent="baseBookmarkSetFormController" abstract="true">
         <property name="commandName" value="folderCommand"/>
         <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
-        <property name="validator"><ref bean="folderValidator"/></property>
+        <property name="validator" ref="folderValidator"/>
     </bean>
     
     <bean id="baseBookmarkFormController" parent="baseBookmarkSetFormController" abstract="true">
         <property name="commandName" value="bookmarkCommand"/>
         <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Bookmark"/>
-        <property name="validator"><ref bean="bookmarkValidator"/></property>
+        <property name="validator" ref="bookmarkValidator"/>
     </bean>
     
 
@@ -50,8 +43,8 @@
      | Actuall, in-use controllers
      +-->
     <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController">
-        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
-        <property name="preferencesRequestResolver"><ref bean="preferencesRequestResolver"/></property>
+        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
+        <property name="preferencesRequestResolver" ref="preferencesRequestResolver"/>
     </bean>
     
     <bean id="newBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.NewBookmarkFormController" parent="baseBookmarkFormController">
@@ -67,21 +60,21 @@
     </bean>
     
     <bean id="toggleFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.ToggleFolderFormController">
-        <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
-        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
+        <property name="bookmarkStore" ref="bookmarkStore"/>
+        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
     </bean>
     
     <bean id="deleteEntryFormController" class="edu.wisc.my.portlets.bookmarks.web.DeleteEntryFormController">
-        <property name="bookmarkStore"><ref bean="bookmarkStore"/></property>
-        <property name="bookmarkSetRequestResolver"><ref bean="bookmarkSetRequestResolver"/></property>
+        <property name="bookmarkStore" ref="bookmarkStore"/>
+        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
     </bean>
     
     <bean id="saveOptionsFormController" class="edu.wisc.my.portlets.bookmarks.web.PreferencesFormController" parent="baseBookmarkSetFormController">
         <property name="commandName" value="options"/>
         <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Preferences"/>
-        <property name="validator"><ref bean="preferencesValidator"/></property>
+        <property name="validator" ref="preferencesValidator"/>
         
-        <property name="preferencesStore"><ref bean="preferencesStore"/></property>
+        <property name="preferencesStore" ref="preferencesStore"/>
     </bean>
 
     
@@ -89,10 +82,8 @@
     <!--
      | Handler mappings to determine the correct controller.
      +-->
-    <bean id="portletOpenSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.PortletOpenSessionInViewInterceptor">
-        <property name="sessionFactory">
-            <ref bean="sessionFactory" />
-        </property>
+    <bean id="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
     
     <bean id="parameterMappingInterceptor" class="org.springframework.web.portlet.handler.ParameterMappingInterceptor"/>
@@ -101,7 +92,7 @@
         <property name="order" value="10"/>
         <property name="interceptors">
             <list>
-                <ref bean="portletOpenSessionInViewInterceptor"/>
+                <ref bean="openSessionInViewInterceptor"/>
                 <ref bean="parameterMappingInterceptor"/>
             </list>
         </property>
@@ -109,14 +100,14 @@
             <map>
                 <entry key="view">
                     <map>
-                        <entry key="viewBookmarks"> <ref local="viewBookmarksFormController"/></entry>
-                        <entry key="newBookmark">   <ref local="newBookmarkFormController"/></entry>
-                        <entry key="editBookmark">  <ref local="editBookmarkFormController"/></entry>
-                        <entry key="newFolder">     <ref local="newFolderFormController"/></entry>
-                        <entry key="editFolder">    <ref local="editFolderFormController"/></entry>
-                        <entry key="toggleFolder">  <ref local="toggleFolderFormController"/></entry>
-                        <entry key="deleteEntry">   <ref local="deleteEntryFormController"/></entry>
-                        <entry key="saveOptions">   <ref local="saveOptionsFormController"/></entry>
+                        <entry key="viewBookmarks" value-ref="viewBookmarksFormController"/>
+                        <entry key="newBookmark" value-ref="newBookmarkFormController"/>
+                        <entry key="editBookmark" value-ref="editBookmarkFormController"/>
+                        <entry key="newFolder" value-ref="newFolderFormController"/>
+                        <entry key="editFolder" value-ref="editFolderFormController"/>
+                        <entry key="toggleFolder" value-ref="toggleFolderFormController"/>
+                        <entry key="deleteEntry" value-ref="deleteEntryFormController"/>
+                        <entry key="saveOptions" value-ref="saveOptionsFormController"/>
                     </map>
                 </entry>
             </map>
@@ -127,12 +118,12 @@
         <property name="order" value="20"/>
         <property name="interceptors">
             <list>
-                <ref bean="portletOpenSessionInViewInterceptor"/>
+                <ref bean="openSessionInViewInterceptor"/>
             </list>
         </property>
         <property name="portletModeMap">
             <map>
-                <entry key="view"><ref local="viewBookmarksFormController"/></entry>
+                <entry key="view" value-ref="viewBookmarksFormController"/>
             </map>
         </property>
     </bean>

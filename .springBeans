@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<configExtensions>
+		<configExtension>xml</configExtension>
+	</configExtensions>
+	<configs>
+		<config>src/main/webapp/WEB-INF/context/portlet/bookmarksPortletContext.xml</config>
+		<config>src/main/webapp/WEB-INF/context/applicationContext.xml</config>
+	</configs>
+	<configSets>
+		<configSet>
+			<name>AppContext</name>
+			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>src/main/webapp/WEB-INF/context/applicationContext.xml</config>
+			</configs>
+		</configSet>
+		<configSet>
+			<name>PortletContext</name>
+			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>src/main/webapp/WEB-INF/context/applicationContext.xml</config>
+				<config>src/main/webapp/WEB-INF/context/portlet/bookmarksPortletContext.xml</config>
+			</configs>
+		</configSet>
+	</configSets>
+</beansProjectDescription>

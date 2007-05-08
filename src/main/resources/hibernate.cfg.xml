@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+        
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.show_sql">false</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.generate_statistics">true</property>
+        
+        <property name="hibernate.jdbc.fetch_size">32</property>
+        <property name="hibernate.jdbc.batch_size">32</property>
+        <property name="hibernate.jdbc.batch_versioned_data">true</property>
+        
+        <property name="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+        
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        
+        <mapping resource="hibernate-mappings/Bookmarks.hbm.xml"/>
+        <mapping resource="hibernate-mappings/Preferences.hbm.xml"/>
+        
+        <class-cache class="edu.wisc.my.portlets.bookmarks.domain.Entry" usage="nonstrict-read-write"/>
+        <class-cache class="edu.wisc.my.portlets.bookmarks.domain.Entry" usage="nonstrict-read-write"/>
+        
+        <collection-cache collection="edu.wisc.my.portlets.bookmarks.domain.Folder.children" usage="nonstrict-read-write"/>
+    </session-factory>
+</hibernate-configuration>

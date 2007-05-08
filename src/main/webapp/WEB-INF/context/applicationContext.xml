@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
-<beans default-lazy-init="false">
-    <!--
-        <beans xmlns="http://www.springframework.org/schema/beans"
+<beans xmlns="http://www.springframework.org/schema/beans"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:util="http://www.springframework.org/schema/util"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-    -->        
+        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" lazy-init="false">
-        <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
-                <value>/WEB-INF/datasource.properties</value>
-                <value>webapp/WEB-INF/datasource.properties</value>
+                <value>classpath:datasource.properties</value>
             </list>
         </property>
     </bean>
@@ -36,18 +29,17 @@
     <bean id="bookmarkSetNameResolver" class="edu.wisc.my.portlets.bookmarks.web.support.PortletPreferencesBookmarkSetNameResolver"/>
     
     <bean id="bookmarkSetRequestResolver" class="edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver">
-        <property name="bookmarkStore"><ref local="bookmarkStore"/></property>
-        <property name="ownerResolver"><ref local="bookmarkSetOwnerResolver"/></property>
-        <property name="nameResolver"><ref local="bookmarkSetNameResolver"/></property>
+        <property name="bookmarkStore" ref="bookmarkStore"/>
+        <property name="ownerResolver" ref="bookmarkSetOwnerResolver"/>
+        <property name="nameResolver" ref="bookmarkSetNameResolver"/>
     </bean>
     
     <bean id="preferencesRequestResolver" class="edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver">
-        <property name="preferencesStore"><ref local="preferencesStore"/></property>
-        <property name="ownerResolver"><ref local="bookmarkSetOwnerResolver"/></property>
-        <property name="nameResolver"><ref local="bookmarkSetNameResolver"/></property>
+        <property name="preferencesStore" ref="preferencesStore"/>
+        <property name="ownerResolver" ref="bookmarkSetOwnerResolver"/>
+        <property name="nameResolver" ref="bookmarkSetNameResolver"/>
     </bean>
     
-
     
     
     <!-- Default View Resolver -->
@@ -60,27 +52,24 @@
     
     
     
-    
     <!-- Hibernate Persistence Code -->
     <bean id="bookmarkStore" parent="abstractStoreTransactionProxy">
-        <property name="target"><ref local="bookmarkStoreTarget"/></property>
+        <property name="target" ref="bookmarkStoreTarget"/>
     </bean>
     
     <bean id="bookmarkStoreTarget" class="edu.wisc.my.portlets.bookmarks.dao.hibernate.HibernateBookmarkStore" parent="abstractHibernateTemplate">
     </bean>
-    
 
     <bean id="preferencesStore" parent="abstractStoreTransactionProxy">
-        <property name="target"><ref local="preferencesStoreTarget"/></property>
+        <property name="target" ref="preferencesStoreTarget"/>
     </bean>
     
     <bean id="preferencesStoreTarget" class="edu.wisc.my.portlets.bookmarks.dao.hibernate.HibernatePreferencesStore" parent="abstractHibernateTemplate">
     </bean>
-    
 
     
     <bean id="abstractStoreTransactionProxy" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" abstract="true">
-        <property name="transactionManager"><ref bean="transactionManager"/></property>
+        <property name="transactionManager" ref="transactionManager"/>
         <property name="transactionAttributes">
             <props>
                 <prop key="create*">PROPAGATION_REQUIRED</prop>
@@ -103,49 +92,27 @@
     
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mappingResources">
-            <list>
-                <value>hibernate-mappings/Bookmarks.hbm.xml</value>
-                <value>hibernate-mappings/Preferences.hbm.xml</value>
-            </list>
-        </property>
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${hibernate.dialect}</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-                <prop key="hibernate.generate_statistics">true</prop>
-                <prop key="hibernate.cache.use_query_cache">true</prop>
-                <prop key="hibernate.jdbc.batch_size">128</prop>
-                <prop key="hibernate.default_batch_fetch_size">32</prop>
             </props>
         </property>
-        <property name="entityCacheStrategies">
-            <props>
-                <prop key="edu.wisc.my.portlets.bookmarks.domain.Entry">nonstrict-read-write</prop>
-                <prop key="edu.wisc.my.portlets.bookmarks.domain.Preferences">nonstrict-read-write</prop>
-            </props>
-        </property>
-        <property name="collectionCacheStrategies">
-            <props>
-                <prop key="edu.wisc.my.portlets.bookmarks.domain.Folder.children">nonstrict-read-write</prop>
-            </props>
-        </property>
-    </bean>
-
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName"><value>${jdbc.driverClassName}</value></property>
-        <property name="url"><value>${jdbc.url}</value></property>
-        <property name="username"><value>${jdbc.username}</value></property>
-        <property name="password"><value>${jdbc.password}</value></property>
-        
-        <property name="initialSize"><value>8</value></property>
-        <property name="maxActive"><value>128</value></property>
-        <property name="maxIdle"><value>16</value></property>
-        <property name="minIdle"><value>8</value></property>
-        <property name="maxWait"><value>15000</value></property>
     </bean>
     
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName"><value>${hibernate.connection.driver_class}</value></property>
+        <property name="url"><value>${hibernate.connection.url}</value></property>
+        <property name="username"><value>${hibernate.connection.username}</value></property>
+        <property name="password"><value>${hibernate.connection.password}</value></property>
+        
+        <property name="initialSize"><value>2</value></property>
+        <property name="maxActive"><value>32</value></property>
+        <property name="maxIdle"><value>4</value></property>
+        <property name="minIdle"><value>2</value></property>
+        <property name="maxWait"><value>5000</value></property>
+    </bean>
     
     
     
@@ -160,9 +127,7 @@
     
     
     <bean id="hibernateStatisticsBean" class="org.hibernate.jmx.StatisticsService">
-        <property name="statisticsEnabled">
-            <value>true</value>
-        </property>
-        <property name="sessionFactory"><ref local="sessionFactory"/></property>
+        <property name="statisticsEnabled" value="true"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 </beans>

@@ -31,7 +31,7 @@ For the errors
 </c:if>
 
 <portlet:actionURL var="formUrl"/>
-<form:form name="${namespace}${formName}" method="POST" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
+<form:form id="${namespace}${formName}" name="${namespace}${formName}" method="POST" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
     <input name="action" type="hidden" value="${actionInput}"/>
     <input name="idPath" type="hidden" value="${idPathInput}"/>
 
