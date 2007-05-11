@@ -10,7 +10,7 @@
     <groupId>org.jasig.portlet</groupId>
     <artifactId>BookmarksPortlet</artifactId>
     <packaging>war</packaging>
-    <version>1.0.6-SNAPSHOT</version>
+    <version>1.0.6</version>
 
     <name>Bookmarks Portlet</name>
     <description>Bookmarks Portlet.</description>
@@ -21,9 +21,9 @@
     </issueManagement>
 
     <scm>
-        <connection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</connection>
-        <developerConnection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</developerConnection>
-        <url>http://developer.ja-sig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/trunk</url>
+        <connection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/tags/rel-1.0.6</connection>
+        <developerConnection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/tags/rel-1.0.6</developerConnection>
+        <url>http://developer.ja-sig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/tags/rel-1.0.6</url>
     </scm>
 
     <repositories>
