@@ -101,17 +101,14 @@
     </bean>
     
     
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName"><value>${hibernate.connection.driver_class}</value></property>
         <property name="url"><value>${hibernate.connection.url}</value></property>
         <property name="username"><value>${hibernate.connection.username}</value></property>
         <property name="password"><value>${hibernate.connection.password}</value></property>
-        
-        <property name="initialSize"><value>2</value></property>
-        <property name="maxActive"><value>32</value></property>
-        <property name="maxIdle"><value>4</value></property>
-        <property name="minIdle"><value>2</value></property>
-        <property name="maxWait"><value>5000</value></property>
+    </bean>
+    <bean class="edu.wisc.my.portlets.bookmarks.dao.SqlShutdownHelper" destroy-method="close">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
     
     
