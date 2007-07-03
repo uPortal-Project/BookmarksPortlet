@@ -26,6 +26,8 @@ import edu.wisc.my.portlets.bookmarks.domain.Folder;
  * @version $Revision: 12141 $
  */
 public class DefaultBookmarksComparator implements Comparator<Entry>, Serializable {
+    private static final long serialVersionUID = 1L;
+
     public static DefaultBookmarksComparator DEFAULT_BOOKMARKS_COMPARATOR = new DefaultBookmarksComparator();
     
     protected DefaultBookmarksComparator() {

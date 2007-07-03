@@ -54,6 +54,6 @@ public class IntegerSetThreadLocal extends ThreadLocal<Set <Integer>> {
     }
 
     public Set<Integer> getSet() {
-        return  (Set<Integer>)this.get();
+        return this.get();
     }
 }

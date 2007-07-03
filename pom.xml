@@ -1,9 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    
     <parent>
         <groupId>org.jasig</groupId>
         <artifactId>jasig-parent</artifactId>
-        <version>4</version>
+        <version>5</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -14,18 +17,12 @@
 
     <name>Bookmarks Portlet</name>
     <description>Bookmarks Portlet.</description>
-
-    <issueManagement>
-        <url>http://www.ja-sig.org/issues/browse/PBOOK</url>
-        <system>Jira</system>
-    </issueManagement>
-
-    <scm>
-        <connection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</connection>
-        <developerConnection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</developerConnection>
-        <url>http://developer.ja-sig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/trunk</url>
-    </scm>
-
+    
+    <properties>
+        <issues.projectKey>PBOOK</issues.projectKey>
+        <scm.path>/portlets</scm.path>
+    </properties>
+    
     <repositories>
         <repository>
             <id>jasig-repository</id>
@@ -43,23 +40,6 @@
             </releases>
         </repository>
     </repositories>
-
-    <developers>
-        <developer>
-            <name>Eric Dalquist</name>
-            <id>edalquist</id>
-            <email>eric.dalquist@doit.wisc.edu</email>
-            <organization>UW - Madison</organization>
-            <roles>
-                <role>Project Admin</role>
-                <role>Developer</role>
-            </roles>
-            <url>http://www.ja-sig.org/wiki/display/~edalquist</url>
-            <timezone>-6</timezone>
-        </developer>
-    </developers>
-
-    <contributors> </contributors>
 
     <dependencies>
 
@@ -244,17 +224,6 @@
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jspc-maven-plugin</artifactId>
                 <executions>
                     <execution>
@@ -305,51 +274,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-project-info-reports-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>surefire-report-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jxr-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>cobertura-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-pmd-plugin</artifactId>
-                <configuration>
-                    <linkXref>true</linkXref>
-                    <sourceEncoding>utf-8</sourceEncoding>
-                    <minimumTokens>100</minimumTokens>
-                    <targetJdk>1.5</targetJdk>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>changelog-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>taglist-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </reporting>
 </project>
