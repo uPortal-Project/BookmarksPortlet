@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     
     <parent>
         <groupId>org.jasig</groupId>
@@ -13,7 +10,7 @@
     <groupId>org.jasig.portlet</groupId>
     <artifactId>BookmarksPortlet</artifactId>
     <packaging>war</packaging>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.8</version>
 
     <name>Bookmarks Portlet</name>
     <description>Bookmarks Portlet.</description>
@@ -343,4 +340,10 @@
             </build>
         </profile>
     </profiles>
+
+  <scm>
+    <connection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/tags/rel-1.0.8</connection>
+    <developerConnection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/tags/rel-1.0.8</developerConnection>
+    <url>http://developer.ja-sig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/tags/rel-1.0.8</url>
+  </scm>
 </project>
