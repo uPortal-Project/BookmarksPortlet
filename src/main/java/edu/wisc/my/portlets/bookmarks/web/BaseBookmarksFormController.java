@@ -19,6 +19,7 @@ import org.springframework.web.portlet.mvc.SimpleFormController;
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import edu.wisc.my.portlets.bookmarks.domain.CollectionFolder;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
@@ -116,6 +117,7 @@ public class BaseBookmarksFormController extends SimpleFormController {
 
         refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());
         refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());
+        refData.put(ViewConstants.COMMAND_EMPTY_COLLECTION, new CollectionFolder());
 
         return refData;
     }

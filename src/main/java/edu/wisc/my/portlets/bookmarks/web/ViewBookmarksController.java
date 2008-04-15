@@ -53,11 +53,12 @@ import org.springframework.web.portlet.mvc.AbstractController;
 
 import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import edu.wisc.my.portlets.bookmarks.domain.CollectionFolder;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
-import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
 import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
+import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
 
 /**
  * Controller resolves the BookmarkSet owner and name for the request and displays it
@@ -120,6 +121,8 @@ public class ViewBookmarksController extends AbstractController {
 
         refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());
         refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());
+        refData.put(ViewConstants.COMMAND_AVAILABLE_COLLECTIONS, this.availableCollections);
+        refData.put(ViewConstants.COMMAND_EMPTY_COLLECTION, new CollectionFolder());
 
         return new ModelAndView("viewBookmarks", refData);
     }
@@ -130,5 +133,10 @@ public class ViewBookmarksController extends AbstractController {
     @Override
     protected void handleActionRequestInternal(ActionRequest request, ActionResponse response) throws Exception {
         //Allow noop action requests in case people want to use direct links to the portlet
+    }
+
+    private Map availableCollections;
+    public void setAvailableCollections(Map collections) {
+    	this.availableCollections = collections;
     }
 }

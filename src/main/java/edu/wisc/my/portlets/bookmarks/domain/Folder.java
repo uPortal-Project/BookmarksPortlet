@@ -64,7 +64,7 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IntegerSetThreadLocal;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12155 $
  */
-public class Folder extends Entry {
+public class Folder extends Entry implements CollapsibleEntry {
     private static final long serialVersionUID = 1L;
     
     private static IntegerSetThreadLocal equalsVisitedFolder = new IntegerSetThreadLocal();

@@ -50,7 +50,17 @@
             </subclass>
         </subclass>
         
-        
+        <subclass name="edu.wisc.my.portlets.bookmarks.domain.CollectionFolder" discriminator-value="VFOLDER">
+            <property name="url" type="string">
+                <column name="URL" length="4000"/>
+            </property>
+            <!-- TODO figure out how to persist comparator -->
+            <property name="minimized" type="true_false">
+                <column name="MINIMIZED"/>
+            </property>
+            
+        </subclass>
+                
         <subclass name="edu.wisc.my.portlets.bookmarks.domain.Bookmark" discriminator-value="BOOKMARK">
             <property name="url" type="string">
                 <column name="URL" length="4000"/>

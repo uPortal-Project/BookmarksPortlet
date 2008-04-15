@@ -24,8 +24,10 @@ function BookmarksPortletData(  namespace,
                                 entry_form_action,
                                 entry_form_action_editBookmark,
                                 entry_form_action_editFolder,
+                                entry_form_action_editCollection,
                                 entry_form_action_newBookmark,
                                 entry_form_action_newFolder,
+                                entry_form_action_newCollection,
                                 entry_form_folderPath,
                                 entry_form_folderPathLabel,
                                 entry_form_idPath,
@@ -39,6 +41,9 @@ function BookmarksPortletData(  namespace,
                                 folder_forms_error,
                                 folder_image_closed,
                                 folder_image_open,
+                                collection_form_url,
+                                collection_forms_empty,
+                                collection_forms_error,
                                 options_form,
                                 options_showLink,
                                 messages_folder_create,
@@ -46,7 +51,9 @@ function BookmarksPortletData(  namespace,
                                 messages_delete_bookmark_prefix,
                                 messages_delete_bookmark_suffix,
                                 messages_delete_folder_prefix,
-                                messages_delete_folder_suffix) {
+                                messages_delete_folder_suffix,
+                                messages_delete_collection_prefix,
+                                messages_delete_collection_suffix) {
 
     this.namespace = namespace;
 
@@ -63,8 +70,10 @@ function BookmarksPortletData(  namespace,
     this.entry_form_action = entry_form_action;
     this.entry_form_action_editBookmark = entry_form_action_editBookmark;
     this.entry_form_action_editFolder = entry_form_action_editFolder;
+    this.entry_form_action_editCollection = entry_form_action_editCollection;
     this.entry_form_action_newBookmark = entry_form_action_newBookmark;
     this.entry_form_action_newFolder = entry_form_action_newFolder;
+    this.entry_form_action_newCollection = entry_form_action_newCollection;
     this.entry_form_folderPath = entry_form_folderPath;
     this.entry_form_folderPathLabel = entry_form_folderPathLabel;
     this.entry_form_idPath = entry_form_idPath;
@@ -74,6 +83,9 @@ function BookmarksPortletData(  namespace,
     this.entry_reference_folderPath = entry_reference_folderPath;
     this.entry_reference_name = entry_reference_name;
     this.entry_reference_note = entry_reference_note;
+    this.collection_form_url = collection_form_url;
+    this.collection_forms_empty = collection_forms_empty;
+    this.collection_forms_error = collection_forms_error;
     this.folder_forms_empty = folder_forms_empty;
     this.folder_forms_error = folder_forms_error;
     this.folder_image_closed = folder_image_closed;
@@ -86,6 +98,8 @@ function BookmarksPortletData(  namespace,
     this.messages_delete_bookmark_suffix = messages_delete_bookmark_suffix;
     this.messages_delete_folder_prefix = messages_delete_folder_prefix;
     this.messages_delete_folder_suffix = messages_delete_folder_suffix;
+    this.messages_delete_collection_prefix = messages_delete_collection_prefix;
+    this.messages_delete_collection_suffix = messages_delete_collection_suffix;
 
 
     //Handy function for debugging
@@ -208,12 +222,35 @@ function cancelFolder(namespace, formName) {
     resetForm(namespace, formName);
 }
 
+function newCollection(namespace) {
+    hideEntryForms(namespace);
+
+    var form = resetForm(namespace, bookmarkPortletsData[namespace].collection_forms_empty);
+
+    form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value = "";
+    form.elements[bookmarkPortletsData[namespace].entry_form_action].value = bookmarkPortletsData[namespace].entry_form_action_newCollection;
+
+    getNamespacedElement(namespace, bookmarkPortletsData[namespace].collection_forms_empty + bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_create;
+
+    setupFolderOptions(form.elements[bookmarkPortletsData[namespace].entry_reference_folderPath], form.elements[bookmarkPortletsData[namespace].entry_form_folderPath]);
+
+    showForm(namespace, bookmarkPortletsData[namespace].collection_forms_empty, bookmarkPortletsData[namespace].entry_form_name);
+}
+
+function cancelCollection(namespace, formName) {
+    hideElement(namespace, formName);
+    resetForm(namespace, formName);
+}
+
 function editEntry(namespace, type, parentIdPath, entryIdPath) {
     if (type == "bookmark") {
         editBookmark(namespace, parentIdPath, entryIdPath);
     }
     else if (type == "folder") {
         editFolder(namespace, parentIdPath, entryIdPath);
+    }
+    else if (type == "collection") {
+        editCollection(namespace, parentIdPath, entryIdPath);
     }
     else {
         alert("Bookmarks Portlet Script Error: type='" + type + "' does not match known types.");
@@ -260,6 +297,27 @@ function editFolder(namespace, parentIdPath, entryIdPath) {
     showForm(namespace, bookmarkPortletsData[namespace].folder_forms_empty);
 }
 
+function editCollection(namespace, parentIdPath, entryIdPath) {
+    hideEntryForms(namespace);
+    
+    var form = resetForm(namespace, bookmarkPortletsData[namespace].collection_forms_empty);
+
+    form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value = entryIdPath;
+    form.elements[bookmarkPortletsData[namespace].entry_form_action].value =  bookmarkPortletsData[namespace].entry_form_action_editCollection;
+
+    //Set common fields
+    form.elements[bookmarkPortletsData[namespace].entry_form_name].value = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_name + entryIdPath).innerHTML;
+    form.elements[bookmarkPortletsData[namespace].entry_form_note].value = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_note + entryIdPath).innerHTML;
+    getNamespacedElement(namespace, bookmarkPortletsData[namespace].collection_forms_empty + bookmarkPortletsData[namespace].entry_form_folderPathLabel).innerHTML = bookmarkPortletsData[namespace].messages_folder_move;
+
+    var entryUrl = getNamespacedElement(namespace, bookmarkPortletsData[namespace].bookmark_reference_url + entryIdPath);
+    form.elements[bookmarkPortletsData[namespace].collection_form_url].value = entryUrl.href;
+
+    setupFolderOptions(form.elements[bookmarkPortletsData[namespace].entry_reference_folderPath], form.elements[bookmarkPortletsData[namespace].entry_form_folderPath], parentIdPath, entryIdPath);
+    
+    showForm(namespace, bookmarkPortletsData[namespace].collection_forms_empty);
+}
+
 function deleteEntry(namespace, type, entryIdPath, deleteUrl) {
     var confirmMessage = "";
     var name = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_name + entryIdPath).innerHTML;
@@ -269,10 +327,14 @@ function deleteEntry(namespace, type, entryIdPath, deleteUrl) {
         confirmMessage = confirmMessage + name;
         confirmMessage = confirmMessage + bookmarkPortletsData[namespace].messages_delete_bookmark_suffix;
     }
-    else {
+    else if (type == "folder") {
         confirmMessage = confirmMessage + bookmarkPortletsData[namespace].messages_delete_folder_prefix;
         confirmMessage = confirmMessage + name;
         confirmMessage = confirmMessage + bookmarkPortletsData[namespace].messages_delete_folder_suffix;
+    } else {
+        confirmMessage = confirmMessage + bookmarkPortletsData[namespace].messages_delete_collection_prefix;
+        confirmMessage = confirmMessage + name;
+        confirmMessage = confirmMessage + bookmarkPortletsData[namespace].messages_delete_collection_suffix;    
     }
 
     var shouldDelete = confirm(confirmMessage);
@@ -376,5 +438,10 @@ function hideEntryForms(namespace) {
     var folderErrorForm = getForm(namespace, bookmarkPortletsData[namespace].folder_forms_error);
     if (typeof folderErrorForm != "undefined") {
         cancelFolder(namespace, bookmarkPortletsData[namespace].folder_forms_error);
+    }
+
+    var collectionErrorForm = getForm(namespace, bookmarkPortletsData[namespace].collection_forms_error);
+    if (typeof collectionErrorForm != "undefined") {
+        cancelCollection(namespace, bookmarkPortletsData[namespace].collection_forms_error);
     }
 }

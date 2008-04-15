@@ -44,7 +44,7 @@ import org.springframework.web.portlet.mvc.AbstractController;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
-import edu.wisc.my.portlets.bookmarks.domain.Folder;
+import edu.wisc.my.portlets.bookmarks.domain.CollapsibleEntry;
 import edu.wisc.my.portlets.bookmarks.domain.support.FolderUtils;
 import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
@@ -103,7 +103,7 @@ public class ToggleFolderFormController extends AbstractController {
         
         final IdPathInfo targetFolderPathInfo = FolderUtils.getEntryInfo(bs, folderIndex);
         if (targetFolderPathInfo != null && targetFolderPathInfo.getTarget() != null) {
-            final Folder targetFolder = (Folder)targetFolderPathInfo.getTarget();
+            final CollapsibleEntry targetFolder = (CollapsibleEntry)targetFolderPathInfo.getTarget();
             targetFolder.setMinimized(!targetFolder.isMinimized());
             
             //Persist the changes to the BookmarkSet 

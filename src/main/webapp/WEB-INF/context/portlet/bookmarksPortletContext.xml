@@ -11,6 +11,7 @@
      +-->
     <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.BookmarkValidator"/>
     <bean id="folderValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.FolderValidator"/>
+    <bean id="collectionValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.CollectionValidator"/>
     <bean id="preferencesValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.PreferencesValidator"/>
     
     
@@ -38,13 +39,26 @@
         <property name="validator" ref="bookmarkValidator"/>
     </bean>
     
+    <bean id="baseCollectionFormController" parent="baseBookmarkSetFormController" abstract="true">
+        <property name="commandName" value="collectionCommand"/>
+        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.CollectionFolder"/>
+        <property name="validator" ref="collectionValidator"/>
+    </bean>
 
+        
     <!--
-     | Actuall, in-use controllers
+     | Actual, in-use controllers
      +-->
     <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController">
         <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
         <property name="preferencesRequestResolver" ref="preferencesRequestResolver"/>
+        <property name="availableCollections">
+            <map>
+                <!--
+                <entry key="Del.icio.us"><value>http://del.icio.us/rss/</value></entry>
+                -->
+            </map>
+        </property>
     </bean>
     
     <bean id="newBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.NewBookmarkFormController" parent="baseBookmarkFormController">
@@ -59,6 +73,12 @@
     <bean id="editFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.EditFolderFormController" parent="baseFolderFormController">
     </bean>
     
+    <bean id="newCollectionFormController" class="edu.wisc.my.portlets.bookmarks.web.NewCollectionFormController" parent="baseCollectionFormController">
+    </bean>
+    
+    <bean id="editCollectionFormController" class="edu.wisc.my.portlets.bookmarks.web.EditCollectionFormController" parent="baseCollectionFormController">
+    </bean>
+
     <bean id="toggleFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.ToggleFolderFormController">
         <property name="bookmarkStore" ref="bookmarkStore"/>
         <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
@@ -105,6 +125,8 @@
                         <entry key="editBookmark" value-ref="editBookmarkFormController"/>
                         <entry key="newFolder" value-ref="newFolderFormController"/>
                         <entry key="editFolder" value-ref="editFolderFormController"/>
+                        <entry key="newCollection" value-ref="newCollectionFormController"/>
+                        <entry key="editCollection" value-ref="editCollectionFormController"/>
                         <entry key="toggleFolder" value-ref="toggleFolderFormController"/>
                         <entry key="deleteEntry" value-ref="deleteEntryFormController"/>
                         <entry key="saveOptions" value-ref="saveOptionsFormController"/>
