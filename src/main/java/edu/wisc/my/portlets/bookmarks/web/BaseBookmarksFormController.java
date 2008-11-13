@@ -127,6 +127,11 @@ public class BaseBookmarksFormController extends SimpleFormController {
      */
     @Override
     protected void processFormSubmission(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
+    	
+    	// don't save preferences for guest users
+    	if (request.getRemoteUser() == null)
+    		return;
+    	
         super.processFormSubmission(request, response, command, errors);
 
         if (errors.getErrorCount() <= 0) {

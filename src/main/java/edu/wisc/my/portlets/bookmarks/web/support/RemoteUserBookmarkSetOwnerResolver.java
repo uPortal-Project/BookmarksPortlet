@@ -50,6 +50,9 @@ public class RemoteUserBookmarkSetOwnerResolver implements OwnerResolver {
      * @see edu.wisc.my.portlets.bookmarks.web.support.OwnerResolver#getOwner(javax.portlet.PortletRequest)
      */
     public String getOwner(PortletRequest request) {
-        return request.getRemoteUser();
+        if (request.getRemoteUser() != null)
+        	return request.getRemoteUser();
+        else
+        	return "guest";
     }
 }
