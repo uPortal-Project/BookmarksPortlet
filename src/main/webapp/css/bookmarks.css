@@ -1,31 +1,31 @@
-#bookmarksPortlet ul.bookmarkList {
+.bookmarksPortlet ul.bookmarkList {
     list-style-type: none !important;
     margin: 0;
     padding: 0;
 }
-#bookmarksPortlet ul.subBookmarkList {
+.bookmarksPortlet ul.subBookmarkList {
     list-style-type: none !important;
     margin: 0;
     padding: 0 0 0 18px;
 }
-#bookmarksPortlet ul.bookmarkList li.bookmarkListItem {
+.bookmarksPortlet ul.bookmarkList li.bookmarkListItem {
     list-style-type: none !important;
     overflow: hidden;
 }
 /* List item icon alignment */
-#bookmarksPortlet ul.bookmarkList li.bookmarkListItem img {
+.bookmarksPortlet ul.bookmarkList li.bookmarkListItem img {
     vertical-align: middle;
     margin: 1px 1px 1px 1px;
 }
 
-#bookmarksPortlet ul.bookmarkList span.padding {
+.bookmarksPortlet ul.bookmarkList span.padding {
     padding-right: 15px;
 }
-#bookmarksPortlet ul.bookmarkList img {
+.bookmarksPortlet ul.bookmarkList img {
     border: none;
     width: 16px;
     height: 16px;
 }
-#bookmarksPortlet .hidden {
+.bookmarksPortlet .hidden {
     display: none;
 }

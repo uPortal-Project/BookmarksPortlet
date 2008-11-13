@@ -2,7 +2,7 @@
 <c:set var="portletNamespace" scope="request"><portlet:namespace/></c:set>
 <c:set var="hasErrors" scope="request" value="${errors.errorCount > 0}"/>
 
-<div id="bookmarksPortlet">
+<div class="bookmarksPortlet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
     <script src="${pageContext.request.contextPath}/script/bookmarks.js" type="text/javascript"></script>
     <script type="text/javascript">
