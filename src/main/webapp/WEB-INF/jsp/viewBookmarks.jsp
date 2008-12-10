@@ -80,15 +80,17 @@
             </c:otherwise>
         </c:choose>
         
-        <a href="javascript:void(0);" onclick="newBookmark('${portletNamespace}');return false;" class="jsTextLink portlet-form-label" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addBookmark"/></a>
-        &nbsp;&nbsp;&nbsp;
-        <a href="javascript:void(0);" onclick="newFolder('${portletNamespace}');return false;" class="jsTextLink portlet-form-label" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addFolder"/></a>
-        &nbsp;&nbsp;&nbsp;
-        <a href="javascript:void(0);" onclick="newCollection('${portletNamespace}');return false;" class="jsTextLink portlet-form-label" style="${ fn:length(availableCollections) > 0 and !guestMode ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></a>
-        <c:if test="${fn:length(bookmarkEntries) > 0} and !guestMode">
-            &nbsp;&nbsp;&nbsp;    
-            <a href="javascript:void(0);" id="${portletNamespace}editLink" onclick="toggleEditMode('${portletNamespace}', true);return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
-            <a href="javascript:void(0);" id="${portletNamespace}cancelLink" onclick="toggleEditMode('${portletNamespace}', false);return false;" class="jsTextLink portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
+        <c:if test="${!guestMode }">
+	        <a href="javascript:void(0);" onclick="newBookmark('${portletNamespace}');return false;" class="jsTextLink portlet-form-label" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addBookmark"/></a>
+	        &nbsp;&nbsp;&nbsp;
+	        <a href="javascript:void(0);" onclick="newFolder('${portletNamespace}');return false;" class="jsTextLink portlet-form-label" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addFolder"/></a>
+	        &nbsp;&nbsp;&nbsp;
+	        <a href="javascript:void(0);" onclick="newCollection('${portletNamespace}');return false;" class="jsTextLink portlet-form-label" style="${ fn:length(availableCollections) > 0 and !guestMode ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></a>
+	        <c:if test="${fn:length(bookmarkEntries) > 0}">
+	            &nbsp;&nbsp;&nbsp;    
+	            <a href="javascript:void(0);" id="${portletNamespace}editLink" onclick="toggleEditMode('${portletNamespace}', true);return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
+	            <a href="javascript:void(0);" id="${portletNamespace}cancelLink" onclick="toggleEditMode('${portletNamespace}', false);return false;" class="jsTextLink portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
+	        </c:if>
         </c:if>
         
         <c:if test="${hasErrors}">
