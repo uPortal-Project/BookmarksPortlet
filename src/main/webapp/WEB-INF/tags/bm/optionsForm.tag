@@ -15,45 +15,21 @@
 </c:if>
 
 <portlet:actionURL var="formUrl"/>
+<h3>Options</h3>
 <form:form id="${namespace}${formName}" name="${namespace}${formName}" method="POST" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
-    <input name="action" type="hidden" value="saveOptions"/>
-
-    <table padding="0">
-        <tr>
-            <td width="1%">&nbsp;</td>
-            <td width="1%">&nbsp;</td>
-            <td width="1%">&nbsp;</td>
-            <td width="97%">&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="portlet-form-field-label" colspan="4">
-                <strong><spring:message code="portlet.options.form.defaultFolderOperations.title"/></strong>
-            </td>
-        </tr>
-        <c:forEach items="${options.defaultFolderOperations}" var="operation">
-            <tr>
-                <td/>
-                <td valign="top"><form:radiobutton id="defaultFolderOperation_${operation}" path="defaultFolderOperation" value="${operation}"/></td>
-                <td colspan="2">
-                    <label class="portlet-form-field-label" for="defaultFolderOperation_${operation}">
-                        <strong><spring:message code="portlet.options.form.defaultFolderOperations.${operation}.title"/></strong>
-                    </label>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3"/>
-                <td class="portlet-form-field-label">
-                    <spring:message code="portlet.options.form.defaultFolderOperations.${operation}.description"/>
-                </td>
-            </tr>
-        </c:forEach>
-        <tr>
-            <td align="right" colspan="4">
-                <spring:message code="portlet.options.form.save" var="portletFormSave"/>
-                <input class="portlet-form-button" value="${portletFormSave}" type="submit"/>
-                <spring:message code="portlet.options.form.cancel" var="portletFormCancel"/>
-                <input class="portlet-form-button" value="${portletFormCancel}" type="reset" onclick="cancelOptionsForm('${namespace}', '${formName}');"/>
-            </td>
-        </tr>
-    </table>
+	<input name="action" type="hidden" value="saveOptions"/>
+	<fieldset>
+		<legend><spring:message code="portlet.options.form.defaultFolderOperations.title"/></legend>
+		<c:forEach items="${options.defaultFolderOperations}" var="operation">
+			<form:radiobutton id="defaultFolderOperation_${operation}" path="defaultFolderOperation" value="${operation}"/>
+			<label class="portlet-form-field-label" for="defaultFolderOperation_${operation}">
+					<spring:message code="portlet.options.form.defaultFolderOperations.${operation}.title"/>
+			</label><br/>
+			<p><spring:message code="portlet.options.form.defaultFolderOperations.${operation}.description"/></p>
+		</c:forEach>
+	</fieldset>
+	<spring:message code="portlet.options.form.save" var="portletFormSave"/>
+	<input class="portlet-form-button" value="${portletFormSave}" type="submit"/>
+	<spring:message code="portlet.options.form.cancel" var="portletFormCancel"/>
+	<input class="portlet-form-button" value="${portletFormCancel}" type="reset" onclick="cancelOptionsForm('${namespace}', '${formName}');"/>
 </form:form>

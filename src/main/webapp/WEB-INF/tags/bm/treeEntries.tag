@@ -112,7 +112,7 @@
         <c:set var="cssClass">portlet-font ${(isFolder || isVFolder) ? 'bookmarksFolder' : 'bookmarksEntry'}</c:set>
         <a id="${namespace}url_${entryIdPath}" 
             href="${entryUrl}" ${entryUrlOnClick} ${entryTarget} 
-            title="${bookmarkEntry.noteLines[0]}"><img id="${namespace}entryImg_${entryIdPath}" src="${entryImg}" border="0" alt="${entryDesc}"/>
+            title="${bookmarkEntry.noteLines[0]}"><img id="${namespace}entryImg_${entryIdPath}" src="${entryImg}" border="0" alt="${entryDescText}"/>
             <span id="${namespace}name_${entryIdPath}" class="${cssClass}">${bookmarkEntry.name}</span></a>
         
         <span class="padding"></span>
