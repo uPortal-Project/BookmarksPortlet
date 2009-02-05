@@ -31,7 +31,7 @@ For the errors
 </c:if>
 
 <portlet:actionURL var="formUrl"/>
-<form:form id="${namespace}${formName}" name="${namespace}${formName}" method="POST" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
+<form:form id="${namespace}${formName}" name="${namespace}${formName}" method="post" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
     <input name="action" type="hidden" value="${actionInput}"/>
     <input name="idPath" type="hidden" value="${idPathInput}"/>
 
@@ -43,13 +43,13 @@ For the errors
         </c:if>
         <tr>
         <%--  SHOULD THIS BE HARD CODED?  --%>
-            <td class="portlet-form-field-label" align="right"><label for="name"><spring:message code="portlet.entry.form.name"/></label></td>
+            <td align="right"><label for="name" class="portlet-form-field-label"><spring:message code="portlet.entry.form.name"/></label></td>
             <td><form:input path="name" cssStyle="width: 250px;" cssClass="portlet-form-input-field"/></td>
             <td><form:errors cssClass="portlet-msg-error" path="name"/></td>
         </tr>
         <tr>
         <%-- PUT SELECT MENU HERE  --%>
-            <td class="portlet-form-field-label" align="right"><label for="url"><spring:message code="portlet.collection.form.url"/></label></td>
+            <td align="right"><label for="url" class="portlet-form-field-label"><spring:message code="portlet.collection.form.url"/></label></td>
             <td>
                 <select name="url" id="url">
                 	<c:forEach items="${ availableCollections }" var="collection">
@@ -61,7 +61,7 @@ For the errors
         </tr>
         
         <tr>
-            <td class="portlet-form-field-label" align="right" valign="top"><label for="note"><spring:message code="portlet.entry.form.note"/></label</td>
+            <td align="right" valign="top"><label for="note" class="portlet-form-field-label"><spring:message code="portlet.entry.form.note"/></label</td>
             <td><form:textarea path="note" cssStyle="width: 250px;" cssClass="portlet-form-input-field"></form:textarea></td>
             <td><form:errors cssClass="portlet-msg-error" path="note"/></td>
         </tr>
@@ -74,12 +74,13 @@ For the errors
             </c:if>
         </c:forEach>
         <tr class="${folderRowClass}">
-            <td class="portlet-form-field-label" id="${namespace}${formName}folderActionLabel" align="right" valign="top"><label for="folderPath">${folderActionLabel}</label></td>
+            <td align="right" valign="top"><label for="folderPath" class="portlet-form-field-label" id="${namespace}${formName}folderActionLabel">${folderActionLabel}</label></td>
             <td>
-                <select name="folderPath" style="width: 250px;">
+                <select name="folderPath" id="folderPath" style="width: 250px;">
                 </select>
                 
-                <select name="referenceFolderPath" class="hidden" disabled="true">
+								<label for="referenceFolderPath" class="hidden">Reference Folder Path:</label>
+                <select name="referenceFolderPath" id="referenceFolderPath" class="hidden" disabled="true">
                     <option cssClass="portlet-form-input-field" value="${bookmarkSet.id}"><spring:message code="portlet.entry.form.folder.none"/></option>
                     <bm:folderOptions depth="0" entries="${entries}" parentIdPath="${bookmarkSet.id}"/>
                 </select>

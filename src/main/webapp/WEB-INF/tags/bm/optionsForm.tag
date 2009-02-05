@@ -16,7 +16,7 @@
 
 <portlet:actionURL var="formUrl"/>
 <h3>Options</h3>
-<form:form id="${namespace}${formName}" name="${namespace}${formName}" method="POST" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
+<form:form id="${namespace}${formName}" name="${namespace}${formName}" method="post" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
 	<input name="action" type="hidden" value="saveOptions"/>
 	<fieldset>
 		<legend><spring:message code="portlet.options.form.defaultFolderOperations.title"/></legend>
