@@ -4,7 +4,7 @@
 
 <div class="bookmarksPortlet">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
-    <script src="${pageContext.request.contextPath}/script/bookmarks.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/script/bookmarks.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         new BookmarksPortletData(   "${portletNamespace}",      //namespace
                                     "newWindow",                //bookmark_form_newWindow
