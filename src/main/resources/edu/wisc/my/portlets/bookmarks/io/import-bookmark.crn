@@ -1,0 +1,19 @@
+<with>
+    <attribute key="id">${sequence(ENTRY_ID_SEQUENCE)}</attribute>
+    <subtasks>
+        <groovy>
+            <script>
+                import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
+
+                Bookmark b = new Bookmark();
+                b.setName(Attributes.NODE.valueOf('title'));
+                b.setNote(Attributes.NODE.valueOf('desc'));
+                b.setUrl(Attributes.NODE.valueOf('@href'));
+                parent.getChildren().put(id, b);                                    
+            </script>
+            <subtasks>
+                <log>Importing bookmark:  ${valueOf(@href)}</log>
+            </subtasks>
+        </groovy>
+    </subtasks>
+</with>

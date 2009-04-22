@@ -1,0 +1,64 @@
+<!--
+ |  This Cernunnos XML imports XBEL documents in the specified directory, which 
+ |  *must be passed as the $1 parameter* (first command-line argument). 
+ |
+ |  Example Document:
+ |
+ |    <xbel version="1.0">
+ |      <title>My Bookmarks</title>
+ |      <info>
+ |        <metadata owner="admin"/>
+ |      </info>
+ |      <folder folded="yes" id="n1168638030077">
+ |        <title>Internet Giants</title>
+ |        <bookmark href="http://www.google.com/" id="n1168638095707">
+ |          <title>Google</title>
+ |          <desc>In addition to providing easy access to billions of web pages, Google has many special features to help you to find exactly what you're looking for</desc>
+ |        </bookmark>
+ |        <bookmark href="http://www.amazon.com/" id="n1168638095708">
+ |          <title>Amazon</title>
+ |          <desc>Online Shopping for Electronics, Apparel, Computers, Books, DVDs and more</desc>
+ |        </bookmark>
+ |      </folder>
+ |    </xbel>
+ | 
+ +-->
+<spring-beans context="${groovy(new File('.').toURI().toURL().toExternalForm())}" location="src/main/webapp/WEB-INF/context/applicationContext.xml">
+    <file-iterator dir="${$1}" includes="**/*.bookmarks">
+        <with>
+            <attribute key="Attributes.NODE">${parseXml()}</attribute>
+            <subtasks>
+                <echo-ln>Importing bookmarks for user:  ${valueOf(info/metadata/@owner)}</echo-ln>
+                <sequence sequence-name="ENTRY_ID_SEQUENCE">
+                    <groovy>
+                        <script>
+                            import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+                        
+                            BookmarkSet bookmarks = new BookmarkSet();
+                            bookmarks.setOwner(Attributes.NODE.valueOf('info/metadata/@owner'));
+                            ScriptAttributes.RESPONSE.setAttribute('parent', bookmarks);
+                        </script>
+                        <subtasks>
+
+                            <!-- Import child bookmarks... -->
+                            <node-iterator xpath="bookmark">
+                                <crn location="import-bookmark.crn"/>
+                            </node-iterator>
+
+                            <!-- Import child folders... -->
+                            <node-iterator xpath="folder">
+                                <crn location="import-folder.crn"/>
+                            </node-iterator>
+
+                            <!-- Store the set... -->
+                            <groovy>
+                                <script>bookmarkStore.storeBookmarkSet(parent);</script>
+                            </groovy>
+
+                        </subtasks>
+                    </groovy>
+                </sequence>
+            </subtasks>
+        </with>
+    </file-iterator>
+</spring-beans>

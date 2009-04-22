@@ -1,0 +1,25 @@
+<project name="BookmarksPortletImporter" basedir="." default="import">
+	
+    <target name="import" description="Imports the specified XBEL documents">
+
+        <!-- The dir property controlls the import -->
+        <fail unless="dir" message="You must specify a directory as follows:  '-Ddir=&lt;location&gt;'"/>
+
+        <!-- Invoke Cernunnos specifying script and parameters -->
+        <java fork="true" failonerror="true" dir="${basedir}" classname="org.danann.cernunnos.runtime.Main">
+            <classpath>
+                <pathelement path="target/classes"/>
+            	<fileset dir="target">
+                    <include name="BookmarksPortlet-*/WEB-INF/lib/**/*.jar"/>
+                </fileset>
+                <fileset dir="import/lib">
+                    <include name="**/*.jar"/>
+                </fileset>
+            </classpath>
+            <arg value="classpath://edu/wisc/my/portlets/bookmarks/io/import-xbel.crn"/>
+            <arg value="${dir}"/>
+        </java>
+
+    </target>
+
+</project>

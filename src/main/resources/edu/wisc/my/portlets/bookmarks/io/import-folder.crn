@@ -1,0 +1,29 @@
+<with>
+    <attribute key="id">${sequence(ENTRY_ID_SEQUENCE)}</attribute>
+    <subtasks>
+        <groovy>
+            <script>
+                import edu.wisc.my.portlets.bookmarks.domain.Folder;
+                        
+                Folder f = new Folder();
+                parent.getChildren().put(id, f);
+                f.setName(Attributes.NODE.valueOf('title'));
+                f.setMinimized(Attributes.NODE.valueOf('@folded').equalsIgnoreCase('yes'));
+                ScriptAttributes.RESPONSE.setAttribute('parent', f);
+            </script>
+            <subtasks>
+            
+                <!-- Import child bookmarks... -->
+                <node-iterator xpath="bookmark">
+                    <crn location="import-bookmark.crn"/>
+                </node-iterator>
+
+                <!-- Import child folders... -->
+                <node-iterator xpath="folder">
+                    <crn location="import-folder.crn"/>
+                </node-iterator>
+
+            </subtasks>
+        </groovy>
+    </subtasks>
+</with>
