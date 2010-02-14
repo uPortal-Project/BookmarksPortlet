@@ -107,11 +107,6 @@
         <property name="username"><value>${hibernate.connection.username}</value></property>
         <property name="password"><value>${hibernate.connection.password}</value></property>
     </bean>
-    <bean class="edu.wisc.my.portlets.bookmarks.dao.SqlShutdownHelper" destroy-method="close">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
-    
-    
     
     <!-- JMX Stats Exporting -->
     <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter">
