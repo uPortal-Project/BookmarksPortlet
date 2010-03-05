@@ -1,9 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     
     <parent>
         <groupId>org.jasig</groupId>
         <artifactId>jasig-parent</artifactId>
-        <version>7</version>
+        <version>13</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -14,27 +15,35 @@
 
     <name>Bookmarks Portlet</name>
     <description>Bookmarks Portlet.</description>
+    <url>${jasig-site-base}/WeatherPortlet/${project.version}</url>
     
-    <properties>
-        <issues.projectKey>PBOOK</issues.projectKey>
-        <scm.path>/portlets</scm.path>
-    </properties>
+    <scm>
+        <connection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</connection>
+        <developerConnection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</developerConnection>
+        <url>http://developer.jasig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/trunk</url>
+    </scm>
+    
+    <distributionManagement>
+        <site>
+            <id>developer.jasig</id>
+            <url>${jasig-site-dist-base}/BookmarksPortlet/${project.version}</url>
+        </site>
+    </distributionManagement>
+    
+    <issueManagement>
+        <url>${jasig-issues-base}/PBOOK</url>
+        <system>${jasig-issues-system}</system>
+    </issueManagement>
+    
+	<properties>
+         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
     
     <repositories>
         <repository>
             <id>jasig-repository</id>
             <name>JA-SIG Maven2 Repository</name>
             <url>http://developer.ja-sig.org/maven2</url>
-        </repository>
-        <repository>
-            <id>Codehaus Snapshots</id>
-            <url>http://snapshots.repository.codehaus.org/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
         </repository>
     </repositories>
 
