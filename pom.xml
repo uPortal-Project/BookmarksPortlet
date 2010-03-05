@@ -11,16 +11,16 @@
     <groupId>org.jasig.portlet</groupId>
     <artifactId>BookmarksPortlet</artifactId>
     <packaging>war</packaging>
-    <version>1.0.10</version>
+    <version>1.0.11-SNAPSHOT</version>
 
     <name>Bookmarks Portlet</name>
     <description>Bookmarks Portlet.</description>
     <url>${jasig-site-base}/WeatherPortlet/${project.version}</url>
     
     <scm>
-        <connection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/tags/rel-1.0.10</connection>
-        <developerConnection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/tags/rel-1.0.10</developerConnection>
-        <url>http://developer.jasig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/tags/rel-1.0.10</url>
+        <connection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</connection>
+        <developerConnection>scm:svn:https://www.ja-sig.org/svn/portlets/BookmarksPortlet/trunk</developerConnection>
+        <url>http://developer.jasig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/trunk</url>
     </scm>
     
     <distributionManagement>
