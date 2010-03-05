@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
-	<configExtensions>
-		<configExtension>xml</configExtension>
-	</configExtensions>
+	<version>1</version>
+	<pluginVersion><![CDATA[2.3.0.200912170948-RELEASE]]></pluginVersion>
+	<configSuffixes>
+		<configSuffix><![CDATA[xml]]></configSuffix>
+	</configSuffixes>
+	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
 		<config>src/main/webapp/WEB-INF/context/portlet/bookmarksPortletContext.xml</config>
 		<config>src/main/webapp/WEB-INF/context/applicationContext.xml</config>
 	</configs>
 	<configSets>
 		<configSet>
-			<name>AppContext</name>
+			<name><![CDATA[AppContext]]></name>
 			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>
 			<incomplete>false</incomplete>
 			<configs>
@@ -17,7 +20,7 @@
 			</configs>
 		</configSet>
 		<configSet>
-			<name>PortletContext</name>
+			<name><![CDATA[PortletContext]]></name>
 			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>
 			<incomplete>false</incomplete>
 			<configs>
