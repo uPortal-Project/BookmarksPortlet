@@ -1,5 +1,5 @@
 <project name="BookmarksPortletImporter" basedir="." default="import">
-	
+ 	
     <target name="import" description="Imports the specified XBEL documents">
 
         <!-- The dir property controlls the import -->
