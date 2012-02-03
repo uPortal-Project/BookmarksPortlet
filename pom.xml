@@ -11,16 +11,16 @@
     <groupId>org.jasig.portlet</groupId>
     <artifactId>BookmarksPortlet</artifactId>
     <packaging>war</packaging>
-    <version>1.0.11</version>
+    <version>1.0.12-SNAPSHOT</version>
 
     <name>Bookmarks Portlet</name>
     <description>Bookmarks Portlet.</description>
     <url>${jasig-site-base}/BookmarksPortlet/${project.version}</url>
     
     <scm>
-        <connection>scm:svn:https://source.jasig.org/portlets/BookmarksPortlet/tags/BookmarksPortlet-1.0.11</connection>
-        <developerConnection>scm:svn:https://source.jasig.org/portlets/BookmarksPortlet/tags/BookmarksPortlet-1.0.11</developerConnection>
-        <url>http://developer.jasig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/tags/BookmarksPortlet-1.0.11</url>
+        <connection>scm:svn:https://source.jasig.org/portlets/BookmarksPortlet/trunk</connection>
+        <developerConnection>scm:svn:https://source.jasig.org/portlets/BookmarksPortlet/trunk</developerConnection>
+        <url>http://developer.jasig.org/source/browse/jasigsvn/portlets/BookmarksPortlet/trunk</url>
     </scm>
     
     <issueManagement>
