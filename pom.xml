@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jasig.parent</groupId>
         <artifactId>jasig-parent</artifactId>
-        <version>32</version>
+        <version>33</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -187,18 +187,6 @@
             <version>1.2.14</version>
             <type>jar</type>
             <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.googlecode.cernunnos</groupId>
-            <artifactId>cernunnos</artifactId>
-            <version>1.1.0</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <!-- ===== Provided Dependencies ================================== -->
