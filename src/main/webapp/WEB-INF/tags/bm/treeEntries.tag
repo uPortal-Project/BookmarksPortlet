@@ -119,7 +119,7 @@
         
         <%-- Need both ID (for IE) and NAME (for FF/Opera) --%>
         <c:if test="${not (editable == false) }">
-	        <span id="${namespace}entryEditButtons" name="${namespace}entryEditButtons" class="hidden">
+	        <span id="${namespace}entryEditButtons" name="${namespace}entryEditButtons" class="bookmark-hide">
 	            <a href="javascript:void(0);" onclick="editEntry('${namespace}', '${entryType}', '${parentIdPath}', '${entryIdPath}');return false;"
 	                title="${entryEditText}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
 	            
@@ -129,11 +129,11 @@
 	        </span>
         </c:if>
 
-        <span id="${namespace}note_${entryIdPath}" class="hidden">${bookmarkEntry.note}</span>
+        <span id="${namespace}note_${entryIdPath}" class="bookmark-hide">${bookmarkEntry.note}</span>
         
         <c:if test="${(isFolder || isVFolder ) && !(options.defaultFolderOperation == 'SAVED' && bookmarkEntry.minimized)}">
             <c:if test="${isFolderClosed}">
-                <c:set var="childrenHiddenClass" value="hidden"/>
+                <c:set var="childrenHiddenClass" value="bookmark-hide"/>
             </c:if>
             
             <c:choose>

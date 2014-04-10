@@ -23,7 +23,7 @@ For the errors
 --%>
     
 <c:if test="${hidden}">
-    <c:set var="formClass" value="hidden" scope="page"/>
+    <c:set var="formClass" value="bookmark-hide" scope="page"/>
 </c:if>
 <c:if test="${empty folderActionLabel}">
     <c:set var="folderActionLabel"><spring:message code="portlet.entry.form.folder"/></c:set>
@@ -64,8 +64,8 @@ For the errors
                 <select name="folderPath" id="folderPath" style="width: 250px;">
                 </select>
                 
-								<label for="referenceFolderPath" class="hidden">Reference Folder Path:</label>
-                <select name="referenceFolderPath" id="referenceFolderPath" class="hidden" disabled="true">
+								<label for="referenceFolderPath" class="bookmark-hide">Reference Folder Path:</label>
+                <select name="referenceFolderPath" id="referenceFolderPath" class="bookmark-hide" disabled="true">
                     <option cssClass="portlet-form-input-field" value="${bookmarkSet.id}"><spring:message code="portlet.entry.form.folder.none"/></option>
                     <bm:folderOptions depth="0" entries="${entries}" parentIdPath="${bookmarkSet.id}"/>
                 </select>

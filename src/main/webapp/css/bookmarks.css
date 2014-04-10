@@ -44,6 +44,7 @@
     width: 16px;
     height: 16px;
 }
-.bookmarksPortlet .hidden {
+.bookmarksPortlet .bookmark-hide {
+    visibility: visible;
     display: none;
 }

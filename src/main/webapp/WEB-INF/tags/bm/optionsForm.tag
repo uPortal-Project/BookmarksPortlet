@@ -11,7 +11,7 @@
 <%@ attribute name="namespace"     required="false" %>
     
 <c:if test="${hidden}">
-    <c:set var="formClass" value="hidden" scope="page"/>
+    <c:set var="formClass" value="bookmark-hide" scope="page"/>
 </c:if>
 
 <portlet:actionURL var="formUrl"/>
