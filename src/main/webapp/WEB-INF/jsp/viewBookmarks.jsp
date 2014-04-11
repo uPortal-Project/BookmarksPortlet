@@ -76,8 +76,8 @@
     <c:set var="optionsFormHidden" value="true"/>
     <c:if test="${hasErrors && empty folderCommand && empty bookmarkCommand}">
         <c:set var="optionsFormHidden" value="false"/>
-        <c:set var="optionsLinkClass" value="hidden" scope="page"/>
-        <c:set var="bookmarksTreeAndFormClass" value="hidden" scope="page"/>
+        <c:set var="optionsLinkClass" value="bookmark-hide" scope="page"/>
+        <c:set var="bookmarksTreeAndFormClass" value="bookmark-hide" scope="page"/>
     </c:if>
     
     <div style="float: right; ${ guestMode ? 'display: none;' : '' }">
@@ -109,7 +109,7 @@
 	        <c:if test="${fn:length(bookmarkEntries) > 0}">
 	            &nbsp;&nbsp;&nbsp;    
 	            <a href="javascript:void(0);" id="${portletNamespace}editLink" onclick="toggleEditMode('${portletNamespace}', true);return false;" class="jsTextLink portlet-form-label"><spring:message code="portlet.view.edit.show"/></a>
-	            <a href="javascript:void(0);" id="${portletNamespace}cancelLink" onclick="toggleEditMode('${portletNamespace}', false);return false;" class="jsTextLink portlet-form-label hidden"><spring:message code="portlet.view.edit.hide"/></a>
+	            <a href="javascript:void(0);" id="${portletNamespace}cancelLink" onclick="toggleEditMode('${portletNamespace}', false);return false;" class="jsTextLink portlet-form-label bookmark-hide"><spring:message code="portlet.view.edit.hide"/></a>
 	        </c:if>
         </c:if>
         
