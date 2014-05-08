@@ -119,7 +119,7 @@
         
         <%-- Need both ID (for IE) and NAME (for FF/Opera) --%>
         <c:if test="${not (editable == false) }">
-	        <span id="${namespace}entryEditButtons" name="${namespace}entryEditButtons" class="bookmark-hide">
+	        <span id="${namespace}entryEditButtons" name="${namespace}entryEditButtons" >
 	            <a href="javascript:void(0);" onclick="editEntry('${namespace}', '${entryType}', '${parentIdPath}', '${entryIdPath}');return false;"
 	                title="${entryEditText}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
 	            

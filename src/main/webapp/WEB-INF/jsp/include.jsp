@@ -21,3 +21,8 @@
 <%@ page contentType="text/html" isELIgnored="false" %>
 
 <%@ include file="/WEB-INF/tags/bm/include.jsp" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bookmarks.css" type="text/css"/>
+<script src="${pageContext.request.contextPath}/script/bookmarks.min.js" type="text/javascript"></script>
+<c:set var="portletNamespace" scope="request"><portlet:namespace/></c:set>
+<c:set var="hasErrors" scope="request" value="${errors.errorCount > 0}"/>

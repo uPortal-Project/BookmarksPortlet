@@ -15,7 +15,7 @@
 </c:if>
 
 <portlet:actionURL var="formUrl"/>
-<h3>Options</h3>
+<h3><spring:message code="portlet.edit.mode" text="Edit Mode"/></h3>
 <form:form id="${namespace}${formName}" name="${namespace}${formName}" method="post" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
 	<input name="action" type="hidden" value="saveOptions"/>
 	<fieldset>
