@@ -36,7 +36,6 @@ function BookmarksPortletData(  namespace,
                                 bookmark_reference_url,
                                 bookmarksTreeAndForm,
                                 entry_childFolderPrefix,
-                                entry_edit_buttons,
                                 entry_edit_cancelLink,
                                 entry_edit_editLink,
                                 entry_form_action,
@@ -82,7 +81,6 @@ function BookmarksPortletData(  namespace,
     this.bookmark_reference_url = bookmark_reference_url;
     this.bookmarksTreeAndForm = bookmarksTreeAndForm;
     this.entry_childFolderPrefix = entry_childFolderPrefix;
-    this.entry_edit_buttons = entry_edit_buttons;
     this.entry_edit_cancelLink = entry_edit_cancelLink;
     this.entry_edit_editLink = entry_edit_editLink;
     this.entry_form_action = entry_form_action;
@@ -132,6 +130,7 @@ function BookmarksPortletData(  namespace,
                 stringVal += property + "=" + this[property] + ", ";
             }
         }
+        
 
         if (hasProperties) {
             stringVal = stringVal.substring(0, stringVal.length - 2);
@@ -179,30 +178,15 @@ function toggleFolder(namespace, folderIdPath, imgContextPath) {
     }
 }
 
-function toggleEditMode(namespace, enableEdit) {
-    var editSpans = getNamespacedElements(namespace, bookmarkPortletsData[namespace].entry_edit_buttons);
+function hideEditMode(namespace) {
+    var editSpans = document.getElementsByName(namespace + "entryEditButtons");
     for (var index = 0; index < editSpans.length; index++) {
-        if (enableEdit) {
-            editSpans[index].style.display = "inline";
-        }
-        else {
-            editSpans[index].style.display = "none";
-        }
-    }
-
-    if (enableEdit) {
-        hideElement(namespace, bookmarkPortletsData[namespace].entry_edit_editLink);
-        showElementInline(namespace, bookmarkPortletsData[namespace].entry_edit_cancelLink);
-    }
-    else {
-        hideElement(namespace, bookmarkPortletsData[namespace].entry_edit_cancelLink);
-        showElementInline(namespace, bookmarkPortletsData[namespace].entry_edit_editLink);
+        editSpans[index].style.display = "none";
     }
 }
 
 function newBookmark(namespace) {
     hideEntryForms(namespace);
-
     var form = resetForm(namespace, bookmarkPortletsData[namespace].bookmark_forms_empty);
 
     form.elements[bookmarkPortletsData[namespace].entry_form_idPath].value = "";

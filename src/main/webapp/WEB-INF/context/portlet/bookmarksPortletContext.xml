@@ -80,6 +80,17 @@
             </map>
         </property>
     </bean>
+    <bean id="editBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.EditBookmarksController">
+        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
+        <property name="preferencesRequestResolver" ref="preferencesRequestResolver"/>
+        <property name="availableCollections">
+            <map>
+                <!--property needs a map attriubte, see viewBookmarksFormController
+                    this is empty on purpose.
+                -->
+            </map>
+        </property>
+    </bean>
     
     <bean id="newBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.NewBookmarkFormController" parent="baseBookmarkFormController">
     </bean>
@@ -141,6 +152,10 @@
                 <entry key="view">
                     <map>
                         <entry key="viewBookmarks" value-ref="viewBookmarksFormController"/>
+                    </map>
+                </entry>
+                <entry key="edit">
+                    <map>
                         <entry key="newBookmark" value-ref="newBookmarkFormController"/>
                         <entry key="editBookmark" value-ref="editBookmarkFormController"/>
                         <entry key="newFolder" value-ref="newFolderFormController"/>
@@ -166,6 +181,7 @@
         <property name="portletModeMap">
             <map>
                 <entry key="view" value-ref="viewBookmarksFormController"/>
+                <entry key="edit" value-ref="editBookmarksFormController"/>
             </map>
         </property>
     </bean>
