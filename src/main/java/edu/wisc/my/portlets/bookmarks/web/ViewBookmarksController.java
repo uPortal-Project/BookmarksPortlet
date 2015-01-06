@@ -34,7 +34,11 @@ import javax.portlet.RenderResponse;
 import org.springframework.web.portlet.ModelAndView;
 import org.springframework.web.portlet.mvc.AbstractController;
 
+import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import edu.wisc.my.portlets.bookmarks.domain.CollectionFolder;
+import edu.wisc.my.portlets.bookmarks.domain.Folder;
+import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
 import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
 import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
@@ -86,8 +90,26 @@ public class ViewBookmarksController extends AbstractController {
     @Override
     protected ModelAndView handleRenderRequestInternal(RenderRequest request, RenderResponse response) throws Exception {
         final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
+        final Preferences preferences = this.preferencesRequestResolver.getPreferences(request, false);
         final Map<String, Object> refData = new HashMap<String, Object>();
         refData.put(ViewConstants.BOOKMARK_SET, bookmarkSet);
+        if (preferences != null) {      
+                    refData.put(ViewConstants.OPTIONS, preferences);       
+                }      
+                else {     
+                    refData.put(ViewConstants.OPTIONS, new Preferences());     
+                }      
+              
+               refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());     
+               refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());     
+               refData.put(ViewConstants.COMMAND_AVAILABLE_COLLECTIONS, this.availableCollections);       
+               refData.put(ViewConstants.COMMAND_EMPTY_COLLECTION, new CollectionFolder());       
+                      
+                if (request.getRemoteUser() == null) {     
+                   refData.put("guestMode", true);     
+                } else {       
+                   refData.put("guestMode", false);
+                }
         return new ModelAndView("viewBookmarks", refData);
     }
 

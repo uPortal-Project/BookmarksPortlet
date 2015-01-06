@@ -30,7 +30,7 @@ For the errors
     <c:set var="folderActionLabel"><spring:message code="portlet.entry.form.folder"/></c:set>
 </c:if>
 
-<portlet:actionURL var="formUrl"/>
+<portlet:actionURL portletMode="EDIT" var="formUrl"/>
 <form:form id="${namespace}${formName}" name="${namespace}${formName}" method="post" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
     <input name="action" type="hidden" value="${actionInput}"/>
     <input name="idPath" type="hidden" value="${idPathInput}"/>
