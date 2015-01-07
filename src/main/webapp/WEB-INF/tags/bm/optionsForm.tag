@@ -14,9 +14,9 @@
     <c:set var="formClass" value="bookmark-hide" scope="page"/>
 </c:if>
 
-<portlet:actionURL var="formUrl"/>
-<h3><spring:message code="portlet.edit.mode" text="Edit Mode"/></h3>
+<portlet:actionURL portletMode="EDIT" var="formUrl"/>
 <form:form id="${namespace}${formName}" name="${namespace}${formName}" method="post" action="${formUrl}" commandName="${commandName}" cssClass="${formClass}">
+    <h3><spring:message code="portlet.edit.mode" text="Edit Mode"/></h3>
 	<input name="action" type="hidden" value="saveOptions"/>
 	<fieldset>
 		<legend><spring:message code="portlet.options.form.defaultFolderOperations.title"/></legend>

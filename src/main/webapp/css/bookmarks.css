@@ -16,6 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ .bookmarksPortlet ul{
+    display: block;
+ }
+ 
 .bookmarksPortlet ul.bookmarkList {
     list-style-type: none !important;
     margin: 0;
