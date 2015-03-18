@@ -11,7 +11,7 @@
     <groupId>org.jasig.portlet</groupId>
     <artifactId>BookmarksPortlet</artifactId>
     <packaging>war</packaging>
-    <version>1.0.16-SNAPSHOT</version>
+    <version>1.1.0-SNAPSHOT</version>
 
     <name>Bookmarks Portlet</name>
     <description>Bookmarks Portlet.</description>
@@ -28,6 +28,10 @@
         <url>${jasig-issues-base}/PBOOK</url>
         <system>${jasig-issues-system}</system>
     </issueManagement>
+
+    <properties>
+        <spring.version>3.2.13.RELEASE</spring.version>
+    </properties>
 
     <dependencies>
 
@@ -86,10 +90,8 @@
 
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate</artifactId>
-            <version>3.2.3.ga</version>
-            <type>jar</type>
-            <scope>compile</scope>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.6.10.Final</version>
         </dependency>
 
         <dependency>
@@ -110,64 +112,32 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-dao</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-hibernate3</artifactId>
-            <version>2.0.8</version>
-            <type>jar</type>
-            <scope>compile</scope>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         
+        <dependency>
+	        <groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc-portlet</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>        
+
         <dependency>
             <groupId>javax.transaction</groupId>
             <artifactId>jta</artifactId>
             <version>1.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jmx</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-portlet</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>2.0.5</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         
         <dependency>
@@ -191,10 +161,22 @@
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.14</version>
+            <version>1.2.17</version>
             <type>jar</type>
             <scope>runtime</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>2.8.5</version>
+        </dependency>
+
+		<dependency>
+		    <groupId>net.sf.ehcache</groupId>
+		    <artifactId>ehcache-web</artifactId>
+		    <version>2.0.4</version>
+		</dependency>
 
         <!-- ===== Provided Dependencies ================================== -->
         <dependency>
@@ -217,7 +199,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.2</version>
+            <version>4.12</version>
             <type>jar</type>
             <scope>test</scope>
         </dependency>
@@ -230,8 +212,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>
