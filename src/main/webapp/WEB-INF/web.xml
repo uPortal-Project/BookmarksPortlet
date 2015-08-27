@@ -45,14 +45,6 @@
         <param-value>/WEB-INF/context/applicationContext.xml</param-value>
     </context-param>
     
-<!--     For some reason Tomcat 7.0.x wasn't resolving the taglibs in the tags folder automatically -->
-    <jsp-config>
-         <taglib>
-             <taglib-uri>http://my.wisc.edu/jsp/jstl/functions</taglib-uri>
-             <taglib-location>/WEB-INF/tags/uwfn.tld</taglib-location>
-         </taglib>
-     </jsp-config>
-    
     <!--
      | The order of these listeners is important and should not be changed
      +-->
