@@ -25,7 +25,7 @@
 <%@ taglib prefix="uwfn" uri="http://my.wisc.edu/jsp/jstl/functions" %>
 <%@ taglib prefix="bm" tagdir="/WEB-INF/tags/bm" %>
     
-<%@ taglib prefix='portlet' uri='/WEB-INF/tags/portlet.tld' %>
+<%@ taglib prefix='portlet' uri='http://java.sun.com/portlet' %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
