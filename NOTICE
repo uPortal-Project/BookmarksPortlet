@@ -31,13 +31,13 @@ This project includes:
   Hibernate Core under GNU Lesser General Public License
   HSQLDB under HSQLDB License
   HttpClient under Apache License
+  Java Portlet Specification V2.0 under Commons Development and Distribution License, Version 1.0
   Java Transaction API under Commons Development and Distribution License, Version 1.0
   JPA 2.0 API under Sun Binary Code License
   jstl under Commons Development and Distribution License, Version 1.0
   JUnit under Eclipse Public License 1.0
   Lang under The Apache Software License, Version 2.0
   Logging under The Apache Software License, Version 2.0
-  Portlet API under Commons Development and Distribution License, Version 1.0
   servlet-api under Commons Development and Distribution License, Version 1.0
   SLF4J API Module under MIT License
   Spring AOP under The Apache Software License, Version 2.0
