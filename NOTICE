@@ -18,10 +18,10 @@ under the License.
 This project includes:
   AntLR under BSD License
   AOP alliance under Public Domain
+  Apache Commons Collections under Apache License, Version 2.0
   Apache Log4j under The Apache Software License, Version 2.0
   Bookmarks Portlet under Apache License Version 2.0
   Codec under Apache License, Version 2.0
-  Collections under The Apache Software License, Version 2.0
   dom4j under BSD License
   ehcache under The Apache Software License, Version 2.0
   Ehcache Core under The Apache Software License, Version 2.0
