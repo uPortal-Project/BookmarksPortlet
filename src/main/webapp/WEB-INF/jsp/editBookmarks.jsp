@@ -93,11 +93,11 @@
         </c:choose>
         <br>
         <c:if test="${!guestMode }">
-            <button type="button" onclick="newBookmark('${portletNamespace}');return false;" class="btn btn-default jsTextLink portlet-form-label" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addBookmark"/></button>
+            <button type="button" onclick="newBookmark('${portletNamespace}');return false;" class="btn btn-default" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addBookmark"/></button>
             &nbsp;&nbsp;&nbsp;
-            <button type="button" onclick="newFolder('${portletNamespace}');return false;" class="btn btn-default jsTextLink portlet-form-label" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addFolder"/></button>
+            <button type="button" onclick="newFolder('${portletNamespace}');return false;" class="btn btn-default" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addFolder"/></button>
             &nbsp;&nbsp;&nbsp;
-            <button type="button" onclick="newCollection('${portletNamespace}');return false;" class="btn btn-default jsTextLink portlet-form-label" style="${ fn:length(availableCollections) > 0 and !guestMode ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></button>
+            <button type="button" onclick="newCollection('${portletNamespace}');return false;" class="btn btn-default" style="${ fn:length(availableCollections) > 0 and !guestMode ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></button>
             <portlet:renderURL portletMode="VIEW" var="returnToViewModeUrl" />
             <a type="button" class="btn btn-default" href="${returnToViewModeUrl}"><spring:message
                 code="favorites.stop.editing"
