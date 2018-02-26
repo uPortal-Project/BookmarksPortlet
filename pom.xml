@@ -31,6 +31,7 @@
 
     <properties>
         <spring.version>3.2.13.RELEASE</spring.version>
+        <uportal-libs.version>5.0.4</uportal-libs.version>
     </properties>
 
     <dependencies>
@@ -117,9 +118,9 @@
         </dependency>
 
         <dependency>
-	        <groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
@@ -172,11 +173,43 @@
             <version>2.8.5</version>
         </dependency>
 
-		<dependency>
-		    <groupId>net.sf.ehcache</groupId>
-		    <artifactId>ehcache-web</artifactId>
-		    <version>2.0.4</version>
-		</dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-web</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jasig.portal</groupId>
+            <artifactId>uPortal-spring</artifactId>
+            <version>${uportal-libs.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-api-internal</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-security-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-security-mvc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.jasig.portal</groupId>
+                    <artifactId>uPortal-tools</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>net.oauth.core</groupId>
+                    <artifactId>oauth</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
         <!-- ===== Provided Dependencies ================================== -->
         <dependency>
