@@ -31,7 +31,7 @@
 
     <properties>
         <spring.version>3.2.13.RELEASE</spring.version>
-        <uportal-libs.version>5.0.5</uportal-libs.version>
+        <uportal-libs.version>5.1.0</uportal-libs.version>
     </properties>
 
     <dependencies>
