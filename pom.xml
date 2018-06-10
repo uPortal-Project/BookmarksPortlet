@@ -30,7 +30,7 @@
     </issueManagement>
 
     <properties>
-        <spring.version>3.2.13.RELEASE</spring.version>
+        <spring.version>4.3.15.RELEASE</spring.version>
         <uportal-libs.version>5.1.0</uportal-libs.version>
     </properties>
 
@@ -309,7 +309,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <injectString>&lt;!-- [INSERT JSPC FRAGMENT HERE] --&gt;</injectString>
+                            <injectString>&lt;!-- [INSERT JSPC FRAGMENT HERE] --></injectString>
                         </configuration>
                         <dependencies>
                             <!-- These dependencies are the portlet.tld is needed for JSP compilation -->
