@@ -103,7 +103,7 @@
             <portlet:renderURL portletMode="EDIT" var="EditModeUrl" />
             <a type="button" class="btn btn-default" href="${EditModeUrl}"><spring:message
                 code="portlet.view.edit.show"
-                text="Show Edit"/>
+                text="Edit"/>
             </a>
             <br>
         </c:if>
