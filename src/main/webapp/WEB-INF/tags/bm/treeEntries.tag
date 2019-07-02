@@ -138,7 +138,7 @@
 	            <a href="javascript:void(0);" onclick="editEntry('${namespace}', '${entryType}', '${parentIdPath}', '${entryIdPath}');return false;"
 	                title="${entryEditText}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
 
-	            <form action="<portlet:actionURL escapeXml="false"></portlet:actionURL>" method="post" style="display: inline-block">
+	            <form action="<portlet:actionURL escapeXml="false"></portlet:actionURL>" method="post" style="display: inline-block" onSubmit="return deleteEntry('${namespace}', '${entryType}', '${entryIdPath}');">
 	                <input type="hidden" name="action" value="deleteEntry"/>
 	                <input type="hidden" name="entryIndex" value="${entryIdPath}"/>
 	                <button type="submit" class="btn btn-link btn-unpadded">
