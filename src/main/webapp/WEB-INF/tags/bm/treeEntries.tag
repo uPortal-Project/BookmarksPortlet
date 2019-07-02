@@ -33,12 +33,7 @@
 
 <c:forEach items="${entries}" var="bookmarkEntry">
     <c:set var="entryIdPath" value="${parentIdPath}.${bookmarkEntry.id}"/>
-   
-    <portlet:actionURL var="deleteEntryUrl">
-        <portlet:param name="action" value="deleteEntry"/>
-        <portlet:param name="entryIndex" value="${entryIdPath}"/>
-    </portlet:actionURL>
-    
+
     <%-- Need to zero out page scoped parameters since they seem to be scoped to more than just the .tag file --%>
     <c:set var="entryUrlOnClick"/>
     <c:set var="folderImgSufix"/>
@@ -142,10 +137,14 @@
 	        <span id="${namespace}entryEditButtons" name="${namespace}entryEditButtons" >
 	            <a href="javascript:void(0);" onclick="editEntry('${namespace}', '${entryType}', '${parentIdPath}', '${entryIdPath}');return false;"
 	                title="${entryEditText}"><img src="${pageContext.request.contextPath}/img/edit.gif" alt="${entryEditText}"/></a>
-	            
-	            <a href="javascript:void(0);"
-	                onclick="deleteEntry('${namespace}', '${entryType}', '${entryIdPath}', '${deleteEntryUrl}');return false;" 
-	                title="${entryDeleteText}"><img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/></a>
+
+	            <form action="<portlet:actionURL escapeXml="false"></portlet:actionURL>" method="post" style="display: inline-block">
+	                <input type="hidden" name="action" value="deleteEntry"/>
+	                <input type="hidden" name="entryIndex" value="${entryIdPath}"/>
+	                <button type="submit" class="btn btn-link btn-unpadded">
+	                    <img src="${pageContext.request.contextPath}/img/delete.gif" alt="${entryDeleteText}"/>
+	                </button>
+	            </form>
 	        </span>
         </c:if>
 
