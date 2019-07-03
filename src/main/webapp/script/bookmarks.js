@@ -320,7 +320,7 @@ function editCollection(namespace, parentIdPath, entryIdPath) {
     showForm(namespace, bookmarkPortletsData[namespace].collection_forms_empty);
 }
 
-function deleteEntry(namespace, type, entryIdPath, deleteUrl) {
+function deleteEntry(namespace, type, entryIdPath) {
     var confirmMessage = "";
     var name = getNamespacedElement(namespace, bookmarkPortletsData[namespace].entry_reference_name + entryIdPath).innerHTML;
 
@@ -339,10 +339,7 @@ function deleteEntry(namespace, type, entryIdPath, deleteUrl) {
         confirmMessage = confirmMessage + bookmarkPortletsData[namespace].messages_delete_collection_suffix;    
     }
 
-    var shouldDelete = confirm(confirmMessage);
-    if (shouldDelete) {
-        window.location = deleteUrl;
-    }
+    return confirm(confirmMessage);
 }
 
 function setupErrorForm(namespace, formName, parentIdPath) {
