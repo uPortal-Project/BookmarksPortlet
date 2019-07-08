@@ -99,7 +99,7 @@
             &nbsp;&nbsp;&nbsp;
             <button type="button" onclick="newCollection('${portletNamespace}');return false;" class="btn btn-default" style="${ fn:length(availableCollections) > 0 and !guestMode ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></button>
             <portlet:renderURL portletMode="VIEW" var="returnToViewModeUrl" />
-            <a type="button" class="btn btn-default" href="${returnToViewModeUrl}"><spring:message
+            <a type="button" class="btn btn-default" href="${returnToViewModeUrl}" style="font-size:14px!important;"><spring:message
                 code="favorites.stop.editing"
                 text="Stop editing"/>
             </a>
