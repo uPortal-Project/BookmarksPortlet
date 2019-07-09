@@ -24,6 +24,8 @@ import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 
 /**
+ * <p>PreferencesRequestResolver class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
@@ -34,6 +36,8 @@ public class PreferencesRequestResolver {
     
     
     /**
+     * <p>Getter for the field <code>preferencesStore</code>.</p>
+     *
      * @return Returns the preferencesStore.
      */
     public PreferencesStore getPreferencesStore() {
@@ -41,6 +45,8 @@ public class PreferencesRequestResolver {
     }
 
     /**
+     * <p>Setter for the field <code>preferencesStore</code>.</p>
+     *
      * @param preferencesStore The preferencesStore to set.
      */
     public void setPreferencesStore(PreferencesStore preferencesStore) {
@@ -48,6 +54,8 @@ public class PreferencesRequestResolver {
     }
 
     /**
+     * <p>Getter for the field <code>nameResolver</code>.</p>
+     *
      * @return Returns the nameResolver.
      */
     public NameResolver getNameResolver() {
@@ -55,6 +63,8 @@ public class PreferencesRequestResolver {
     }
 
     /**
+     * <p>Setter for the field <code>nameResolver</code>.</p>
+     *
      * @param nameResolver The nameResolver to set.
      */
     public void setNameResolver(NameResolver nameResolver) {
@@ -62,6 +72,8 @@ public class PreferencesRequestResolver {
     }
 
     /**
+     * <p>Getter for the field <code>ownerResolver</code>.</p>
+     *
      * @return Returns the ownerResolver.
      */
     public OwnerResolver getOwnerResolver() {
@@ -69,6 +81,8 @@ public class PreferencesRequestResolver {
     }
 
     /**
+     * <p>Setter for the field <code>ownerResolver</code>.</p>
+     *
      * @param ownerResolver The ownerResolver to set.
      */
     public void setOwnerResolver(OwnerResolver ownerResolver) {
@@ -79,23 +93,25 @@ public class PreferencesRequestResolver {
 
     /**
      * Calls getPreferences(request, true);
-     * 
+     *
      * @see #getPreferences(PortletRequest, boolean)
+     * @param request a {@link javax.portlet.PortletRequest} object.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.Preferences} object.
      */
     public Preferences getPreferences(PortletRequest request) {
         return this.getPreferences(request, true);
     }
     
     /**
-     * Gets Preferences for the request using the injected {@link OwnerResolver}
-     * and {@link NameResolver}.
+     * Gets Preferences for the request using the injected {@link edu.wisc.my.portlets.bookmarks.web.support.OwnerResolver}
+     * and {@link edu.wisc.my.portlets.bookmarks.web.support.NameResolver}.
      * <br>
      * <br>
-     * If <code>create</code> is false and no Preferences exists for the name and owner null is returned. 
+     * If <code>create</code> is false and no Preferences exists for the name and owner null is returned.
      * <br>
      * <br>
-     * If <code>create</code> is true and no Preferences exists for the name and owner a new Preferences is created. 
-     * 
+     * If <code>create</code> is true and no Preferences exists for the name and owner a new Preferences is created.
+     *
      * @param request The request to resolve the name and owner from.
      * @param create If a Preferences should be created for the name and owner if one does not exist
      * @return The Preferences for the name and owner from the request, null if it does not exists and create is false. If create is true this will never return null.

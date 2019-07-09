@@ -20,22 +20,32 @@ package edu.wisc.my.portlets.bookmarks.web.support;
 
 /**
  * ViewConstants used for passing data to the rendering via the request
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12164 $
  */
 public final class ViewConstants {
+    /** Constant <code>BOOKMARK_SET="bookmarkSet"</code> */
     public static final String BOOKMARK_SET = "bookmarkSet";
+    /** Constant <code>OPTIONS="options"</code> */
     public static final String OPTIONS      = "options";
+    /** Constant <code>ERRORS="errors"</code> */
     public static final String ERRORS       = "errors";
     
+    /** Constant <code>COMMAND_EMPTY_FOLDER="emptyFolderCommand"</code> */
     public static final String COMMAND_EMPTY_FOLDER     = "emptyFolderCommand";
+    /** Constant <code>COMMAND_EMPTY_COLLECTION="emptyCollectionCommand"</code> */
     public static final String COMMAND_EMPTY_COLLECTION     = "emptyCollectionCommand";
+    /** Constant <code>COMMAND_EMPTY_BOOKMARK="emptyBookmarkCommand"</code> */
     public static final String COMMAND_EMPTY_BOOKMARK   = "emptyBookmarkCommand";
 
+    /** Constant <code>COMMAND_FOLDER="folderCommand"</code> */
     public static final String COMMAND_FOLDER   = "folderCommand";
+    /** Constant <code>COMMAND_COLLECTION="collectionCommand"</code> */
     public static final String COMMAND_COLLECTION   = "collectionCommand";
+    /** Constant <code>COMMAND_BOOKMARK="bookmarkCommand"</code> */
     public static final String COMMAND_BOOKMARK = "bookmarkCommand";
     
+    /** Constant <code>COMMAND_AVAILABLE_COLLECTIONS="availableCollections"</code> */
     public static final String COMMAND_AVAILABLE_COLLECTIONS = "availableCollections";
 }

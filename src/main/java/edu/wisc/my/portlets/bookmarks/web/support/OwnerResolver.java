@@ -22,7 +22,7 @@ import javax.portlet.PortletRequest;
 
 /**
  * Support interface to resolve the BookmarkSet owner for a request.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
@@ -30,7 +30,7 @@ public interface OwnerResolver {
     
     /**
      * Resolves the BookmarkSet owner for the PortletRequest, may return null if no owner is specified for the request.
-     * 
+     *
      * @param request The request to resolve the owner for, must not be null.
      * @return The BookmarkSet owner for the request, may be null if there is no owner for the request.
      */

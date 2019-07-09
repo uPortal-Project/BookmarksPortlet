@@ -34,6 +34,8 @@ import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
 
 
 /**
+ * <p>ToggleFolderFormController class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12175 $
  */
@@ -42,6 +44,8 @@ public class ToggleFolderFormController extends AbstractController {
     protected BookmarkSetRequestResolver bookmarkSetRequestResolver;
     
     /**
+     * <p>Getter for the field <code>bookmarkSetRequestResolver</code>.</p>
+     *
      * @return Returns the bookmarkSetRequestResolver.
      */
     public BookmarkSetRequestResolver getBookmarkSetRequestResolver() {
@@ -49,6 +53,8 @@ public class ToggleFolderFormController extends AbstractController {
     }
 
     /**
+     * <p>Setter for the field <code>bookmarkSetRequestResolver</code>.</p>
+     *
      * @param bookmarkSetRequestResolver The bookmarkSetRequestResolver to set.
      */
     public void setBookmarkSetRequestResolver(BookmarkSetRequestResolver bookmarkSetRequestResolver) {
@@ -56,6 +62,8 @@ public class ToggleFolderFormController extends AbstractController {
     }
 
     /**
+     * <p>Getter for the field <code>bookmarkStore</code>.</p>
+     *
      * @return Returns the bookmarkStore.
      */
     public BookmarkStore getBookmarkStore() {
@@ -63,6 +71,8 @@ public class ToggleFolderFormController extends AbstractController {
     }
 
     /**
+     * <p>Setter for the field <code>bookmarkStore</code>.</p>
+     *
      * @param bookmarkStore The bookmarkStore to set.
      */
     public void setBookmarkStore(BookmarkStore bookmarkStore) {
@@ -70,9 +80,7 @@ public class ToggleFolderFormController extends AbstractController {
     }
     
     
-    /**
-     * @see org.springframework.web.portlet.mvc.AbstractController#handleActionRequestInternal(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void handleActionRequestInternal(ActionRequest request, ActionResponse response) throws Exception {
         final String folderIndex = StringUtils.defaultIfEmpty(request.getParameter("folderIndex"), null);

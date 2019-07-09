@@ -21,8 +21,22 @@ package edu.wisc.my.portlets.bookmarks.dao.template;
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
+/**
+ * <p>TemplateBookmarkSetResolver interface.</p>
+ *
+ * @author Unknown
+ * @version $Id: $Id
+ */
 public interface TemplateBookmarkSetResolver {
 
+	/**
+	 * <p>getTemplateBookmarkSet.</p>
+	 *
+	 * @param owner a {@link java.lang.String} object.
+	 * @param name a {@link java.lang.String} object.
+	 * @param store a {@link edu.wisc.my.portlets.bookmarks.dao.BookmarkStore} object.
+	 * @return a {@link edu.wisc.my.portlets.bookmarks.domain.BookmarkSet} object.
+	 */
 	BookmarkSet getTemplateBookmarkSet(String owner, String name, BookmarkStore store);
 
 }

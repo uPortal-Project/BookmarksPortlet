@@ -44,6 +44,12 @@ public class TemplateUserBookmarkStore implements BookmarkStore {
 	 * Public API.
 	 */
 
+	/**
+	 * <p>Constructor for TemplateUserBookmarkStore.</p>
+	 *
+	 * @param enclosed a {@link edu.wisc.my.portlets.bookmarks.dao.BookmarkStore} object.
+	 * @param resolver a {@link edu.wisc.my.portlets.bookmarks.dao.template.TemplateBookmarkSetResolver} object.
+	 */
 	public TemplateUserBookmarkStore(BookmarkStore enclosed, TemplateBookmarkSetResolver resolver) {
 
 		// Assertions.
@@ -62,9 +68,7 @@ public class TemplateUserBookmarkStore implements BookmarkStore {
 
 	}
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#getBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public BookmarkSet getBookmarkSet(String owner, String name) {
 
     	BookmarkSet rslt = enclosed.getBookmarkSet(owner, name);
@@ -80,24 +84,18 @@ public class TemplateUserBookmarkStore implements BookmarkStore {
 
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#storeBookmarkSet(edu.wisc.my.portlets.bookmarks.domain.BookmarkSet)
-     */
+    /** {@inheritDoc} */
     public void storeBookmarkSet(BookmarkSet bookmarkSet) {
     	enclosed.storeBookmarkSet(bookmarkSet);
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#removeBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public void removeBookmarkSet(String owner, String name) {
     	enclosed.removeBookmarkSet(owner, name);
     }
 
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#createBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public BookmarkSet createBookmarkSet(String owner, String name) {
 
     	BookmarkSet rslt = enclosed.createBookmarkSet(owner, name);

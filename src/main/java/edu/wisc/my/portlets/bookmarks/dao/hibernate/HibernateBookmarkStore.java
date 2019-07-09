@@ -32,7 +32,7 @@ import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
  * Persists and retrieves BookmarkSet objects via Hibernate.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12173 $
  */
@@ -40,9 +40,7 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
     private static final String PARAM_OWNER = "owner";
     private static final String PARAM_NAME = "name";
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#getBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public BookmarkSet getBookmarkSet(String owner, String name) {
         try {
             final Session session = this.getSession(false);
@@ -61,9 +59,7 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
         }
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#storeBookmarkSet(edu.wisc.my.portlets.bookmarks.domain.BookmarkSet)
-     */
+    /** {@inheritDoc} */
     public void storeBookmarkSet(BookmarkSet bookmarkSet) {
         try {
             final Session session = this.getSession(false);
@@ -83,9 +79,7 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
         }
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#removeBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public void removeBookmarkSet(String owner, String name) {
         try {
             final Session session = this.getSession(false);
@@ -103,9 +97,7 @@ public class HibernateBookmarkStore extends HibernateDaoSupport implements Bookm
     }
     
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#createBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public BookmarkSet createBookmarkSet(String owner, String name) {
         final BookmarkSet bookmarkSet = new BookmarkSet();
         bookmarkSet.setOwner(owner);

@@ -36,6 +36,8 @@ import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
+ * <p>FileSystemBookmarkStore class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12150 $
  */
@@ -46,21 +48,23 @@ public class FileSystemBookmarkStore implements BookmarkStore {
     
     
     /**
+     * <p>Getter for the field <code>baseStorePath</code>.</p>
+     *
      * @return Returns the baseStorePath.
      */
     public String getBaseStorePath() {
         return this.baseStorePath;
     }
     /**
+     * <p>Setter for the field <code>baseStorePath</code>.</p>
+     *
      * @param baseStorePath The baseStorePath to set.
      */
     public void setBaseStorePath(String baseStorePath) {
         this.baseStorePath = baseStorePath;
     }
     
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#getBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public BookmarkSet getBookmarkSet(String owner, String name) {
         final File storeFile = this.getStoreFile(owner, name);
         
@@ -89,9 +93,7 @@ public class FileSystemBookmarkStore implements BookmarkStore {
         }
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#storeBookmarkSet(edu.wisc.my.portlets.bookmarks.domain.BookmarkSet)
-     */
+    /** {@inheritDoc} */
     public void storeBookmarkSet(BookmarkSet bookmarkSet) {
         if (bookmarkSet == null) {
             throw new IllegalArgumentException("AddressBook may not be null");
@@ -117,18 +119,14 @@ public class FileSystemBookmarkStore implements BookmarkStore {
         }
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#removeBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public void removeBookmarkSet(String owner, String name) {
         final File storeFile = this.getStoreFile(owner, name);
         storeFile.delete();
     }
     
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.BookmarkStore#createBookmarkSet(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public BookmarkSet createBookmarkSet(String owner, String name) {
         final BookmarkSet bookmarkSet = new BookmarkSet();
         bookmarkSet.setOwner(owner);
@@ -143,7 +141,7 @@ public class FileSystemBookmarkStore implements BookmarkStore {
     
     /**
      * Generates the file name String for an owner and book name.
-     * 
+     *
      * @param owner The owner of the bookmark set.
      * @param name The name of the bookmark set.
      * @return The file name for the owner and name.
@@ -160,9 +158,9 @@ public class FileSystemBookmarkStore implements BookmarkStore {
     }
 
     /**
-     * Generates the {@link File} object to use for storing, retrieving
+     * Generates the {@link java.io.File} object to use for storing, retrieving
      * and deleting the bookmark set.
-     * 
+     *
      * @param owner The owner of the bookmark set.
      * @param name The name of the bookmark set.
      * @return The File for the owner and name.
@@ -175,6 +173,8 @@ public class FileSystemBookmarkStore implements BookmarkStore {
     }
     
     /**
+     * <p>getStoreDirectory.</p>
+     *
      * @return The directory to store AddressBooks in.
      */
     protected File getStoreDirectory() {

@@ -21,17 +21,17 @@ package edu.wisc.my.portlets.bookmarks.dao;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
- * The BookmarkStore provides the APIs to use for storing, retrieving and removing BookmarkSets 
+ * The BookmarkStore provides the APIs to use for storing, retrieving and removing BookmarkSets
  * from a persitent store.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
 public interface BookmarkStore {
     /**
-     * Gets a BookmarkSet for the specified owner and name. If no BookmarkSet can be found for the 
+     * Gets a BookmarkSet for the specified owner and name. If no BookmarkSet can be found for the
      * owner and name null is retuned.
-     * 
+     *
      * @param owner The owner of the BookmarkSet to retreive.
      * @param name The name of the BookmarkSet to retrieve.
      * @return The BookmarkSet for the name and owner, null if one is not found for the owner and name.
@@ -41,7 +41,7 @@ public interface BookmarkStore {
     /**
      * Stores a new BookmarkSet or updates an existing BookmarkSet. BookmarkSets are keyed uniquely
      * using the name and owner fields.
-     * 
+     *
      * @param bookmarkSet The BookmarkSet to persist.
      * TODO should this return something?
      */
@@ -50,7 +50,7 @@ public interface BookmarkStore {
     /**
      * Removes a BookmarkSet from the persistent store. If a BookmarkSet matching
      * the owner and name cannot be found this is a noop.
-     * 
+     *
      * @param owner The owner of the BookmarkSet to remove.
      * @param name The name of the BookmarkSet to remove.
      */
@@ -58,7 +58,7 @@ public interface BookmarkStore {
     
     /**
      * Creates a BookmarkSet and stores it in the persistent store.
-     * 
+     *
      * @param owner The owner of the BookmarkSet to create.
      * @param name The name of the BookmarkSet to create.
      * @return The new BookmarkSet.

@@ -40,6 +40,8 @@ import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
 import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
 
 /**
+ * <p>BaseBookmarksFormController class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12168 $
  */
@@ -53,6 +55,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
 
     
     /**
+     * <p>Getter for the field <code>handlerMappingParameter</code>.</p>
+     *
      * @return Returns the handlerMappingParameter.
      */
     public String getHandlerMappingParameter() {
@@ -60,6 +64,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /**
+     * <p>Setter for the field <code>handlerMappingParameter</code>.</p>
+     *
      * @param handlerMappingParameter The handlerMappingParameter to set.
      */
     public void setHandlerMappingParameter(String handlerMappingParameter) {
@@ -67,6 +73,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /**
+     * <p>Getter for the field <code>bookmarkSetRequestResolver</code>.</p>
+     *
      * @return Returns the bookmarkSetRequestResolver.
      */
     public BookmarkSetRequestResolver getBookmarkSetRequestResolver() {
@@ -74,6 +82,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /**
+     * <p>Setter for the field <code>bookmarkSetRequestResolver</code>.</p>
+     *
      * @param bookmarkSetRequestResolver The bookmarkSetRequestResolver to set.
      */
     public void setBookmarkSetRequestResolver(BookmarkSetRequestResolver bookmarkSetRequestResolver) {
@@ -81,6 +91,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /**
+     * <p>Getter for the field <code>bookmarkStore</code>.</p>
+     *
      * @return Returns the bookmarkStore.
      */
     public BookmarkStore getBookmarkStore() {
@@ -88,6 +100,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /**
+     * <p>Setter for the field <code>bookmarkStore</code>.</p>
+     *
      * @param bookmarkStore The bookmarkStore to set.
      */
     public void setBookmarkStore(BookmarkStore bookmarkStore) {
@@ -95,6 +109,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /**
+     * <p>Getter for the field <code>preferencesRequestResolver</code>.</p>
+     *
      * @return Returns the preferencesRequestResolver.
      */
     public PreferencesRequestResolver getPreferencesRequestResolver() {
@@ -102,6 +118,8 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /**
+     * <p>Setter for the field <code>preferencesRequestResolver</code>.</p>
+     *
      * @param preferencesRequestResolver The preferencesRequestResolver to set.
      */
     public void setPreferencesRequestResolver(PreferencesRequestResolver preferencesRequestResolver) {
@@ -109,9 +127,7 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
 
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#referenceData(javax.portlet.PortletRequest, java.lang.Object, org.springframework.validation.Errors)
-     */
+    /** {@inheritDoc} */
     @Override
     protected Map referenceData(PortletRequest request, Object command, Errors errors) throws Exception {
         final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
@@ -135,9 +151,7 @@ public class BaseBookmarksFormController extends SimpleFormController {
         return refData;
     }
 
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#processFormSubmission(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void processFormSubmission(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
     	

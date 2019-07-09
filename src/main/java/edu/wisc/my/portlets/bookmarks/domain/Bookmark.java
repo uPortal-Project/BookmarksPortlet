@@ -24,7 +24,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * A bookmark tracks a URL and if the URL should be opened in a new window.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12140 $
  */
@@ -35,6 +35,8 @@ public class Bookmark extends Entry {
     private boolean newWindow = true;
 
     /**
+     * <p>isNewWindow.</p>
+     *
      * @return Returns the newWindow.
      */
     public boolean isNewWindow() {
@@ -42,6 +44,8 @@ public class Bookmark extends Entry {
     }
 
     /**
+     * <p>Setter for the field <code>newWindow</code>.</p>
+     *
      * @param newWindow The newWindow to set.
      */
     public void setNewWindow(boolean newWindow) {
@@ -49,6 +53,8 @@ public class Bookmark extends Entry {
     }
 
     /**
+     * <p>Getter for the field <code>url</code>.</p>
+     *
      * @return Returns the url.
      */
     public String getUrl() {
@@ -56,15 +62,15 @@ public class Bookmark extends Entry {
     }
 
     /**
+     * <p>Setter for the field <code>url</code>.</p>
+     *
      * @param url The url to set.
      */
     public void setUrl(String url) {
         this.url = url;
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
+    /** {@inheritDoc} */
     public boolean equals(final Object object) {
         if (object == this) {
             return true;
@@ -80,7 +86,10 @@ public class Bookmark extends Entry {
     }
 
     /**
+     * <p>hashCode.</p>
+     *
      * @see java.lang.Object#hashCode()
+     * @return a int.
      */
     public int hashCode() {
         return new HashCodeBuilder(-406873869, 1835942177).appendSuper(super.hashCode())
@@ -90,7 +99,10 @@ public class Bookmark extends Entry {
     }
 
     /**
+     * <p>toString.</p>
+     *
      * @see java.lang.Object#toString()
+     * @return a {@link java.lang.String} object.
      */
     public String toString() {
         return new ToStringBuilder(this).appendSuper(super.toString())

@@ -42,6 +42,12 @@ import org.xml.sax.SAXException;
 
 import edu.wisc.my.portlets.bookmarks.domain.support.IntegerSetThreadLocal;
 
+/**
+ * <p>CollectionFolder class.</p>
+ *
+ * @author cbeach
+ * @version $Id: $Id
+ */
 public class CollectionFolder extends Entry implements CollapsibleEntry {
     private static final long serialVersionUID = 1L;
     
@@ -58,6 +64,8 @@ public class CollectionFolder extends Entry implements CollapsibleEntry {
 
 
     /**
+     * <p>Getter for the field <code>children</code>.</p>
+     *
      * @return Returns the children, will never return null.
      */
     public Map<Long, Entry> getChildren() {
@@ -66,15 +74,15 @@ public class CollectionFolder extends Entry implements CollapsibleEntry {
     }
 
     /**
+     * <p>isMinimized.</p>
+     *
      * @return Returns the minimized.
      */
     public boolean isMinimized() {
         return this.minimized;
     }
 
-    /**
-     * @param minimized The minimized to set.
-     */
+    /** {@inheritDoc} */
     public void setMinimized(boolean minimized) {
         this.minimized = minimized;
     }
@@ -83,7 +91,7 @@ public class CollectionFolder extends Entry implements CollapsibleEntry {
      * Returns an immutable sorted view of the values of the children Map. The sorting is done
      * using the current childComparator. Warning, this is has a time cost of 2n log(n)
      * on every call.
-     * 
+     *
      * @return An immutable sorted view of the folder's children.
      */
     public List<Entry> getSortedChildren() {
@@ -144,10 +152,20 @@ public class CollectionFolder extends Entry implements CollapsibleEntry {
     	return children;
     }
 
+	/**
+	 * <p>Getter for the field <code>url</code>.</p>
+	 *
+	 * @return a {@link java.lang.String} object.
+	 */
 	public String getUrl() {
 		return url;
 	}
 
+	/**
+	 * <p>Setter for the field <code>url</code>.</p>
+	 *
+	 * @param url a {@link java.lang.String} object.
+	 */
 	public void setUrl(String url) {
 		this.url = url;
 	}

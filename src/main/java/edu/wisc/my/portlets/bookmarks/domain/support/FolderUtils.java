@@ -27,20 +27,31 @@ import edu.wisc.my.portlets.bookmarks.domain.Entry;
 import edu.wisc.my.portlets.bookmarks.domain.Folder;
 
 /**
+ * <p>FolderUtils class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12175 $
  */
 public final class FolderUtils {
     private FolderUtils() { }
     
+    /**
+     * <p>getEntryInfo.</p>
+     *
+     * @param baseFolder a {@link edu.wisc.my.portlets.bookmarks.domain.Folder} object.
+     * @param indexPath a {@link java.lang.String} object.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo} object.
+     */
     public static IdPathInfo getEntryInfo(Folder baseFolder, String indexPath) {
         return getEntryInfo(baseFolder, indexPath, "\\.");
     }
     
     /**
-     * @param baseFolder
-     * @param idPath
-     * @param regexDelimeter
+     * <p>getEntryInfo.</p>
+     *
+     * @param baseFolder a {@link edu.wisc.my.portlets.bookmarks.domain.Folder} object.
+     * @param idPath a {@link java.lang.String} object.
+     * @param regexDelimeter a {@link java.lang.String} object.
      * @return The IdPathInfo that represents the found Entry, null if no entry is found for the idPath.
      */
     public static IdPathInfo getEntryInfo(Folder baseFolder, String idPath, String regexDelimeter) {
@@ -82,6 +93,13 @@ public final class FolderUtils {
     
     
     
+    /**
+     * <p>deepContains.</p>
+     *
+     * @param parent a {@link edu.wisc.my.portlets.bookmarks.domain.Folder} object.
+     * @param query a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @return a boolean.
+     */
     public static boolean deepContains(Folder parent, Entry query) {
         final Map<Long, Entry> children = parent.getChildren();
        
@@ -100,6 +118,13 @@ public final class FolderUtils {
     }
     
     
+    /**
+     * <p>deepClone.</p>
+     *
+     * @param target a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @param copyIds a boolean.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     */
     public static Entry deepClone(Entry target, boolean copyIds) {
         if (target instanceof BookmarkSet) {
             return deepCloneBookmarkSet((BookmarkSet)target, copyIds);
@@ -115,6 +140,13 @@ public final class FolderUtils {
         }
     }
     
+    /**
+     * <p>deepCloneEntry.</p>
+     *
+     * @param target a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @param copyIds a boolean.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     */
     public static Entry deepCloneEntry(Entry target, boolean copyIds) {
         if (target == null) {
             return null;
@@ -126,6 +158,13 @@ public final class FolderUtils {
         return clone;
     }
     
+    /**
+     * <p>deepCloneBookmark.</p>
+     *
+     * @param target a {@link edu.wisc.my.portlets.bookmarks.domain.Bookmark} object.
+     * @param copyIds a boolean.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.Bookmark} object.
+     */
     public static Bookmark deepCloneBookmark(Bookmark target, boolean copyIds) {
         if (target == null) {
             return null;
@@ -137,6 +176,13 @@ public final class FolderUtils {
         return clone;
     }
     
+    /**
+     * <p>deepCloneFolder.</p>
+     *
+     * @param target a {@link edu.wisc.my.portlets.bookmarks.domain.Folder} object.
+     * @param copyIds a boolean.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.Folder} object.
+     */
     public static Folder deepCloneFolder(Folder target, boolean copyIds) {
         if (target == null) {
             return null;
@@ -148,6 +194,13 @@ public final class FolderUtils {
         return clone;
     }
     
+    /**
+     * <p>deepCloneBookmarkSet.</p>
+     *
+     * @param target a {@link edu.wisc.my.portlets.bookmarks.domain.BookmarkSet} object.
+     * @param copyIds a boolean.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.BookmarkSet} object.
+     */
     public static BookmarkSet deepCloneBookmarkSet(BookmarkSet target, boolean copyIds) {
         if (target == null) {
             return null;

@@ -25,7 +25,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * The root folder for a tree of bookmarks, adds an owner field to the object to associate
  * the set with a user.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12140 $
  */
@@ -35,6 +35,8 @@ public class BookmarkSet extends Folder {
     private String owner;
 
     /**
+     * <p>Getter for the field <code>owner</code>.</p>
+     *
      * @return Returns the owner.
      */
     public String getOwner() {
@@ -42,15 +44,15 @@ public class BookmarkSet extends Folder {
     }
 
     /**
+     * <p>Setter for the field <code>owner</code>.</p>
+     *
      * @param owner The owner to set.
      */
     public void setOwner(String owner) {
         this.owner = owner;
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
+    /** {@inheritDoc} */
     public boolean equals(final Object object) {
         if (object == this) {
             return true;
@@ -65,7 +67,10 @@ public class BookmarkSet extends Folder {
     }
 
     /**
+     * <p>hashCode.</p>
+     *
      * @see java.lang.Object#hashCode()
+     * @return a int.
      */
     public int hashCode() {
         return new HashCodeBuilder(-280978973, 410501249).appendSuper(super.hashCode())
@@ -74,7 +79,10 @@ public class BookmarkSet extends Folder {
     }
 
     /**
+     * <p>toString.</p>
+     *
      * @see java.lang.Object#toString()
+     * @return a {@link java.lang.String} object.
      */
     public String toString() {
         return new ToStringBuilder(this).appendSuper(super.toString())

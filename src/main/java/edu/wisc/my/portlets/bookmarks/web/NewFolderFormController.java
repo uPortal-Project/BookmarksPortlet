@@ -36,13 +36,13 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
 
 
 /**
+ * <p>NewFolderFormController class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12181 $
  */
 public class NewFolderFormController extends BaseEntryFormController {
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
         final String targetParentPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);

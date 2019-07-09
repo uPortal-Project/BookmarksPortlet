@@ -18,10 +18,26 @@
  */
 package edu.wisc.my.portlets.bookmarks.domain;
 
+/**
+ * <p>CollapsibleEntry interface.</p>
+ *
+ * @author cbeach
+ * @version $Id: $Id
+ */
 public interface CollapsibleEntry {
 	
+	/**
+	 * <p>setMinimized.</p>
+	 *
+	 * @param minimized a boolean.
+	 */
 	public void setMinimized(boolean minimized);
 	
+	/**
+	 * <p>isMinimized.</p>
+	 *
+	 * @return a boolean.
+	 */
 	public boolean isMinimized();
 
 }

@@ -25,6 +25,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
+ * <p>IdPathInfo class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12140 $
  */
@@ -33,6 +35,13 @@ public class IdPathInfo {
     private final Folder parent;
     private final Entry target;
     
+    /**
+     * <p>Constructor for IdPathInfo.</p>
+     *
+     * @param indexPath an array of {@link long} objects.
+     * @param parent a {@link edu.wisc.my.portlets.bookmarks.domain.Folder} object.
+     * @param target a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     */
     public IdPathInfo(long[] indexPath, Folder parent, Entry target) {
         this.idPath = indexPath;
         this.parent = parent;
@@ -40,6 +49,8 @@ public class IdPathInfo {
     }
 
     /**
+     * <p>Getter for the field <code>idPath</code>.</p>
+     *
      * @return Returns the idPath.
      */
     public long[] getIdPath() {
@@ -47,6 +58,8 @@ public class IdPathInfo {
     }
 
     /**
+     * <p>Getter for the field <code>parent</code>.</p>
+     *
      * @return Returns the parent.
      */
     public Folder getParent() {
@@ -54,15 +67,15 @@ public class IdPathInfo {
     }
 
     /**
+     * <p>Getter for the field <code>target</code>.</p>
+     *
      * @return Returns the target.
      */
     public Entry getTarget() {
         return this.target;
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
+    /** {@inheritDoc} */
     public boolean equals(final Object object) {
         if (object == this) {
             return true;
@@ -79,7 +92,10 @@ public class IdPathInfo {
     }
 
     /**
+     * <p>hashCode.</p>
+     *
      * @see java.lang.Object#hashCode()
+     * @return a int.
      */
     public int hashCode() {
         return new HashCodeBuilder(1559811763, 1812223771)
@@ -90,7 +106,10 @@ public class IdPathInfo {
     }
 
     /**
+     * <p>toString.</p>
+     *
      * @see java.lang.Object#toString()
+     * @return a {@link java.lang.String} object.
      */
     public String toString() {
         return new ToStringBuilder(this).appendSuper(super.toString())

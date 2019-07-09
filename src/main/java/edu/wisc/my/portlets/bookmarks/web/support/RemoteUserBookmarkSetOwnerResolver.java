@@ -22,15 +22,13 @@ import javax.portlet.PortletRequest;
 
 /**
  * Returns the result of {@link javax.portlet.PortletRequest#getRemoteUser()} as the owner.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
 public class RemoteUserBookmarkSetOwnerResolver implements OwnerResolver {
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.web.support.OwnerResolver#getOwner(javax.portlet.PortletRequest)
-     */
+    /** {@inheritDoc} */
     public String getOwner(PortletRequest request) {
         if (request.getRemoteUser() != null)
         	return request.getRemoteUser();

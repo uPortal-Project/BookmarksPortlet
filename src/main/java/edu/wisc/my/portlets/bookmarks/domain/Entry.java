@@ -28,7 +28,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 /**
  * An Entry is the base object that may in a bookmarks hierarchy. It is a stand alone object
  * but is indended to be extended.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12141 $
  */
@@ -42,6 +42,8 @@ public class Entry implements Serializable {
     private Date modified = this.created;
 
     /**
+     * <p>Getter for the field <code>created</code>.</p>
+     *
      * @return Returns the created.
      */
     public Date getCreated() {
@@ -49,6 +51,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>created</code>.</p>
+     *
      * @param created The created to set.
      */
     public void setCreated(Date created) {
@@ -56,6 +60,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>note</code>.</p>
+     *
      * @return Returns the note.
      */
     public String getNote() {
@@ -63,6 +69,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>note</code>.</p>
+     *
      * @param note The note to set.
      */
     public void setNote(String note) {
@@ -70,6 +78,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>id</code>.</p>
+     *
      * @return Returns the id.
      */
     public long getId() {
@@ -77,6 +87,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>id</code>.</p>
+     *
      * @param id The id to set.
      */
     public void setId(long id) {
@@ -84,6 +96,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>modified</code>.</p>
+     *
      * @return Returns the modified.
      */
     public Date getModified() {
@@ -91,6 +105,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>modified</code>.</p>
+     *
      * @param modified The modified to set.
      */
     public void setModified(Date modified) {
@@ -98,6 +114,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
      * @return Returns the name.
      */
     public String getName() {
@@ -105,6 +123,8 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>name</code>.</p>
+     *
      * @param name The name to set.
      */
     public void setName(String name) {
@@ -112,6 +132,8 @@ public class Entry implements Serializable {
     }
     
     /**
+     * <p>getNoteLines.</p>
+     *
      * @return A String[] of the lines the note contains
      */
     public String[] getNoteLines() {
@@ -123,9 +145,7 @@ public class Entry implements Serializable {
         }
     }
     
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
+    /** {@inheritDoc} */
     public boolean equals(final Object object) {
         if (object == this) {
             return true;
@@ -143,7 +163,10 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>hashCode.</p>
+     *
      * @see java.lang.Object#hashCode()
+     * @return a int.
      */
     public int hashCode() {
         return new HashCodeBuilder(1323836787, 1770312237)
@@ -155,7 +178,10 @@ public class Entry implements Serializable {
     }
 
     /**
+     * <p>toString.</p>
+     *
      * @see java.lang.Object#toString()
+     * @return a {@link java.lang.String} object.
      */
     public String toString() {
         return new ToStringBuilder(this).appendSuper(super.toString())

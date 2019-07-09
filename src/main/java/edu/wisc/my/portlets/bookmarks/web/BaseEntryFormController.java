@@ -26,16 +26,14 @@ import org.springframework.validation.BindException;
 /**
  * Takes the responsibility of copying entry parameters that aren't bound to the command from
  * the request to the response. Sub classes MUST call super.processFormSubmission if they
- * override {@link #processFormSubmission(ActionRequest, ActionResponse, Object, BindException)}. 
- * 
+ * override {@link #processFormSubmission(ActionRequest, ActionResponse, Object, BindException)}.
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12164 $
  */
 public class BaseEntryFormController extends BaseBookmarksFormController {
 
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#processFormSubmission(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void processFormSubmission(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
         if (errors.hasErrors()) {

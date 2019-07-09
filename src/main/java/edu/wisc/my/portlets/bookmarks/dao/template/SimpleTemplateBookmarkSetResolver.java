@@ -21,6 +21,12 @@ package edu.wisc.my.portlets.bookmarks.dao.template;
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
+/**
+ * <p>SimpleTemplateBookmarkSetResolver class.</p>
+ *
+ * @author Unknown
+ * @version $Id: $Id
+ */
 public class SimpleTemplateBookmarkSetResolver implements TemplateBookmarkSetResolver {
 
 	// Instance Members.
@@ -31,10 +37,21 @@ public class SimpleTemplateBookmarkSetResolver implements TemplateBookmarkSetRes
 	 * Public API.
 	 */
 
+	/**
+	 * <p>Constructor for SimpleTemplateBookmarkSetResolver.</p>
+	 *
+	 * @param templateOwner a {@link java.lang.String} object.
+	 */
 	public SimpleTemplateBookmarkSetResolver(String templateOwner) {
 		this(templateOwner, null);
 	}
 
+	/**
+	 * <p>Constructor for SimpleTemplateBookmarkSetResolver.</p>
+	 *
+	 * @param templateOwner a {@link java.lang.String} object.
+	 * @param templateName a {@link java.lang.String} object.
+	 */
 	public SimpleTemplateBookmarkSetResolver(String templateOwner, String templateName) {
 
 		// Assertions.
@@ -50,6 +67,7 @@ public class SimpleTemplateBookmarkSetResolver implements TemplateBookmarkSetRes
 
 	}
 
+	/** {@inheritDoc} */
 	public BookmarkSet getTemplateBookmarkSet(String owner, String name, BookmarkStore store) {
 
 		// Assertions.

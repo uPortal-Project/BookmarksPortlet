@@ -24,23 +24,19 @@ import edu.wisc.my.portlets.bookmarks.domain.Folder;
 
 /**
  * Validates a Folder, currently there is nothing to validate beyond what the EntryValidator provides.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12165 $
  */
 public class FolderValidator extends EntryValidator {
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#supports(java.lang.Class)
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean supports(Class clazz) {
         return Folder.class.isAssignableFrom(clazz) && super.supports(clazz);
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#validate(java.lang.Object, org.springframework.validation.Errors)
-     */
+    /** {@inheritDoc} */
     @Override
     public void validate(Object obj, Errors errors) {
         //Currently folders have no Folder specific fields to validate

@@ -38,13 +38,13 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
 
 
 /**
+ * <p>EditBookmarkFormController class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12175 $
  */
 public class EditBookmarkFormController extends BaseEntryFormController {
-    /**
-     * @see org.springframework.web.portlet.mvc.AbstractFormController#formBackingObject(javax.portlet.PortletRequest)
-     */
+    /** {@inheritDoc} */
     @Override
     protected Object formBackingObject(PortletRequest request) throws Exception {
         //TODO if move return default object
@@ -52,9 +52,7 @@ public class EditBookmarkFormController extends BaseEntryFormController {
         return super.formBackingObject(request);
     }
 
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
         final String targetParentPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);

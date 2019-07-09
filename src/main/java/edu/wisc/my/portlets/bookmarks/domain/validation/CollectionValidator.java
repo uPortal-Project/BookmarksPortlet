@@ -26,19 +26,21 @@ import org.springframework.validation.ValidationUtils;
 
 import edu.wisc.my.portlets.bookmarks.domain.CollectionFolder;
 
+/**
+ * <p>CollectionValidator class.</p>
+ *
+ * @author cbeach
+ * @version $Id: $Id
+ */
 public class CollectionValidator  extends EntryValidator {
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#supports(java.lang.Class)
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean supports(Class clazz) {
         return CollectionFolder.class.isAssignableFrom(clazz) && super.supports(clazz);
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#validate(java.lang.Object, org.springframework.validation.Errors)
-     */
+    /** {@inheritDoc} */
     @Override
     public void validate(Object obj, Errors errors) {
         super.validate(obj, errors);

@@ -30,7 +30,7 @@ import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
  * Validates a Bookmark, requires a valid URL, determined by calling new URL on the URL String. Also
  * appends a default protocol of http:// if it isn't already there. The default protocol the validator
  * uses may be set via the defaultProtocol property.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12165 $
  */
@@ -41,6 +41,8 @@ public class BookmarkValidator extends EntryValidator {
     private String defaultProtocol = "http://";
     
     /**
+     * <p>Getter for the field <code>defaultProtocol</code>.</p>
+     *
      * @return Returns the defaultProtocol.
      */
     public String getDefaultProtocol() {
@@ -48,6 +50,8 @@ public class BookmarkValidator extends EntryValidator {
     }
 
     /**
+     * <p>Setter for the field <code>defaultProtocol</code>.</p>
+     *
      * @param defaultProtocol The defaultProtocol to set.
      */
     public void setDefaultProtocol(String defaultProtocol) {
@@ -61,17 +65,13 @@ public class BookmarkValidator extends EntryValidator {
         this.defaultProtocol = defaultProtocol;
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#supports(java.lang.Class)
-     */
+    /** {@inheritDoc} */
     @Override
     public boolean supports(Class clazz) {
         return Bookmark.class.isAssignableFrom(clazz) && super.supports(clazz);
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.domain.validation.EntryValidator#validate(java.lang.Object, org.springframework.validation.Errors)
-     */
+    /** {@inheritDoc} */
     @Override
     public void validate(Object obj, Errors errors) {
         super.validate(obj, errors);

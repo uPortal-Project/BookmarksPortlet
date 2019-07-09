@@ -24,20 +24,33 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
 /**
  * When the {@link #close()} is called the configured SQL will be run on
  * the configured DataSource.
- * 
+ *
  * @author Eric Dalquist
  * @version $Revision$
  */
 public class SqlShutdownHelper extends JdbcDaoSupport {
     private String shutdownSql = "SHUTDOWN COMPACT";
     
+    /**
+     * <p>Getter for the field <code>shutdownSql</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getShutdownSql() {
         return shutdownSql;
     }
+    /**
+     * <p>Setter for the field <code>shutdownSql</code>.</p>
+     *
+     * @param shutdownSql a {@link java.lang.String} object.
+     */
     public void setShutdownSql(String shutdownSql) {
         this.shutdownSql = shutdownSql;
     }
 
+    /**
+     * <p>close.</p>
+     */
     public void close() {
         final JdbcTemplate jdbcTemplate = this.getJdbcTemplate();
         jdbcTemplate.execute(this.shutdownSql);

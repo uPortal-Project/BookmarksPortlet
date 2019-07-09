@@ -22,19 +22,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * <p>IntegerSetThreadLocal class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12142 $
  */
 public class IntegerSetThreadLocal extends ThreadLocal<Set <Integer>> {
 
-    /**
-     * @see java.lang.ThreadLocal#initialValue()
-     */
+    /** {@inheritDoc} */
     @Override
     protected Set<Integer> initialValue() {
         return new HashSet<Integer>();
     }
 
+    /**
+     * <p>getSet.</p>
+     *
+     * @return a {@link java.util.Set} object.
+     */
     public Set<Integer> getSet() {
         return this.get();
     }

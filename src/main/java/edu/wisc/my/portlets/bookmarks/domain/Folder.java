@@ -42,7 +42,7 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IntegerSetThreadLocal;
  * A Folder can contain other entries in a List. This is a basic bean and no defensive copying
  * is done. Changes made to List returned by {@link #getChildren()} will be reflected to other
  * code using these APIs.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12155 $
  */
@@ -59,6 +59,8 @@ public class Folder extends Entry implements CollapsibleEntry {
 
 
     /**
+     * <p>Getter for the field <code>children</code>.</p>
+     *
      * @return Returns the children, will never return null.
      */
     public synchronized Map<Long, Entry> getChildren() {
@@ -70,6 +72,8 @@ public class Folder extends Entry implements CollapsibleEntry {
     }
 
     /**
+     * <p>Setter for the field <code>children</code>.</p>
+     *
      * @param children The children to set.
      */
     public void setChildren(Map<Long, Entry> children) {
@@ -77,15 +81,15 @@ public class Folder extends Entry implements CollapsibleEntry {
     }
 
     /**
+     * <p>isMinimized.</p>
+     *
      * @return Returns the minimized.
      */
     public boolean isMinimized() {
         return this.minimized;
     }
 
-    /**
-     * @param minimized The minimized to set.
-     */
+    /** {@inheritDoc} */
     public void setMinimized(boolean minimized) {
         this.minimized = minimized;
     }
@@ -94,7 +98,7 @@ public class Folder extends Entry implements CollapsibleEntry {
      * Returns an immutable sorted view of the values of the children Map. The sorting is done
      * using the current childComparator. Warning, this is has a time cost of 2n log(n)
      * on every call.
-     * 
+     *
      * @return An immutable sorted view of the folder's children.
      */
     public List<Entry> getSortedChildren() {
@@ -110,6 +114,8 @@ public class Folder extends Entry implements CollapsibleEntry {
     }
     
     /**
+     * <p>Getter for the field <code>childComparator</code>.</p>
+     *
      * @return Returns the childComparator.
      */
     public Comparator<Entry> getChildComparator() {
@@ -117,6 +123,8 @@ public class Folder extends Entry implements CollapsibleEntry {
     }
 
     /**
+     * <p>Setter for the field <code>childComparator</code>.</p>
+     *
      * @param childComparator The childComparator to set, calls setChildComparator on all children of type Folder.
      */
     public void setChildComparator(Comparator<Entry> childComparator) {
@@ -138,9 +146,7 @@ public class Folder extends Entry implements CollapsibleEntry {
         }
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
+    /** {@inheritDoc} */
     public boolean equals(final Object object) {
         final Set<Integer> visited = equalsVisitedFolder.getSet();
         final int identityHash = System.identityHashCode(this);
@@ -168,7 +174,10 @@ public class Folder extends Entry implements CollapsibleEntry {
     }
     
     /**
+     * <p>hashCode.</p>
+     *
      * @see java.lang.Object#hashCode()
+     * @return a int.
      */
     public int hashCode() {
         final Set<Integer> visited = hashCodeVisitedFolder.getSet();
@@ -190,7 +199,10 @@ public class Folder extends Entry implements CollapsibleEntry {
     }
 
     /**
+     * <p>toString.</p>
+     *
      * @see java.lang.Object#toString()
+     * @return a {@link java.lang.String} object.
      */
     public String toString() {
         final Set<Integer> visited = toStringVisitedFolder.getSet();

@@ -21,12 +21,15 @@ package edu.wisc.my.portlets.bookmarks.dao.hibernate.types;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 
 /**
- * UserType for persisting {@link Preferences.DefaultFolderOperation}s.
- * 
+ * UserType for persisting {@link edu.wisc.my.portlets.bookmarks.domain.Preferences.DefaultFolderOperation}s.
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12179 $
  */
 public class DefaultFolderOperationUserType extends EnumUserType<Preferences.DefaultFolderOperation> { 
+    /**
+     * <p>Constructor for DefaultFolderOperationUserType.</p>
+     */
     public DefaultFolderOperationUserType() { 
         super(Preferences.DefaultFolderOperation.class); 
     }

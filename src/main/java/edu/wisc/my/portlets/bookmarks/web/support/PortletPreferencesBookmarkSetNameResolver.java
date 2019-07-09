@@ -24,17 +24,20 @@ import javax.portlet.PortletRequest;
 /**
  * Uses the configured bookmarkSetName as a key into the PortletPreferences to resolve the
  * name of the BookmarkSet for the request.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
 public class PortletPreferencesBookmarkSetNameResolver implements NameResolver {
+    /** Constant <code>DEFAULT_BOOKMARK_SET_NAME="bookmarkSetName"</code> */
     public static final String DEFAULT_BOOKMARK_SET_NAME = "bookmarkSetName";
     
     private String bookmarkSetName = DEFAULT_BOOKMARK_SET_NAME;
     
 
     /**
+     * <p>Getter for the field <code>bookmarkSetName</code>.</p>
+     *
      * @return Returns the bookmarkSetName.
      */
     public String getBookmarkSetName() {
@@ -42,6 +45,8 @@ public class PortletPreferencesBookmarkSetNameResolver implements NameResolver {
     }
 
     /**
+     * <p>Setter for the field <code>bookmarkSetName</code>.</p>
+     *
      * @param bookmarkSetName The bookmarkSetName to set.
      */
     public void setBookmarkSetName(String bookmarkSetName) {
@@ -49,9 +54,7 @@ public class PortletPreferencesBookmarkSetNameResolver implements NameResolver {
     }
 
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.web.support.NameResolver#getBookmarkSetName(javax.portlet.PortletRequest)
-     */
+    /** {@inheritDoc} */
     public String getBookmarkSetName(PortletRequest request) {
         final PortletPreferences prefs = request.getPreferences();
         return prefs.getValue(this.bookmarkSetName, null);

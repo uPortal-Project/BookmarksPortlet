@@ -27,7 +27,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 /**
  * This class contains preferences (mainly user interface/experiance related) for a BookmarkSet.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12179 $
  */
@@ -50,6 +50,8 @@ public class Preferences implements Serializable {
 
 
     /**
+     * <p>Getter for the field <code>id</code>.</p>
+     *
      * @return Returns the id.
      */
     public long getId() {
@@ -57,6 +59,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>id</code>.</p>
+     *
      * @param id The id to set.
      */
     public void setId(long id) {
@@ -64,6 +68,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
      * @return Returns the name.
      */
     public String getName() {
@@ -71,6 +77,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>name</code>.</p>
+     *
      * @param name The name to set.
      */
     public void setName(String name) {
@@ -78,6 +86,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>owner</code>.</p>
+     *
      * @return Returns the owner.
      */
     public String getOwner() {
@@ -85,6 +95,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>owner</code>.</p>
+     *
      * @param owner The owner to set.
      */
     public void setOwner(String owner) {
@@ -92,6 +104,8 @@ public class Preferences implements Serializable {
     }
     
     /**
+     * <p>Getter for the field <code>created</code>.</p>
+     *
      * @return Returns the created.
      */
     public Date getCreated() {
@@ -99,6 +113,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>created</code>.</p>
+     *
      * @param created The created to set.
      */
     public void setCreated(Date created) {
@@ -106,6 +122,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>modified</code>.</p>
+     *
      * @return Returns the modified.
      */
     public Date getModified() {
@@ -113,6 +131,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>modified</code>.</p>
+     *
      * @param modified The modified to set.
      */
     public void setModified(Date modified) {
@@ -120,6 +140,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Getter for the field <code>defaultFolderOperation</code>.</p>
+     *
      * @return Returns the defaultFolderOperation.
      */
     public DefaultFolderOperation getDefaultFolderOperation() {
@@ -127,6 +149,8 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>Setter for the field <code>defaultFolderOperation</code>.</p>
+     *
      * @param defaultFolderOperation The defaultFolderOperation to set.
      */
     public void setDefaultFolderOperation(DefaultFolderOperation defaultFolderOperation) {
@@ -139,15 +163,15 @@ public class Preferences implements Serializable {
     }
     
     /**
+     * <p>getDefaultFolderOperations.</p>
+     *
      * @return The array of possible DefaultFolderOperations
      */
     public DefaultFolderOperation[] getDefaultFolderOperations() {
         return DefaultFolderOperation.values();
     }
 
-    /**
-     * @see java.lang.Object#equals(Object)
-     */
+    /** {@inheritDoc} */
     public boolean equals(final Object object) {
         if (object == this) {
             return true;
@@ -167,7 +191,10 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>hashCode.</p>
+     *
      * @see java.lang.Object#hashCode()
+     * @return a int.
      */
     public int hashCode() {
         return new HashCodeBuilder(1282633449, -470755709)
@@ -181,7 +208,10 @@ public class Preferences implements Serializable {
     }
 
     /**
+     * <p>toString.</p>
+     *
      * @see java.lang.Object#toString()
+     * @return a {@link java.lang.String} object.
      */
     public String toString() {
         return new ToStringBuilder(this)

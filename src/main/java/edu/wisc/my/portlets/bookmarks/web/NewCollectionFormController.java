@@ -34,10 +34,14 @@ import edu.wisc.my.portlets.bookmarks.domain.Folder;
 import edu.wisc.my.portlets.bookmarks.domain.support.FolderUtils;
 import edu.wisc.my.portlets.bookmarks.domain.support.IdPathInfo;
 
+/**
+ * <p>NewCollectionFormController class.</p>
+ *
+ * @author Unknown
+ * @version $Id: $Id
+ */
 public class NewCollectionFormController extends BaseEntryFormController {
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
         final String targetParentPath = StringUtils.defaultIfEmpty(request.getParameter("folderPath"), null);

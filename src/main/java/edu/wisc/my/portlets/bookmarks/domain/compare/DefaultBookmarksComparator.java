@@ -29,23 +29,34 @@ import edu.wisc.my.portlets.bookmarks.domain.Folder;
 
 /**
  * Implements the default comparison order for the objects involved in a BookmarkSet.
- * 
+ *
  * Comparison follows these rules in order:
  * Folders are always greater than non Folders.
  * Entry fields are compared in the following order: name, note, created, modified.
- * Bookmark fields are compared in the follwing order: 
- * 
+ * Bookmark fields are compared in the follwing order:
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12141 $
  */
 public class DefaultBookmarksComparator implements Comparator<Entry>, Serializable {
     private static final long serialVersionUID = 1L;
 
+    /** Constant <code>DEFAULT_BOOKMARKS_COMPARATOR</code> */
     public static DefaultBookmarksComparator DEFAULT_BOOKMARKS_COMPARATOR = new DefaultBookmarksComparator();
     
+    /**
+     * <p>Constructor for DefaultBookmarksComparator.</p>
+     */
     protected DefaultBookmarksComparator() {
     }
 
+    /**
+     * <p>compare.</p>
+     *
+     * @param e1 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @param e2 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @return a int.
+     */
     public int compare(Entry e1, Entry e2) {
         return new CompareToBuilder()
             .appendSuper(this.compareFolders(e1, e2))
@@ -56,7 +67,11 @@ public class DefaultBookmarksComparator implements Comparator<Entry>, Serializab
 
     /**
      * Folders are always greater than non-Folders, if they are both Folders
-     * or both not Folders they are equal. 
+     * or both not Folders they are equal.
+     *
+     * @param e1 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @param e2 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @return a int.
      */
     protected int compareFolders(final Entry e1, final Entry e2) {
         final boolean f1 = e1 instanceof Folder;
@@ -76,6 +91,10 @@ public class DefaultBookmarksComparator implements Comparator<Entry>, Serializab
     /**
      * Compairs the entries by name, note, created and modified properties in that
      * order.
+     *
+     * @param e1 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @param e2 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @return a int.
      */
     protected int compareEntries(final Entry e1, final Entry e2) {
         return new CompareToBuilder()
@@ -89,6 +108,10 @@ public class DefaultBookmarksComparator implements Comparator<Entry>, Serializab
     /**
      * If both classes are not Bookmarks they are equal. If they are both
      * bookmarks they are compared by url then newWindow properties.
+     *
+     * @param e1 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @param e2 a {@link edu.wisc.my.portlets.bookmarks.domain.Entry} object.
+     * @return a int.
      */
     protected int compareBookmarks(final Entry e1, final Entry e2) {
         if (e1 instanceof Bookmark && e2 instanceof Bookmark) {

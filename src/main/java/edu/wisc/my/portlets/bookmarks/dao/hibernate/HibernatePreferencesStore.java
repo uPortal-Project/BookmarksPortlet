@@ -32,7 +32,7 @@ import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 
 /**
  * Persists and retrieves Preferences objects via Hibernate.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12173 $
  */
@@ -40,9 +40,7 @@ public class HibernatePreferencesStore extends HibernateDaoSupport implements Pr
     private static final String PARAM_OWNER = "owner";
     private static final String PARAM_NAME = "name";
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.PreferencesStore#getPreferences(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public Preferences getPreferences(String owner, String name) {
         try {
             final Session session = this.getSession(false);
@@ -61,9 +59,7 @@ public class HibernatePreferencesStore extends HibernateDaoSupport implements Pr
         }
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.PreferencesStore#storePreferences(edu.wisc.my.portlets.bookmarks.domain.Preferences)
-     */
+    /** {@inheritDoc} */
     public void storePreferences(Preferences bookmarkSet) {
         try {
             final Session session = this.getSession(false);
@@ -81,9 +77,7 @@ public class HibernatePreferencesStore extends HibernateDaoSupport implements Pr
         }
     }
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.PreferencesStore#removePreferences(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public void removePreferences(String owner, String name) {
         try {
             try {
@@ -106,9 +100,7 @@ public class HibernatePreferencesStore extends HibernateDaoSupport implements Pr
     }
     
 
-    /**
-     * @see edu.wisc.my.portlets.bookmarks.dao.PreferencesStore#createPreferences(java.lang.String, java.lang.String)
-     */
+    /** {@inheritDoc} */
     public Preferences createPreferences(String owner, String name) {
         final Preferences bookmarkSet = new Preferences();
         bookmarkSet.setOwner(owner);

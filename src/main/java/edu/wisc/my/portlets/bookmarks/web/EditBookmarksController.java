@@ -46,13 +46,17 @@ import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
 /**
  * Controller resolves the BookmarkSet owner and name for the request and displays it
  * as the model via Edit mode.
- * 
+ *
+ * @author Unknown
+ * @version $Id: $Id
  */
 public class EditBookmarksController extends AbstractController {
     private BookmarkSetRequestResolver bookmarkSetRequestResolver;
     private PreferencesRequestResolver preferencesRequestResolver;
 
     /**
+     * <p>Getter for the field <code>bookmarkSetRequestResolver</code>.</p>
+     *
      * @return Returns the bookmarkSetRequestResolver.
      */
     public BookmarkSetRequestResolver getBookmarkSetRequestResolver() {
@@ -60,6 +64,8 @@ public class EditBookmarksController extends AbstractController {
     }
 
     /**
+     * <p>Setter for the field <code>bookmarkSetRequestResolver</code>.</p>
+     *
      * @param bookmarkSetRequestResolver The bookmarkSetRequestResolver to set.
      */
     public void setBookmarkSetRequestResolver(BookmarkSetRequestResolver bookmarkSetRequestResolver) {
@@ -67,6 +73,8 @@ public class EditBookmarksController extends AbstractController {
     }
 
     /**
+     * <p>Getter for the field <code>preferencesRequestResolver</code>.</p>
+     *
      * @return Returns the preferencesRequestResolver.
      */
     public PreferencesRequestResolver getPreferencesRequestResolver() {
@@ -74,6 +82,8 @@ public class EditBookmarksController extends AbstractController {
     }
 
     /**
+     * <p>Setter for the field <code>preferencesRequestResolver</code>.</p>
+     *
      * @param preferencesRequestResolver The preferencesRequestResolver to set.
      */
     public void setPreferencesRequestResolver(PreferencesRequestResolver preferencesRequestResolver) {
@@ -81,9 +91,7 @@ public class EditBookmarksController extends AbstractController {
     }
 
 
-    /**
-     * @see org.springframework.web.portlet.mvc.AbstractController#handleRenderRequestInternal(javax.portlet.RenderRequest, javax.portlet.RenderResponse)
-     */
+    /** {@inheritDoc} */
     @Override
     protected ModelAndView handleRenderRequestInternal(RenderRequest request, RenderResponse response) throws Exception {
         final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
@@ -113,9 +121,7 @@ public class EditBookmarksController extends AbstractController {
         return new ModelAndView("editBookmarks", refData);
     }
 
-    /**
-     * @see org.springframework.web.portlet.mvc.AbstractController#handleActionRequestInternal(javax.portlet.ActionRequest, javax.portlet.ActionResponse)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void handleActionRequestInternal(ActionRequest request, ActionResponse response) throws Exception {
         //Allow noop action requests in case people want to use direct links to the portlet
@@ -123,6 +129,11 @@ public class EditBookmarksController extends AbstractController {
 
     private Map availableCollections;
     
+    /**
+     * <p>Setter for the field <code>availableCollections</code>.</p>
+     *
+     * @param collections a {@link java.util.Map} object.
+     */
     public void setAvailableCollections(Map collections) {
     	this.availableCollections = collections;
     }

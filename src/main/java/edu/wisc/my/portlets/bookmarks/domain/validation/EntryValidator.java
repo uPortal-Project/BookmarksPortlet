@@ -26,22 +26,18 @@ import edu.wisc.my.portlets.bookmarks.domain.Entry;
 
 /**
  * Validates an entry, requires a non null/empty name.
- * 
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12165 $
  */
 public class EntryValidator implements Validator {
 
-    /**
-     * @see org.springframework.validation.Validator#supports(java.lang.Class)
-     */
+    /** {@inheritDoc} */
     public boolean supports(Class clazz) {
         return Entry.class.isAssignableFrom(clazz);
     }
 
-    /**
-     * @see org.springframework.validation.Validator#validate(java.lang.Object, org.springframework.validation.Errors)
-     */
+    /** {@inheritDoc} */
     public void validate(Object obj, Errors errors) {
         final Entry entry = (Entry)obj;
         this.validateName(entry, errors);

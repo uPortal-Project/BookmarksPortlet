@@ -24,6 +24,8 @@ import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
 
 /**
+ * <p>BookmarkSetRequestResolver class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
@@ -34,6 +36,8 @@ public class BookmarkSetRequestResolver {
     
     
     /**
+     * <p>Getter for the field <code>bookmarkStore</code>.</p>
+     *
      * @return Returns the bookmarkStore.
      */
     public BookmarkStore getBookmarkStore() {
@@ -41,6 +45,8 @@ public class BookmarkSetRequestResolver {
     }
 
     /**
+     * <p>Setter for the field <code>bookmarkStore</code>.</p>
+     *
      * @param bookmarkStore The bookmarkStore to set.
      */
     public void setBookmarkStore(BookmarkStore bookmarkStore) {
@@ -48,6 +54,8 @@ public class BookmarkSetRequestResolver {
     }
 
     /**
+     * <p>Getter for the field <code>nameResolver</code>.</p>
+     *
      * @return Returns the nameResolver.
      */
     public NameResolver getNameResolver() {
@@ -55,6 +63,8 @@ public class BookmarkSetRequestResolver {
     }
 
     /**
+     * <p>Setter for the field <code>nameResolver</code>.</p>
+     *
      * @param nameResolver The nameResolver to set.
      */
     public void setNameResolver(NameResolver nameResolver) {
@@ -62,6 +72,8 @@ public class BookmarkSetRequestResolver {
     }
 
     /**
+     * <p>Getter for the field <code>ownerResolver</code>.</p>
+     *
      * @return Returns the ownerResolver.
      */
     public OwnerResolver getOwnerResolver() {
@@ -69,6 +81,8 @@ public class BookmarkSetRequestResolver {
     }
 
     /**
+     * <p>Setter for the field <code>ownerResolver</code>.</p>
+     *
      * @param ownerResolver The ownerResolver to set.
      */
     public void setOwnerResolver(OwnerResolver ownerResolver) {
@@ -79,23 +93,25 @@ public class BookmarkSetRequestResolver {
 
     /**
      * Calls getBookmarkSet(request, true);
-     * 
+     *
      * @see #getBookmarkSet(PortletRequest, boolean)
+     * @param request a {@link javax.portlet.PortletRequest} object.
+     * @return a {@link edu.wisc.my.portlets.bookmarks.domain.BookmarkSet} object.
      */
     public BookmarkSet getBookmarkSet(PortletRequest request) {
         return this.getBookmarkSet(request, true);
     }
     
     /**
-     * Gets a BookmarkSet for the request using the injected {@link OwnerResolver}
-     * and {@link NameResolver}.
+     * Gets a BookmarkSet for the request using the injected {@link edu.wisc.my.portlets.bookmarks.web.support.OwnerResolver}
+     * and {@link edu.wisc.my.portlets.bookmarks.web.support.NameResolver}.
      * <br>
      * <br>
-     * If <code>create</code> is false and no BookmarkSet exists for the name and owner null is returned. 
+     * If <code>create</code> is false and no BookmarkSet exists for the name and owner null is returned.
      * <br>
      * <br>
-     * If <code>create</code> is true and no BookmarkSet exists for the name and owner a new BookmarkSet is created. 
-     * 
+     * If <code>create</code> is true and no BookmarkSet exists for the name and owner a new BookmarkSet is created.
+     *
      * @param request The request to resolve the name and owner from.
      * @param create If a BookmarkSet should be created for the name and owner if one does not exist
      * @return The BookmarkSet for the name and owner from the request, null if it does not exists and create is false. If create is true this will never return null.

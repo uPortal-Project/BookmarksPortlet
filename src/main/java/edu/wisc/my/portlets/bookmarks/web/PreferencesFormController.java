@@ -30,6 +30,8 @@ import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 
 /**
+ * <p>PreferencesFormController class.</p>
+ *
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12164 $
  */
@@ -38,30 +40,30 @@ public class PreferencesFormController extends BaseBookmarksFormController {
     
     
     /**
+     * <p>Getter for the field <code>preferencesStore</code>.</p>
+     *
      * @return Returns the preferencesStore.
      */
     public PreferencesStore getPreferencesStore() {
         return this.preferencesStore;
     }
     /**
+     * <p>Setter for the field <code>preferencesStore</code>.</p>
+     *
      * @param preferencesStore The preferencesStore to set.
      */
     public void setPreferencesStore(PreferencesStore preferencesStore) {
         this.preferencesStore = preferencesStore;
     }
     
-    /**
-     * @see org.springframework.web.portlet.mvc.AbstractFormController#formBackingObject(javax.portlet.PortletRequest)
-     */
+    /** {@inheritDoc} */
     @Override
     protected Object formBackingObject(PortletRequest request) throws Exception {
         Preferences prefs = this.preferencesRequestResolver.getPreferences(request);
         return prefs;
     }
 
-    /**
-     * @see org.springframework.web.portlet.mvc.SimpleFormController#onSubmitAction(javax.portlet.ActionRequest, javax.portlet.ActionResponse, java.lang.Object, org.springframework.validation.BindException)
-     */
+    /** {@inheritDoc} */
     @Override
     protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
         final Preferences prefs = (Preferences)command;
