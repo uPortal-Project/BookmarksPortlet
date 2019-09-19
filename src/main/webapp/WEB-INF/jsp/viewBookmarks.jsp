@@ -95,11 +95,6 @@
         </c:choose>
         <br>
         <c:if test="${!guestMode }">
-            <button type="button" onclick="newBookmark('${portletNamespace}');return false;" class="btn btn-default"><spring:message code="portlet.view.addBookmark"/></button>
-            &nbsp;&nbsp;&nbsp;
-            <button type="button" onclick="newFolder('${portletNamespace}');return false;" class="btn btn-default"><spring:message code="portlet.view.addFolder"/></button>
-            &nbsp;&nbsp;&nbsp;
-            <button type="button" onclick="newCollection('${portletNamespace}');return false;" class="btn btn-default" style="${ fn:length(availableCollections) > 0 ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></button>
             <portlet:renderURL portletMode="EDIT" var="EditModeUrl" />
             <a type="button" class="btn btn-default" href="${EditModeUrl}"><spring:message
                 code="portlet.view.edit.show"
