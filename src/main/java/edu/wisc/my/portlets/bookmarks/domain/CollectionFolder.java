@@ -33,8 +33,8 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -51,7 +51,7 @@ import edu.wisc.my.portlets.bookmarks.domain.support.IntegerSetThreadLocal;
 public class CollectionFolder extends Entry implements CollapsibleEntry {
     private static final long serialVersionUID = 1L;
     
-	private static Log log = LogFactory.getLog(CollectionFolder.class);
+	private static Logger log = LoggerFactory.getLogger(CollectionFolder.class);
 
     private static IntegerSetThreadLocal equalsVisitedFolder = new IntegerSetThreadLocal();
     private static IntegerSetThreadLocal hashCodeVisitedFolder = new IntegerSetThreadLocal();
