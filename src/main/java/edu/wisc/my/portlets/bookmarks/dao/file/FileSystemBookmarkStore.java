@@ -28,8 +28,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessResourceFailureException;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
@@ -42,7 +42,7 @@ import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
  * @version $Revision: 12150 $
  */
 public class FileSystemBookmarkStore implements BookmarkStore {
-    protected final Log logger = LogFactory.getLog(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     
     private String baseStorePath = null;
     
