@@ -22,6 +22,8 @@ import javax.portlet.PortletRequest;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>BookmarkSetRequestResolver class.</p>
@@ -29,67 +31,15 @@ import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
+@Component
 public class BookmarkSetRequestResolver {
+
+    @Autowired
     protected BookmarkStore bookmarkStore;
+    @Autowired
     protected OwnerResolver ownerResolver;
+    @Autowired
     protected NameResolver nameResolver;
-    
-    
-    /**
-     * <p>Getter for the field <code>bookmarkStore</code>.</p>
-     *
-     * @return Returns the bookmarkStore.
-     */
-    public BookmarkStore getBookmarkStore() {
-        return this.bookmarkStore;
-    }
-
-    /**
-     * <p>Setter for the field <code>bookmarkStore</code>.</p>
-     *
-     * @param bookmarkStore The bookmarkStore to set.
-     */
-    public void setBookmarkStore(BookmarkStore bookmarkStore) {
-        this.bookmarkStore = bookmarkStore;
-    }
-
-    /**
-     * <p>Getter for the field <code>nameResolver</code>.</p>
-     *
-     * @return Returns the nameResolver.
-     */
-    public NameResolver getNameResolver() {
-        return this.nameResolver;
-    }
-
-    /**
-     * <p>Setter for the field <code>nameResolver</code>.</p>
-     *
-     * @param nameResolver The nameResolver to set.
-     */
-    public void setNameResolver(NameResolver nameResolver) {
-        this.nameResolver = nameResolver;
-    }
-
-    /**
-     * <p>Getter for the field <code>ownerResolver</code>.</p>
-     *
-     * @return Returns the ownerResolver.
-     */
-    public OwnerResolver getOwnerResolver() {
-        return this.ownerResolver;
-    }
-
-    /**
-     * <p>Setter for the field <code>ownerResolver</code>.</p>
-     *
-     * @param ownerResolver The ownerResolver to set.
-     */
-    public void setOwnerResolver(OwnerResolver ownerResolver) {
-        this.ownerResolver = ownerResolver;
-    }
-    
-    
 
     /**
      * Calls getBookmarkSet(request, true);
@@ -101,7 +51,7 @@ public class BookmarkSetRequestResolver {
     public BookmarkSet getBookmarkSet(PortletRequest request) {
         return this.getBookmarkSet(request, true);
     }
-    
+
     /**
      * Gets a BookmarkSet for the request using the injected {@link edu.wisc.my.portlets.bookmarks.web.support.OwnerResolver}
      * and {@link edu.wisc.my.portlets.bookmarks.web.support.NameResolver}.
@@ -120,10 +70,10 @@ public class BookmarkSetRequestResolver {
         final String owner = this.ownerResolver.getOwner(request);
         final String name = this.nameResolver.getBookmarkSetName(request);
         BookmarkSet bookmarkSet = this.bookmarkStore.getBookmarkSet(owner, name);
-        
+
         if (bookmarkSet == null && create) {
             bookmarkSet = this.bookmarkStore.createBookmarkSet(owner, name);
-            
+
             if (bookmarkSet == null) {
                 throw new IllegalStateException("Required BookmarkSet is null even after createBookmarkSet was called.");
             }

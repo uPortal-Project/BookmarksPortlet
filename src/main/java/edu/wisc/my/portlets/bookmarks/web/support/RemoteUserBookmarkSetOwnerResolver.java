@@ -18,6 +18,8 @@
  */
 package edu.wisc.my.portlets.bookmarks.web.support;
 
+import org.springframework.stereotype.Component;
+
 import javax.portlet.PortletRequest;
 
 /**
@@ -26,13 +28,11 @@ import javax.portlet.PortletRequest;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
+@Component
 public class RemoteUserBookmarkSetOwnerResolver implements OwnerResolver {
 
     /** {@inheritDoc} */
     public String getOwner(PortletRequest request) {
-        if (request.getRemoteUser() != null)
-        	return request.getRemoteUser();
-        else
-        	return "guest";
+        return request.getRemoteUser() != null ? request.getRemoteUser() : "guest";
     }
 }
