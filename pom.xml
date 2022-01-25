@@ -51,7 +51,7 @@
 
   <properties>
     <logbackVersion>1.2.10</logbackVersion>
-    <slf4jVersion>1.7.33</slf4jVersion>
+    <slf4jVersion>1.7.34</slf4jVersion>
     <spring.version>3.2.18.RELEASE</spring.version>
     <uportal-libs.version>5.11.0</uportal-libs.version>
   </properties>
