@@ -18,10 +18,13 @@
  */
 package edu.wisc.my.portlets.bookmarks.web.support;
 
+import javax.annotation.Resource;
 import javax.portlet.PortletRequest;
 
 import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>PreferencesRequestResolver class.</p>
@@ -29,67 +32,15 @@ import edu.wisc.my.portlets.bookmarks.domain.Preferences;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12161 $
  */
+@Component
 public class PreferencesRequestResolver {
+
+    @Resource(name="preferencesStore")
     protected PreferencesStore preferencesStore;
+    @Autowired
     protected OwnerResolver ownerResolver;
+    @Autowired
     protected NameResolver nameResolver;
-    
-    
-    /**
-     * <p>Getter for the field <code>preferencesStore</code>.</p>
-     *
-     * @return Returns the preferencesStore.
-     */
-    public PreferencesStore getPreferencesStore() {
-        return this.preferencesStore;
-    }
-
-    /**
-     * <p>Setter for the field <code>preferencesStore</code>.</p>
-     *
-     * @param preferencesStore The preferencesStore to set.
-     */
-    public void setPreferencesStore(PreferencesStore preferencesStore) {
-        this.preferencesStore = preferencesStore;
-    }
-
-    /**
-     * <p>Getter for the field <code>nameResolver</code>.</p>
-     *
-     * @return Returns the nameResolver.
-     */
-    public NameResolver getNameResolver() {
-        return this.nameResolver;
-    }
-
-    /**
-     * <p>Setter for the field <code>nameResolver</code>.</p>
-     *
-     * @param nameResolver The nameResolver to set.
-     */
-    public void setNameResolver(NameResolver nameResolver) {
-        this.nameResolver = nameResolver;
-    }
-
-    /**
-     * <p>Getter for the field <code>ownerResolver</code>.</p>
-     *
-     * @return Returns the ownerResolver.
-     */
-    public OwnerResolver getOwnerResolver() {
-        return this.ownerResolver;
-    }
-
-    /**
-     * <p>Setter for the field <code>ownerResolver</code>.</p>
-     *
-     * @param ownerResolver The ownerResolver to set.
-     */
-    public void setOwnerResolver(OwnerResolver ownerResolver) {
-        this.ownerResolver = ownerResolver;
-    }
-    
-    
 
     /**
      * Calls getPreferences(request, true);
@@ -101,7 +52,7 @@ public class PreferencesRequestResolver {
     public Preferences getPreferences(PortletRequest request) {
         return this.getPreferences(request, true);
     }
-    
+
     /**
      * Gets Preferences for the request using the injected {@link edu.wisc.my.portlets.bookmarks.web.support.OwnerResolver}
      * and {@link edu.wisc.my.portlets.bookmarks.web.support.NameResolver}.
@@ -120,10 +71,10 @@ public class PreferencesRequestResolver {
         final String owner = this.ownerResolver.getOwner(request);
         final String name = this.nameResolver.getBookmarkSetName(request);
         Preferences preferences = this.preferencesStore.getPreferences(owner, name);
-        
+
         if (preferences == null && create) {
             preferences = this.preferencesStore.createPreferences(owner, name);
-            
+
             if (preferences == null) {
                 throw new IllegalStateException("Required Preferences is null even after createPreferences was called.");
             }

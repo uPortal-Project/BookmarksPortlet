@@ -22,167 +22,21 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--
-     | Validators for use by the controllers
-     +-->
-    <bean id="bookmarkValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.BookmarkValidator"/>
-    <bean id="folderValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.FolderValidator"/>
-    <bean id="collectionValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.CollectionValidator"/>
-    <bean id="preferencesValidator" class="edu.wisc.my.portlets.bookmarks.domain.validation.PreferencesValidator"/>
-    
-    
-    <!--
-     | Abstract controllers for re-use below
-     +-->
-    <bean id="baseBookmarkSetFormController" abstract="true">
-        <property name="bookmarkStore" ref="bookmarkStore"/>
-        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
-        <property name="preferencesRequestResolver" ref="preferencesRequestResolver"/>
-        
-        <property name="formView" value="viewBookmarks"/>
-        <property name="successView" value="viewBookmarks"/>
-    </bean>
-    
-    <bean id="baseFolderFormController" parent="baseBookmarkSetFormController" abstract="true">
-        <property name="commandName" value="folderCommand"/>
-        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Folder"/>
-        <property name="validator" ref="folderValidator"/>
-    </bean>
-    
-    <bean id="baseBookmarkFormController" parent="baseBookmarkSetFormController" abstract="true">
-        <property name="commandName" value="bookmarkCommand"/>
-        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Bookmark"/>
-        <property name="validator" ref="bookmarkValidator"/>
-    </bean>
-    
-    <bean id="baseCollectionFormController" parent="baseBookmarkSetFormController" abstract="true">
-        <property name="commandName" value="collectionCommand"/>
-        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.CollectionFolder"/>
-        <property name="validator" ref="collectionValidator"/>
-    </bean>
+    <context:component-scan base-package="edu.wisc.my.portlets.bookmarks">
+        <context:exclude-filter type="regex" expression="edu\\.wisc\\.my\\.portlets\\.bookmarks\\.web\\.support\\."/>
+    </context:component-scan>
+    <context:annotation-config />
 
-        
-    <!--
-     | Actual, in-use controllers
-     +-->
-    <bean id="viewBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.ViewBookmarksController">
-        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
-        <property name="preferencesRequestResolver" ref="preferencesRequestResolver"/>
-        <property name="availableCollections">
-            <map>
-                <!--
-                <entry key="Del.icio.us"><value>http://del.icio.us/rss/</value></entry>
-                -->
-            </map>
-        </property>
-    </bean>
-    <bean id="editBookmarksFormController" class="edu.wisc.my.portlets.bookmarks.web.EditBookmarksController">
-        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
-        <property name="preferencesRequestResolver" ref="preferencesRequestResolver"/>
-        <property name="availableCollections">
-            <map>
-                <!--property needs a map attriubte, see viewBookmarksFormController
-                    this is empty on purpose.
-                -->
-            </map>
-        </property>
-    </bean>
-    
-    <bean id="newBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.NewBookmarkFormController" parent="baseBookmarkFormController">
-    </bean>
-    
-    <bean id="editBookmarkFormController" class="edu.wisc.my.portlets.bookmarks.web.EditBookmarkFormController" parent="baseBookmarkFormController">
-    </bean>
-    
-    <bean id="newFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.NewFolderFormController" parent="baseFolderFormController">
-    </bean>
-    
-    <bean id="editFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.EditFolderFormController" parent="baseFolderFormController">
-    </bean>
-    
-    <bean id="newCollectionFormController" class="edu.wisc.my.portlets.bookmarks.web.NewCollectionFormController" parent="baseCollectionFormController">
-    </bean>
-    
-    <bean id="editCollectionFormController" class="edu.wisc.my.portlets.bookmarks.web.EditCollectionFormController" parent="baseCollectionFormController">
-    </bean>
+    <!-- for viewBookmarksFormController -->
+    <util:map id="availableCollections">
+        <!--
+        <entry key="Del.icio.us"><value>http://del.icio.us/rss/</value></entry>
+        -->
+    </util:map>
 
-    <bean id="toggleFolderFormController" class="edu.wisc.my.portlets.bookmarks.web.ToggleFolderFormController">
-        <property name="bookmarkStore" ref="bookmarkStore"/>
-        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
-    </bean>
-    
-    <bean id="deleteEntryFormController" class="edu.wisc.my.portlets.bookmarks.web.DeleteEntryFormController">
-        <property name="bookmarkStore" ref="bookmarkStore"/>
-        <property name="bookmarkSetRequestResolver" ref="bookmarkSetRequestResolver"/>
-    </bean>
-    
-    <bean id="saveOptionsFormController" class="edu.wisc.my.portlets.bookmarks.web.PreferencesFormController" parent="baseBookmarkSetFormController">
-        <property name="commandName" value="options"/>
-        <property name="commandClass" value="edu.wisc.my.portlets.bookmarks.domain.Preferences"/>
-        <property name="validator" ref="preferencesValidator"/>
-        
-        <property name="preferencesStore" ref="preferencesStore"/>
-    </bean>
-
-    
-    
-    <!--
-     | Handler mappings to determine the correct controller.
-     +-->
-    <bean id="openSessionInViewInterceptor" class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    
-    <bean id="parameterMappingInterceptor" class="org.springframework.web.portlet.handler.ParameterMappingInterceptor"/>
-    
-    <bean id="portletModeParameterHandlerMapping" class="org.springframework.web.portlet.handler.PortletModeParameterHandlerMapping">
-        <property name="order" value="10"/>
-        <property name="interceptors">
-            <list>
-                <ref bean="openSessionInViewInterceptor"/>
-                <ref bean="parameterMappingInterceptor"/>
-            </list>
-        </property>
-        <property name="portletModeParameterMap">
-            <map>
-                <entry key="view">
-                    <map>
-                        <entry key="viewBookmarks" value-ref="viewBookmarksFormController"/>
-                    </map>
-                </entry>
-                <entry key="edit">
-                    <map>
-                        <entry key="newBookmark" value-ref="newBookmarkFormController"/>
-                        <entry key="editBookmark" value-ref="editBookmarkFormController"/>
-                        <entry key="newFolder" value-ref="newFolderFormController"/>
-                        <entry key="editFolder" value-ref="editFolderFormController"/>
-                        <entry key="newCollection" value-ref="newCollectionFormController"/>
-                        <entry key="editCollection" value-ref="editCollectionFormController"/>
-                        <entry key="toggleFolder" value-ref="toggleFolderFormController"/>
-                        <entry key="deleteEntry" value-ref="deleteEntryFormController"/>
-                        <entry key="saveOptions" value-ref="saveOptionsFormController"/>
-                    </map>
-                </entry>
-            </map>
-        </property>
-    </bean>
-    
-    <bean id="portletModeHandlerMapping" class="org.springframework.web.portlet.handler.PortletModeHandlerMapping">
-        <property name="order" value="20"/>
-        <property name="interceptors">
-            <list>
-                <ref bean="openSessionInViewInterceptor"/>
-            </list>
-        </property>
-        <property name="portletModeMap">
-            <map>
-                <entry key="view" value-ref="viewBookmarksFormController"/>
-                <entry key="edit" value-ref="editBookmarksFormController"/>
-            </map>
-        </property>
-    </bean>
-    
 </beans>

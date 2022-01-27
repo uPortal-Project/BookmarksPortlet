@@ -27,12 +27,12 @@ import javax.portlet.PortletRequest;
  * @version $Revision: 12161 $
  */
 public interface NameResolver {
-    
+
     /**
      * Resolves the BookmarkSet name for the PortletRequest, may return null if no name is specified for the request.
      *
      * @param request The request to resolve the name for, must not be null.
      * @return The BookmarkSet name for the request, may be null if there is no name for the request.
      */
-    public String getBookmarkSetName(PortletRequest request);
+    String getBookmarkSetName(PortletRequest request);
 }

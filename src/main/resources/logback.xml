@@ -82,7 +82,7 @@
   <!--
     | Setup default log level to INFO
   +-->
-  <root level="INFO">
+  <root level="WARN">
     <appender-ref ref="LOG" />
   </root>
 
@@ -93,5 +93,9 @@
   <logger name="edu.wisc.my.portlets.bookmarks" additivity="false" level="DEBUG">
     <appender-ref ref="LOG" />
   </logger>
+  <logger name="org.springframework.web" additivity="false" level="INFO">
+    <appender-ref ref="LOG" />
+  </logger>
   -->
+
 </configuration>

@@ -22,8 +22,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:util="http://www.springframework.org/schema/util"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd">
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- Custom uPortal tech that supports global.properties and Jasypt encryption -->
     <bean id="propertyConfigurer" class="org.springframework.context.support.PortalPropertySourcesPlaceholderConfigurer">
@@ -68,24 +72,8 @@
         </property>
     </bean>
 
-
-    <bean id="bookmarkSetOwnerResolver" class="edu.wisc.my.portlets.bookmarks.web.support.RemoteUserBookmarkSetOwnerResolver"/>
-
-    <bean id="bookmarkSetNameResolver" class="edu.wisc.my.portlets.bookmarks.web.support.PortletPreferencesBookmarkSetNameResolver"/>
-
-    <bean id="bookmarkSetRequestResolver" class="edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver">
-        <property name="bookmarkStore" ref="bookmarkStore"/>
-        <property name="ownerResolver" ref="bookmarkSetOwnerResolver"/>
-        <property name="nameResolver" ref="bookmarkSetNameResolver"/>
-    </bean>
-
-    <bean id="preferencesRequestResolver" class="edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver">
-        <property name="preferencesStore" ref="preferencesStore"/>
-        <property name="ownerResolver" ref="bookmarkSetOwnerResolver"/>
-        <property name="nameResolver" ref="bookmarkSetNameResolver"/>
-    </bean>
-
-
+    <context:component-scan base-package="edu.wisc.my.portlets.bookmarks.web.support" />
+    <context:annotation-config />
 
     <!-- Default View Resolver -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -125,9 +113,7 @@
     </bean>
 
     <bean id="abstractHibernateTemplate" abstract="true">
-        <property name="sessionFactory">
-            <ref local="sessionFactory" />
-        </property>
+        <property name="sessionFactory" ref ="sessionFactory" />
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
@@ -143,6 +129,12 @@
             </props>
         </property>
     </bean>
+
+    <mvc:interceptors>
+        <bean class="org.springframework.orm.hibernate3.support.OpenSessionInViewInterceptor">
+            <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
+    </mvc:interceptors>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName"><value>${hibernate.connection.driver_class}</value></property>

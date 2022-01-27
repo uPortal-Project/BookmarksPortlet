@@ -39,7 +39,7 @@ public class BookmarkValidator extends EntryValidator {
 
 
     private String defaultProtocol = "http://";
-    
+
     /**
      * <p>Getter for the field <code>defaultProtocol</code>.</p>
      *
@@ -61,7 +61,7 @@ public class BookmarkValidator extends EntryValidator {
         if (!defaultProtocol.endsWith(PROTOCOL_SEPERATOR)) {
             throw new IllegalArgumentException("defaultProtocol must end with a the protocol seperator='" + PROTOCOL_SEPERATOR + "'.");
         }
-        
+
         this.defaultProtocol = defaultProtocol;
     }
 
@@ -86,7 +86,7 @@ public class BookmarkValidator extends EntryValidator {
         if (!url.contains(PROTOCOL_SEPERATOR)) {
             url = this.defaultProtocol + url;
         }
-        
+
         bookmark.setUrl(url);
 
         try {
