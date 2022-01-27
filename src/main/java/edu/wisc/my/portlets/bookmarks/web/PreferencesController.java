@@ -24,7 +24,6 @@ import javax.annotation.Resource;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.validation.Valid;
 
 import edu.wisc.my.portlets.bookmarks.domain.validation.PreferencesValidator;
 import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
@@ -38,8 +37,6 @@ import org.springframework.ui.Model;
 import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
@@ -50,15 +47,15 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
  */
 @Controller
 @RequestMapping("VIEW")
-public class PreferencesFormController {
+public class PreferencesController {
 
-    private static final Logger logger = LoggerFactory.getLogger(PreferencesFormController.class);
+    private static final Logger logger = LoggerFactory.getLogger(PreferencesController.class);
 
     @Autowired
     private PreferencesRequestResolver preferencesRequestResolver;
     @Resource(name="preferencesStore")
     private PreferencesStore preferencesStore;
-    private PreferencesValidator validator = new PreferencesValidator();
+    private final PreferencesValidator validator = new PreferencesValidator();
 
     @ModelAttribute
     private Preferences getPreferences(PortletRequest request) {
