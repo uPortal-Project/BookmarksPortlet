@@ -23,116 +23,35 @@
 
 package edu.wisc.my.portlets.bookmarks.web;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.springframework.web.portlet.ModelAndView;
-import org.springframework.web.portlet.mvc.AbstractController;
-
-import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
-import edu.wisc.my.portlets.bookmarks.domain.BookmarkSet;
-import edu.wisc.my.portlets.bookmarks.domain.CollectionFolder;
-import edu.wisc.my.portlets.bookmarks.domain.Folder;
-import edu.wisc.my.portlets.bookmarks.domain.Preferences;
-import edu.wisc.my.portlets.bookmarks.web.support.BookmarkSetRequestResolver;
-import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
-import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
+import java.util.Map;
 
 /**
  * Controller resolves the BookmarkSet owner and name for the request and displays it
  * as the model.
- *
- * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
- * @version $Revision: 12169 $
  */
-public class ViewBookmarksController extends AbstractController {
-    private BookmarkSetRequestResolver bookmarkSetRequestResolver;
-    private PreferencesRequestResolver preferencesRequestResolver;
-    
-    
-    /**
-     * <p>Getter for the field <code>bookmarkSetRequestResolver</code>.</p>
-     *
-     * @return Returns the bookmarkSetRequestResolver.
-     */
-    public BookmarkSetRequestResolver getBookmarkSetRequestResolver() {
-        return this.bookmarkSetRequestResolver;
-    }
+@Controller
+@RequestMapping("VIEW")
+public class ViewBookmarksController {
 
-    /**
-     * <p>Setter for the field <code>bookmarkSetRequestResolver</code>.</p>
-     *
-     * @param bookmarkSetRequestResolver The bookmarkSetRequestResolver to set.
-     */
-    public void setBookmarkSetRequestResolver(BookmarkSetRequestResolver bookmarkSetRequestResolver) {
-        this.bookmarkSetRequestResolver = bookmarkSetRequestResolver;
-    }
+    private static final Logger logger = LoggerFactory.getLogger(ViewBookmarksController.class);
 
-    /**
-     * <p>Getter for the field <code>preferencesRequestResolver</code>.</p>
-     *
-     * @return Returns the preferencesRequestResolver.
-     */
-    public PreferencesRequestResolver getPreferencesRequestResolver() {
-        return this.preferencesRequestResolver;
-    }
+    @Autowired
+    private ReferenceData referenceData;
 
-    /**
-     * <p>Setter for the field <code>preferencesRequestResolver</code>.</p>
-     *
-     * @param preferencesRequestResolver The preferencesRequestResolver to set.
-     */
-    public void setPreferencesRequestResolver(PreferencesRequestResolver preferencesRequestResolver) {
-        this.preferencesRequestResolver = preferencesRequestResolver;
-    }
-
-
-    /** {@inheritDoc} */
-    @Override
-    protected ModelAndView handleRenderRequestInternal(RenderRequest request, RenderResponse response) throws Exception {
-        final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
-        final Preferences preferences = this.preferencesRequestResolver.getPreferences(request, false);
-        final Map<String, Object> refData = new HashMap<String, Object>();
-        refData.put(ViewConstants.BOOKMARK_SET, bookmarkSet);
-        if (preferences != null) {      
-                    refData.put(ViewConstants.OPTIONS, preferences);       
-                }      
-                else {     
-                    refData.put(ViewConstants.OPTIONS, new Preferences());     
-                }      
-              
-               refData.put(ViewConstants.COMMAND_EMPTY_BOOKMARK, new Bookmark());     
-               refData.put(ViewConstants.COMMAND_EMPTY_FOLDER, new Folder());     
-               refData.put(ViewConstants.COMMAND_AVAILABLE_COLLECTIONS, this.availableCollections);       
-               refData.put(ViewConstants.COMMAND_EMPTY_COLLECTION, new CollectionFolder());       
-                      
-                if (request.getRemoteUser() == null) {     
-                   refData.put("guestMode", true);     
-                } else {       
-                   refData.put("guestMode", false);
-                }
-        return new ModelAndView("viewBookmarks", refData);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    protected void handleActionRequestInternal(ActionRequest request, ActionResponse response) throws Exception {
-        //Allow noop action requests in case people want to use direct links to the portlet
-    }
-
-    private Map availableCollections;
-    
-    /**
-     * <p>Setter for the field <code>availableCollections</code>.</p>
-     *
-     * @param collections a {@link java.util.Map} object.
-     */
-    public void setAvailableCollections(Map collections) {
-    	this.availableCollections = collections;
+    @RenderMapping
+    public String addDataForView(Model model, RenderRequest request) {
+        logger.debug("Entering VIEW addDataForView()");
+        final Map<String, Object> refData = referenceData.getRefData(request, null);
+        model.addAllAttributes(refData);
+        return "viewBookmarks";
     }
 }

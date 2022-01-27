@@ -27,7 +27,6 @@ import javax.portlet.PortletRequest;
 
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.web.portlet.mvc.SimpleFormController;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
 import edu.wisc.my.portlets.bookmarks.domain.Bookmark;
@@ -45,15 +44,23 @@ import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
  * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
  * @version $Revision: 12168 $
  */
-public class BaseBookmarksFormController extends SimpleFormController {
+public class BaseBookmarksFormController {
     private String handlerMappingParameter = "action";
 
     protected BookmarkSetRequestResolver bookmarkSetRequestResolver;
     protected PreferencesRequestResolver preferencesRequestResolver;
     protected BookmarkStore bookmarkStore;
-    
 
-    
+    protected Object formBackingObject(PortletRequest request) throws Exception {
+        //TODO if move return default object
+        //TODO if no move get real object from store for updating
+        return null;
+    }
+
+    protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
+
+    }
+
     /**
      * <p>Getter for the field <code>handlerMappingParameter</code>.</p>
      *
@@ -128,7 +135,6 @@ public class BaseBookmarksFormController extends SimpleFormController {
 
 
     /** {@inheritDoc} */
-    @Override
     protected Map referenceData(PortletRequest request, Object command, Errors errors) throws Exception {
         final BookmarkSet bookmarkSet = this.bookmarkSetRequestResolver.getBookmarkSet(request, false);
         final Preferences preferences = this.preferencesRequestResolver.getPreferences(request, false);
@@ -136,7 +142,7 @@ public class BaseBookmarksFormController extends SimpleFormController {
         final Map<String, Object> refData = new HashMap<String, Object>();
         refData.put(ViewConstants.BOOKMARK_SET, bookmarkSet);
         refData.put(ViewConstants.ERRORS, errors);
-        
+
         if (preferences != null) {
             refData.put(ViewConstants.OPTIONS, preferences);
         }
@@ -152,18 +158,17 @@ public class BaseBookmarksFormController extends SimpleFormController {
     }
 
     /** {@inheritDoc} */
-    @Override
     protected void processFormSubmission(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
-    	
+
     	// don't save preferences for guest users
     	if (request.getRemoteUser() == null)
     		return;
-    	
-        super.processFormSubmission(request, response, command, errors);
+
+        //super.processFormSubmission(request, response, command, errors);
 
         if (errors.getErrorCount() <= 0) {
-            response.setRenderParameter(this.handlerMappingParameter, this.getSuccessView());
+            response.setRenderParameter(this.handlerMappingParameter, "viewBookmarks");
         }
     }
-    
+
 }

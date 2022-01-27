@@ -18,6 +18,7 @@
  */
 package edu.wisc.my.portlets.bookmarks.web.support;
 
+import javax.annotation.Resource;
 import javax.portlet.PortletRequest;
 
 import edu.wisc.my.portlets.bookmarks.dao.BookmarkStore;
@@ -35,6 +36,7 @@ import org.springframework.stereotype.Component;
 public class BookmarkSetRequestResolver {
 
     @Autowired
+    @Resource(name = "bookmarkStore")
     protected BookmarkStore bookmarkStore;
     @Autowired
     protected OwnerResolver ownerResolver;

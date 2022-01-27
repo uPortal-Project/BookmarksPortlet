@@ -20,54 +20,94 @@ package edu.wisc.my.portlets.bookmarks.web;
 
 import java.util.Date;
 
+import javax.annotation.Resource;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
+import javax.validation.Valid;
 
-import org.springframework.validation.BindException;
+import edu.wisc.my.portlets.bookmarks.domain.validation.PreferencesValidator;
+import edu.wisc.my.portlets.bookmarks.web.support.PreferencesRequestResolver;
+import edu.wisc.my.portlets.bookmarks.web.support.ViewConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 
 import edu.wisc.my.portlets.bookmarks.dao.PreferencesStore;
 import edu.wisc.my.portlets.bookmarks.domain.Preferences;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
+import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 /**
- * <p>PreferencesFormController class.</p>
- *
- * @author Eric Dalquist <a href="mailto:eric.dalquist@doit.wisc.edu">eric.dalquist@doit.wisc.edu</a>
- * @version $Revision: 12164 $
+ * PreferencesFormController class.
  */
-public class PreferencesFormController extends BaseBookmarksFormController {
+@Controller
+@RequestMapping("VIEW")
+public class PreferencesFormController {
+
+    private static final Logger logger = LoggerFactory.getLogger(PreferencesFormController.class);
+
+    @Autowired
+    private PreferencesRequestResolver preferencesRequestResolver;
+    @Resource(name="preferencesStore")
     private PreferencesStore preferencesStore;
-    
-    
-    /**
-     * <p>Getter for the field <code>preferencesStore</code>.</p>
-     *
-     * @return Returns the preferencesStore.
-     */
-    public PreferencesStore getPreferencesStore() {
-        return this.preferencesStore;
-    }
-    /**
-     * <p>Setter for the field <code>preferencesStore</code>.</p>
-     *
-     * @param preferencesStore The preferencesStore to set.
-     */
-    public void setPreferencesStore(PreferencesStore preferencesStore) {
-        this.preferencesStore = preferencesStore;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    protected Object formBackingObject(PortletRequest request) throws Exception {
-        Preferences prefs = this.preferencesRequestResolver.getPreferences(request);
-        return prefs;
+    private PreferencesValidator validator = new PreferencesValidator();
+
+    @ModelAttribute
+    private Preferences getPreferences(PortletRequest request) {
+        return this.preferencesRequestResolver.getPreferences(request);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    protected void onSubmitAction(ActionRequest request, ActionResponse response, Object command, BindException errors) throws Exception {
-        final Preferences prefs = (Preferences)command;
-        prefs.setModified(new Date());
-        this.preferencesStore.storePreferences(prefs);
+    @RenderMapping(params = "action=saveOptions")
+    public String showOptionsForm(Model model, PortletRequest request) {
+        logger.debug("prefs render");
+        final Preferences prefs = getPreferences(request);
+        logger.debug("prefs (options): {}", prefs);
+        model.addAttribute("options", prefs);
+        return "editBookmarks";
+    }
+
+    @ActionMapping(params = "action=saveOptions")
+    public void saveOptions(@ModelAttribute("options") Preferences prefs, BindingResult result,
+                            ActionRequest request, ActionResponse response) {
+        logger.debug("prefs action");
+        // don't save preferences for guest users
+        if (request.getRemoteUser() == null) {
+            logger.warn("guest user should not be saving options");
+            return;
+        }
+
+        populatePreferences(prefs, request);
+        validator.validate(prefs, result);
+        logger.debug("prefs: {}", prefs);
+        logger.debug("results: {}", result);
+
+        if (!result.hasErrors()) {
+            logger.debug("no errors");
+            prefs.setModified(new Date());
+            this.preferencesStore.storePreferences(prefs);
+            response.setRenderParameter("action", "viewBookmarks");
+        } else {
+            logger.warn("prefs errors!");
+            request.setAttribute(ViewConstants.ERRORS, result);
+            response.setRenderParameter("action", "saveOptions");
+        }
+    }
+
+    private void populatePreferences(Preferences preferences, ActionRequest request) {
+        //Update info that should not be modified by form
+        final Preferences savedPreferences = getPreferences(request);
+        preferences.setId(savedPreferences.getId());
+        preferences.setOwner(savedPreferences.getOwner());
+        preferences.setName(savedPreferences.getName());
+        preferences.setCreated(savedPreferences.getCreated() != null ? savedPreferences.getCreated() : new Date());
+        preferences.setModified(savedPreferences.getModified() != null ? savedPreferences.getModified() : new Date());
     }
 }

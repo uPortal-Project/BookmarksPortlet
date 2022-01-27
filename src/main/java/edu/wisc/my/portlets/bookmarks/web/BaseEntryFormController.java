@@ -45,7 +45,7 @@ public class BaseEntryFormController extends BaseBookmarksFormController {
             response.setRenderParameter("idPath", idPath);
             response.setRenderParameter("folderPath", folderPath);
         }
-        
+
         super.processFormSubmission(request, response, command, errors);
     }
 }

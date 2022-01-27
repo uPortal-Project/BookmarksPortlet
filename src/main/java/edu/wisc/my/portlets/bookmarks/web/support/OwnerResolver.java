@@ -27,12 +27,12 @@ import javax.portlet.PortletRequest;
  * @version $Revision: 12161 $
  */
 public interface OwnerResolver {
-    
+
     /**
      * Resolves the BookmarkSet owner for the PortletRequest, may return null if no owner is specified for the request.
      *
      * @param request The request to resolve the owner for, must not be null.
      * @return The BookmarkSet owner for the request, may be null if there is no owner for the request.
      */
-    public String getOwner(PortletRequest request);
+    String getOwner(PortletRequest request);
 }
