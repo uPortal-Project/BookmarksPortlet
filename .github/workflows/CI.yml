@@ -55,7 +55,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: adopt-hotspot
-          java-version: ${{ matrix.java-distribution }}
+          distribution: ${{ matrix.java-distribution }}
+          java-version: ${{ matrix.java-version }}
       - name: Build and Test
         run: mvn -B package
