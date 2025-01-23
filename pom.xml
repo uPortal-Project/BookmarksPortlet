@@ -310,6 +310,13 @@
           <linebreakpos>10000</linebreakpos>
           <suffix>.min</suffix>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-utils</artifactId>
+            <version>4.0.2</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>com.mycila.maven-license-plugin</groupId>
