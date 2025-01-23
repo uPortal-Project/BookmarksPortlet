@@ -55,7 +55,7 @@
     <spring.version>4.3.30.RELEASE</spring.version>
     <uportal-libs.version>5.17.0</uportal-libs.version>
     <jaxb-api.version>2.3.1</jaxb-api.version>
-    <jaxb-impl.version>2.3.3</jaxb-impl.version>
+    <jaxb-impl.version>4.0.5</jaxb-impl.version>
   </properties>
 
   <dependencies>
