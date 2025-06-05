@@ -18,6 +18,8 @@
  */
 package edu.wisc.my.portlets.bookmarks.dao;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
@@ -30,7 +32,9 @@ import org.springframework.jdbc.core.support.JdbcDaoSupport;
  */
 public class SqlShutdownHelper extends JdbcDaoSupport {
     private String shutdownSql = "SHUTDOWN COMPACT";
-    
+
+    private static final Logger logger = LoggerFactory.getLogger(SqlShutdownHelper.class);
+
     /**
      * <p>Getter for the field <code>shutdownSql</code>.</p>
      *
@@ -54,6 +58,6 @@ public class SqlShutdownHelper extends JdbcDaoSupport {
     public void close() {
         final JdbcTemplate jdbcTemplate = this.getJdbcTemplate();
         jdbcTemplate.execute(this.shutdownSql);
-        this.logger.info("Executed '" + this.shutdownSql + "'");
+        logger.info("Executed '{}'", this.shutdownSql);
     }
 }
