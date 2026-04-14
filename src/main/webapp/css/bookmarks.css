@@ -16,9 +16,24 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- .bookmarksPortlet ul{
-    display: block;
- }
+.bookmarksPortlet .btn:not(.btn-link) {
+    background-color: #fff;
+    color: #333;
+    border-color: #ccc;
+}
+.bookmarksPortlet .btn:not(.btn-link):hover {
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.bookmarksPortlet .btn-link {
+    background-color: transparent;
+    color: #337ab7;
+}
+.bookmarksPortlet .btn-link:hover {
+    background-color: transparent;
+    color: #23527c;
+}
+
  
 .bookmarksPortlet ul.bookmarkList {
     list-style-type: none !important;

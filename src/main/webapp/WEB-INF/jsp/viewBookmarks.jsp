@@ -74,7 +74,7 @@
     </c:if>
 
     <div style="float: right; ${ guestMode ? 'display: none;' : '' }">
-        <button type="button" id="${portletNamespace}optionsLink" class="btn btn-default ${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></button>
+        <button type="button" id="${portletNamespace}optionsLink" class="btn btn-outline-secondary ${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></button>
     </div>
     <bm:optionsForm formName="optionsForm" commandName="options" hidden="${optionsFormHidden}" namespace="${portletNamespace}"/>
     <div id="${portletNamespace}bookmarksTreeAndForm">
@@ -96,7 +96,7 @@
         <br>
         <c:if test="${!guestMode }">
             <portlet:renderURL portletMode="EDIT" var="EditModeUrl" />
-            <a type="button" class="btn btn-default" href="${EditModeUrl}"><spring:message
+            <a type="button" class="btn btn-outline-secondary" href="${EditModeUrl}"><spring:message
                 code="portlet.view.edit.show"
                 text="Edit"/>
             </a>
