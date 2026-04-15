@@ -74,7 +74,7 @@
     </c:if>
 
     <div style="float: right; ${ guestMode ? 'display: none;' : '' }">
-        <button type="button" id="${portletNamespace}optionsLink" class="btn btn-default ${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></button>
+        <button type="button" id="${portletNamespace}optionsLink" class="btn btn-outline-secondary ${optionsLinkClass}" onclick="showOptionsForm('${portletNamespace}');return false;"><spring:message code="portlet.view.options"/></button>
     </div>
     <bm:optionsForm formName="optionsForm" commandName="options" hidden="${optionsFormHidden}" namespace="${portletNamespace}"/>
 
@@ -93,13 +93,13 @@
         </c:choose>
         <br>
         <c:if test="${!guestMode }">
-            <button type="button" onclick="newBookmark('${portletNamespace}');return false;" class="btn btn-default" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addBookmark"/></button>
+            <button type="button" onclick="newBookmark('${portletNamespace}');return false;" class="btn btn-outline-secondary" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addBookmark"/></button>
             &nbsp;&nbsp;&nbsp;
-            <button type="button" onclick="newFolder('${portletNamespace}');return false;" class="btn btn-default" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addFolder"/></button>
+            <button type="button" onclick="newFolder('${portletNamespace}');return false;" class="btn btn-outline-secondary" style="${ guestMode ? 'display: none;' : '' }"><spring:message code="portlet.view.addFolder"/></button>
             &nbsp;&nbsp;&nbsp;
-            <button type="button" onclick="newCollection('${portletNamespace}');return false;" class="btn btn-default" style="${ fn:length(availableCollections) > 0 and !guestMode ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></button>
+            <button type="button" onclick="newCollection('${portletNamespace}');return false;" class="btn btn-outline-secondary" style="${ fn:length(availableCollections) > 0 and !guestMode ? '' : 'display: none;' }"><spring:message code="portlet.view.addCollection"/></button>
             <portlet:renderURL portletMode="VIEW" var="returnToViewModeUrl" />
-            <a type="button" class="btn btn-default" href="${returnToViewModeUrl}" style="font-size:14px!important;"><spring:message
+            <a type="button" class="btn btn-outline-secondary" href="${returnToViewModeUrl}" style="font-size:14px!important;"><spring:message
                 code="favorites.stop.editing"
                 text="Stop editing"/>
             </a>
